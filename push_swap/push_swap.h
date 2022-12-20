@@ -22,6 +22,13 @@ typedef struct s_prog
 
 //debugging utils
 void get_stack_info(t_stack *stack);
-void visualize_state(t_prog *prog);
+void get_state(t_prog *prog);
+
+//instructions
+void manage_instruction(char *instruction, t_prog *prog);
+void stack_swap(t_stack *stack);
+void rot_stack(t_stack *stack);
+void rvrs_rot_stack(t_stack *stack);
+void push_stack(t_stack *from,t_stack *to);
 
 #endif

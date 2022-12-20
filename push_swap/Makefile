@@ -1,4 +1,4 @@
-SRC = main.c debug_utils.c
+SRC = main.c debug_utils.c instructions.c
 OBJS = ${SRC:.c=.o}
 CC = cc
 CFLAGS = -Wall -Werror -Wextra

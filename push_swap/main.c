@@ -13,19 +13,23 @@ int main(int ac, char**av)
 	//do proper error handling
 	if(ac < 2)
 		return 0;
-	printf("zes\n");
 	prog = initprog(ac,av);
 	if(prog)
 	{
-		//sortstacks(prog);
-		ft_printf("initialized prog\n");
+
+		get_state(prog);
+
+		manage_instruction("sa",prog);
+		manage_instruction("pb",prog);
+		manage_instruction("pb",prog);
+		manage_instruction("pb",prog);
+		manage_instruction("sa",prog);
+		manage_instruction("pa",prog);		
+		manage_instruction("pa",prog);
+		manage_instruction("pa",prog);
+		get_state(prog);
+
 	}
-	
-	get_stack_info(prog->stack_a);
-	get_stack_info(prog->stack_b);
-
-	visualize_state(prog);
-
 	return (0);
 }
 
@@ -47,7 +51,7 @@ t_prog *initprog(int ac, char**av)
 	}
 	prog = malloc(sizeof(t_prog));
 	prog->stack_a = generate_stack(values, stacksize, stacksize);
-	prog->stack_b = generate_stack(0, 0, stacksize);
+	prog->stack_b = generate_stack(NULL, 0, stacksize);
 	if(!values || !(prog->stack_a) || !(prog->stack_b))
 		return (0);
 	free(values);
@@ -63,8 +67,8 @@ t_stack *generate_stack(int *values,size_t num, size_t stacksize)
 	if(!stack)
 		return (NULL);
 	i = 0;
-	stack->array = ft_calloc(stacksize,sizeof(int));
-	if(values)
+	stack->array = malloc(stacksize * sizeof(int));
+	if(values != 0 && num  != 0)
 	{
 		while(i < stacksize)
 		{
