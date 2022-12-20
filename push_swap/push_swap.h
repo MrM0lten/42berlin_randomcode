@@ -30,5 +30,6 @@ void stack_swap(t_stack *stack);
 void rot_stack(t_stack *stack);
 void rvrs_rot_stack(t_stack *stack);
 void push_stack(t_stack *from,t_stack *to);
+void run_sorting_algo(t_prog *prog);
 
 #endif

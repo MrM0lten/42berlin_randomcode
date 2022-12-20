@@ -1,4 +1,4 @@
-SRC = main.c debug_utils.c instructions.c
+SRC = main.c debug_utils.c instructions.c algorithm.c
 OBJS = ${SRC:.c=.o}
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -14,6 +14,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	${CC} $(SRC) -L. ${LIBFT} -o $(NAME)
+	@$(RM) $(OBJS)
 
 $(LIBFT):
 	@$(MAKE) -C ./libft 

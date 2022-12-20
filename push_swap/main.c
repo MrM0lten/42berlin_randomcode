@@ -16,19 +16,7 @@ int main(int ac, char**av)
 	prog = initprog(ac,av);
 	if(prog)
 	{
-
-		get_state(prog);
-
-		manage_instruction("sa",prog);
-		manage_instruction("pb",prog);
-		manage_instruction("pb",prog);
-		manage_instruction("pb",prog);
-		manage_instruction("sa",prog);
-		manage_instruction("pa",prog);		
-		manage_instruction("pa",prog);
-		manage_instruction("pa",prog);
-		get_state(prog);
-
+		run_sorting_algo(prog);
 	}
 	return (0);
 }
