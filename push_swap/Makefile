@@ -6,28 +6,26 @@ RM = rm -f
 AR = ar -rcs
 
 NAME = push_swap
-DIRLIB		= ./libft/
-NAMELFT		= libft.a
-LIBFT = $(DIRLIB)$(NAMELFT)
-
-$(NAME) :	$(OBJS) $(LIBFT)
-	${CC} $(SRC) -L. ${LIBFT} -o $(NAME)
-	
-
-$(LIBFT):
-	cd $(DIRLIB) && $(MAKE)
+LIBNAME = libft.a
+DIRLIB = ./libft/
+LIBFT = $(DIRLIB)$(LIBNAME)
 
 all: $(NAME)
 
+$(NAME): $(OBJS) $(LIBFT)
+	${CC} $(SRC) -L. ${LIBFT} -o $(NAME)
+
+$(LIBFT):
+	@$(MAKE) -C ./libft 
+
 clean:
-	@cd $(DIRLIB) && $(MAKE) clean
+	@$(MAKE) clean -C ./libft 
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@cd $(DIRLIB) && $(MAKE) fclean
-	@$(MAKE) fclean -C ./libft
+	@$(MAKE) fclean -C ./libft 
 	$(RM) $(NAME)
 
-re: fclean all
+re: fclean all re clean
 
 .PHONY: all clean fclean re $(NAME)

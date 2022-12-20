@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
+#include "../../includes/libft.h"
 
 static size_t	calc_arr_elem(char const *s, char delim)
 {

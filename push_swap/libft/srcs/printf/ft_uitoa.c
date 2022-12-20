@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_uitoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/04 14:36:53 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/05 09:34:39 by jisserst         ###   ########.fr       */
+/*   Created: 2022/12/10 22:05:02 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/10 22:05:28 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-static int	get_digits(int n)
+static int	get_digits(unsigned int n)
 {
 	int	i;
 
@@ -28,29 +28,20 @@ static int	get_digits(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_uitoa(unsigned int n)
 {
 	char	*ptr;
-	long	temp;
 	int		c;
 
-	temp = n;
 	c = get_digits(n);
-	if (n < 0)
-	{
-		temp *= -1;
-		c++;
-	}
 	ptr = (char *)malloc(c * sizeof(char) + 1);
 	if (!ptr)
 		return (0);
 	*(ptr + c) = '\0';
 	while (c--)
 	{
-		*(ptr + c) = temp % 10 + '0';
-		temp = temp / 10;
+		*(ptr + c) = n % 10 + '0';
+		n = n / 10;
 	}
-	if (n < 0)
-		*(ptr + 0) = '-';
 	return (ptr);
 }

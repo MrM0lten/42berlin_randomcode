@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 12:45:08 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/05 13:36:00 by jisserst         ###   ########.fr       */
+/*   Created: 2022/12/08 08:30:48 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/10 21:56:19 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
-{
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
-}
+# include "libft.h"
+# include <stdarg.h>
+
+int		ft_printf(const char *s, ...);
+int		ft_putchar(char c);
+int		ft_putstr(char *s);
+int		ft_putnbr(int n);
+int		ft_put_unsigned_nbr(unsigned int n);
+char	*ft_uitoa(unsigned int n);
+int		ft_put_hexnbr(unsigned int nbr, int flag_is_upper);
+int		ft_put_ptr(unsigned long long nbr);
+
+#endif

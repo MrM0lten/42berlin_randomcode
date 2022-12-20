@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 12:30:44 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/05 12:36:33 by jisserst         ###   ########.fr       */
+/*   Created: 2022/12/04 12:01:26 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/10 18:50:02 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
 #include <stdlib.h>
-#include "libft.h"
+#include "../../includes/libft.h"
 
-t_list	*ft_lstnew(void *content)
+// allocates nmemb elements of size size
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_list	*new;
+	void	*ptr;
+	size_t	total;
 
-	new = malloc(sizeof(t_list));
-	if (!new)
+	total = size * nmemb;
+	if (nmemb != 0 && size != 0 && total / nmemb != size)
 		return (0);
-	new->content = content;
-	new->next = 0;
-	return (new);
+	ptr = malloc(total);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, total);
+	return (ptr);
 }

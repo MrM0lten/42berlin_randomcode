@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_put_unsigned_nbr.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/04 17:26:54 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/05 09:08:12 by jisserst         ###   ########.fr       */
+/*   Created: 2022/12/10 22:04:09 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/10 22:04:32 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/ft_printf.h"
+#include <stdlib.h>
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_put_unsigned_nbr(unsigned int n)
 {
-	if (n == -2147483648)
+	char	*nbr_str;
+	int		i;
+
+	i = 0;
+	if (n == 0)
+		i += ft_putchar('0');
+	else
 	{
-		ft_putstr_fd("-2147483648", fd);
-		return ;
+		nbr_str = ft_uitoa(n);
+		ft_putstr(nbr_str);
+		i = ft_strlen(nbr_str);
+		free(nbr_str);
 	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
-	if (n / 10 > 0)
-		ft_putnbr_fd(n / 10, fd);
-	ft_putchar_fd('0' + n % 10, fd);
+	return (i);
 }

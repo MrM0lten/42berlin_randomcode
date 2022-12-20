@@ -1,30 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 12:44:35 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/05 14:56:59 by jisserst         ###   ########.fr       */
+/*   Created: 2022/12/04 14:36:53 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/05 09:34:39 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-int	ft_lstsize(t_list *lst)
+static int	get_digits(int n)
 {
-	int		i;
+	int	i;
 
-	if (!lst)
-		return (0);
 	i = 0;
-	while (lst->next != NULL)
+	if (n == 0)
+		return (1);
+	while (n)
 	{
+		n /= 10;
 		i++;
-		lst = lst->next;
 	}
-	if (lst->next == NULL)
-		i++;
 	return (i);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*ptr;
+	long	temp;
+	int		c;
+
+	temp = n;
+	c = get_digits(n);
+	if (n < 0)
+	{
+		temp *= -1;
+		c++;
+	}
+	ptr = (char *)malloc(c * sizeof(char) + 1);
+	if (!ptr)
+		return (0);
+	*(ptr + c) = '\0';
+	while (c--)
+	{
+		*(ptr + c) = temp % 10 + '0';
+		temp = temp / 10;
+	}
+	if (n < 0)
+		*(ptr + 0) = '-';
+	return (ptr);
 }
