@@ -1,15 +1,49 @@
 #include "push_swap.h"
 
 static int is_array_sorted(t_stack *stack_a);
+void rot_to_smallest(t_prog *prog);
 
 void run_sorting_algo(t_prog *prog)
 {
+	
+	get_state(prog);
+	//calculate the LIS
+	rot_to_smallest(prog);
+	get_state(prog);
 
-	while(!is_array_sorted(prog->stack_a))
+	//random might not be useful actually
+	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
+	
+}
+
+void rot_to_smallest(t_prog *prog)
+{
+	size_t i;
+	size_t pos;
+	int val;
+
+	i = 0;
+	pos = 0;
+	val = prog->stack_a->array[i];
+	while((size_t)i < prog->stack_a->max_size)
 	{
-		ft_printf("sort you idiot\n");
+		if(prog->stack_a->array[i] < val)
+		{
+			val = prog->stack_a->array[i];
+			pos = i;
+		}	
+		i++;
 	}
-	ft_printf("Array Sorted\n");
+	if((size_t)pos <= (prog->stack_a->max_size / 2))
+	{
+		while(pos-- != 0)
+			put_instruction("ra",prog);
+	}
+	else
+	{
+		while((size_t)pos++ < prog->stack_a->max_size)
+			put_instruction("rra",prog);
+	}
 }
 
 static int is_array_sorted(t_stack *stack_a)

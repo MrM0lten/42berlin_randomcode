@@ -25,7 +25,7 @@ void get_stack_info(t_stack *stack);
 void get_state(t_prog *prog);
 
 //instructions
-void manage_instruction(char *instruction, t_prog *prog);
+void put_instruction(char *instruction, t_prog *prog);
 void stack_swap(t_stack *stack);
 void rot_stack(t_stack *stack);
 void rvrs_rot_stack(t_stack *stack);

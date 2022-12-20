@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void manage_instruction(char *instruction, t_prog *prog)
+void put_instruction(char *instruction, t_prog *prog)
 {
 	if(!ft_strncmp(instruction,"sa",3))
 		stack_swap(prog->stack_a);
@@ -34,7 +34,9 @@ void manage_instruction(char *instruction, t_prog *prog)
 		rvrs_rot_stack(prog->stack_b);
 	}
 	else
-		ft_printf("you moron\n");
+		ft_printf("An Error occured, did you input the right command?\n");
+
+	ft_printf("%s\n",instruction);
 }
 
 void stack_swap(t_stack *stack)
