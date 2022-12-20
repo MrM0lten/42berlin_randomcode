@@ -1,45 +1,39 @@
 SRCDIRS = ./srcs/gnl/ ./srcs/printf ./srcs/stdlib
 INCLDIR = ./includes/  
 
-SRC =	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
-		ft_strlcat.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c \
-		ft_itoa.c ft_memcpy.c  ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c \
-		ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c ft_memcpy.c \
-		ft_memmove.c ft_putnbr_fd.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c \
-		ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
-		ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_striteri.c
+SRC = $(foreach D,$(SRCDIRS),$(wildcard $(D)/*.c))
 
 OBJS = ${SRC:.c=.o}
 HEADERS = libft.h ft_printf.h get_next_line.h
 
 LIB = libft.a
-PROG = prog.exe
 
 CC = cc
 AR = ar -rcs
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-all :
-#	+$(MAKE) -C ./srcs/gnl
-	+$(MAKE) -C ./srcs/printf
-	+$(MAKE) -C ./srcs/stdlib
+#color formatting for echo
+#https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+CCRED ="\033[0;31m"
+CCGREEN ="\033[0;32m"
+
+all : $(LIB)
 
 $(LIB) : $(OBJS)
-	$(AR) $(LIB) $(OBJS)
-
-main: $(LIB)
-	${CC} ${CFLAGS} -o $(PROG)
+	@$(AR) $(LIB) $(OBJS)
+	@echo $(CCGREEN)"created libft"
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean :
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS)
 
 fclean : clean
+	@echo $(CCRED)"removing all .o files"
 	$(RM) $(LIB)
 
 re : fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

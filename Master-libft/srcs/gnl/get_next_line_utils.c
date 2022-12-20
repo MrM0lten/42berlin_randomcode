@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "get_next_line.h"
+#include "../../includes/get_next_line.h"
 
 int	ft_strlen(char *s)
 {

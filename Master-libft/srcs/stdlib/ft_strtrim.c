@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
+#include "../../includes/libft.h"
 #include <stdio.h>
 
 static int	can_trim(char c, char const *set);

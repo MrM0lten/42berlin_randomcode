@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "get_next_line.h"
+#include "../../includes/get_next_line.h"
 
 char	*fill_buffer(int fd, char *buffer);
 char	*ft_realloc(char *s1, char *s2, size_t s2_len);
