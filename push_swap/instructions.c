@@ -36,6 +36,7 @@ void put_instruction(char *instruction, t_prog *prog)
 	else
 		ft_printf("An Error occured, did you input the right command?\n");
 
+	get_state(prog);
 	ft_printf("%s\n",instruction);
 }
 

@@ -19,7 +19,7 @@ void get_stack_info(t_stack *stack)
 void get_state(t_prog *prog)
 {
 	int i = 0;
-	ft_printf("------------------------------------------------\n");
+	
 	while((size_t)i < prog->stack_a->max_size)
 	{
 		ft_printf("%i %i\n", prog->stack_a->array[i],prog->stack_b->array[i]);
@@ -27,4 +27,15 @@ void get_state(t_prog *prog)
 	}
 	ft_printf("- -\n");
 	ft_printf("a b\n");
+	ft_printf("------------------------------------------------\n");
+}
+
+void print_arr(int *arr, int size)
+{
+	int i;
+
+	i = -1;
+	while(++i < size)
+		ft_printf("%i ",arr[i]);
+	ft_printf("\n");
 }

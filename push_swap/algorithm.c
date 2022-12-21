@@ -2,18 +2,138 @@
 
 static int is_array_sorted(t_stack *stack_a);
 void rot_to_smallest(t_prog *prog);
+t_stack *generate_LIS(t_prog *prog);
+void move_unsorted(t_prog *prog, t_stack *lis);
+int is_elem_sorted(int val, t_stack *lis);
 
 void run_sorting_algo(t_prog *prog)
 {
 	
 	get_state(prog);
-	//calculate the LIS
+	//rotating to smallest number for easy LIS Generation
 	rot_to_smallest(prog);
-	get_state(prog);
-
+	t_stack *temp = generate_LIS(prog);
+	print_arr(temp->array,temp->max_size);
+	move_unsorted(prog, temp);
+	get_stack_info(prog->stack_a);
+	get_stack_info(prog->stack_b);
+	print_arr(temp->array,temp->max_size);
 	//random might not be useful actually
 	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 	
+	
+}
+
+void move_unsorted(t_prog *prog, t_stack *lis)
+{
+	int push_amnt;
+	int top_item;
+
+	push_amnt = prog->stack_a->max_size - lis->max_size;
+	top_item = prog->stack_a->max_size - prog->stack_a->size;
+	while(push_amnt > 0)
+	{
+		ft_printf("stack a size = %i, top item = %i\n", (int)prog->stack_a->size,top_item);
+		if(!is_elem_sorted(prog->stack_a->array[top_item], lis))
+		{
+			put_instruction("pb",prog);
+			push_amnt--;
+			top_item++;
+		}
+		else
+			put_instruction("ra",prog); //might be worth calculating which rotation direction makes the most sense
+		
+	}
+
+}
+
+int is_elem_sorted(int val, t_stack *lis)
+{
+	size_t i;
+
+	i = 0;
+	ft_printf("checking for sorting\n");
+	while(i < lis->max_size)
+	{
+		ft_printf("comparing %i against %i\n",lis->array[i] ,(int)val);
+		if(lis->array[i] == val)
+		{
+			return (1);
+		}
+			
+		i++;
+	}
+	ft_printf("element not found\n");
+	return (0);
+}
+
+//finds the longest list of items that are already in order and returns the list of ordered numbers in an array
+t_stack *generate_LIS(t_prog *prog)
+{
+	int *lis;
+	t_stack *items;
+	size_t i;
+	size_t j;
+	int lis_max;
+
+	lis = malloc(sizeof(int) * prog->stack_a->max_size);
+	i = 0;
+	while(i < prog->stack_a->max_size)
+		lis[i++] = 1;
+
+	print_arr(lis,prog->stack_a->max_size);
+	//main loop //holy shit thats such a simple loop 
+	i = 1; 
+	while(i < prog->stack_a->max_size)
+	{
+		j = 0;
+		while(j < i)
+		{
+			if(prog->stack_a->array[i] > prog->stack_a->array[j] 
+			&& lis[i] <= lis[j])
+				lis[i] = 1 + lis[j];
+			j++;
+		}
+		i++;
+	}
+	print_arr(lis,prog->stack_a->max_size);
+	i = 0;
+	lis_max = 0; //loop will get the max lis
+	while(i < prog->stack_a->max_size)
+	{
+		if(lis_max < lis[i])
+			lis_max = lis[i];
+		i++;
+	}
+	
+	items = (t_stack *)malloc(sizeof(t_stack));
+	//items = generate_stack(,(size_t)lis_max,(size_t)lis_max);
+	ft_printf("lis max = %i\n",lis_max);
+	print_arr(lis,prog->stack_a->max_size);
+	items->array = (int *)malloc(sizeof(int) * lis_max);
+	items->max_size = (size_t)lis_max;
+	items->size = (size_t)lis_max;
+	//print_arr(items->array ,items->max_size);
+	i = prog->stack_a->max_size - 1;
+	while(lis_max != lis[i])
+		i--;
+	j = 0;
+	items->array[j++] = prog->stack_a->array[i];
+	//print_arr(items->array ,items->max_size);
+	while(i < 0 || lis_max != 0)
+	{
+		ft_printf("wtf\n");
+		if(lis[i] == lis_max - 1)
+		{
+			items->array[j] = prog->stack_a->array[i];
+			j++;
+			lis_max--;
+		}
+		i--;
+	}
+	print_arr(items->array ,items->max_size);
+	free(lis);
+	return (items);
 }
 
 void rot_to_smallest(t_prog *prog)

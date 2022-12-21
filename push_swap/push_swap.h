@@ -2,6 +2,7 @@
 # define PUSH_SWAP_H
 
 #include <stddef.h>
+#include <stdlib.h>
 #include "./libft/includes/libft.h"
 #include "./libft/includes/ft_printf.h"
 
@@ -23,6 +24,7 @@ typedef struct s_prog
 //debugging utils
 void get_stack_info(t_stack *stack);
 void get_state(t_prog *prog);
+void print_arr(int *arr, int size);
 
 //instructions
 void put_instruction(char *instruction, t_prog *prog);
@@ -31,5 +33,8 @@ void rot_stack(t_stack *stack);
 void rvrs_rot_stack(t_stack *stack);
 void push_stack(t_stack *from,t_stack *to);
 void run_sorting_algo(t_prog *prog);
+
+//random
+t_stack *generate_stack(int *values,size_t num, size_t stacksize);
 
 #endif

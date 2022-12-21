@@ -51,7 +51,7 @@ t_stack *generate_stack(int *values,size_t num, size_t stacksize)
 	t_stack *stack;
 	size_t i;
 
-	stack = malloc(sizeof(stack));
+	stack = (t_stack *)malloc(sizeof(t_stack));
 	if(!stack)
 		return (NULL);
 	i = 0;
