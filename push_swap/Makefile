@@ -1,4 +1,5 @@
-SRC = main.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c
+SRC = main.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c \
+	insert_algo.c
 OBJS = ${SRC:.c=.o}
 CC = cc
 CFLAGS = -Wall -Werror -Wextra

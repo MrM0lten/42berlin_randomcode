@@ -39,3 +39,15 @@ void print_arr(int *arr, int size)
 		ft_printf("%i ",arr[i]);
 	ft_printf("\n");
 }
+
+void print2D_arr(t_2Dpoint **arr)
+{
+	size_t i;
+	
+	i = 0;
+	while(arr[i])
+	{
+		ft_printf("Element[%i] = <%i,%i>\n",i,arr[i]->val_a,arr[i]->val_b);
+		i++;
+	}
+}

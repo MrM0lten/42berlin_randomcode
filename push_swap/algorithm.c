@@ -16,16 +16,17 @@ void run_sorting_algo(t_prog *prog)
 	t_stack *temp = generate_LIS(prog);
 	//print_arr(temp->array,temp->max_size);
 	move_unsorted(prog, temp);
+	free_stack(temp);
 
-
+	insert_algorithm(prog);
 	//get_stack_info(prog->stack_a);
 	//get_stack_info(prog->stack_b);
 	//print_arr(temp->array,temp->max_size);
 	
 	//random might not be useful actually
 
-	get_state(prog);
-	free_stack(temp);
+	//get_state(prog);
+	
 	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 }
 
