@@ -41,22 +41,8 @@ t_stack *generate_stack(int *values,size_t num, size_t stacksize)
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if(!stack)
 		return (NULL);
+	
 	stack->array = values;
-	/*
-	stack->array = malloc(stacksize * sizeof(int));
-	if(!stack->array)
-		return (NULL);
-	i = 0;
-	if(values && values != 0 && num  != 0)
-	{
-		while(i < stacksize)
-		{
-			stack->array[i] = values[i];
-			i++;
-		}
-			
-	}
-	*/
 	stack->max_size = stacksize;
 	stack->size = num;
 	return (stack);

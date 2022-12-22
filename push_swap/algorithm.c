@@ -84,6 +84,8 @@ t_stack *generate_LIS(t_prog *prog)
 	int lis_max;
 
 	lis = malloc(sizeof(int) * prog->stack_a->max_size);
+	if(!lis)
+		return (NULL);
 	i = 0;
 	while(i < prog->stack_a->max_size)
 		lis[i++] = 1;

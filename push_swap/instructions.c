@@ -59,12 +59,14 @@ void rot_stack(t_stack *stack)
 	i = stack->max_size - stack->size;
 	temp = stack->array[i];
 	//ft_printf("temp = %i, i = %i\n",temp,(int)i);
-	while(i < stack->max_size)
+	while(i < stack->max_size -1)
 	{
+		//ft_printf("assigning %i to %i = %i\n",stack->array[i + 1],stack->array[i]);
 		stack->array[i] = stack->array[i + 1];
 		i++;
 	}
-	stack->array[i - 1] = temp;
+	//ft_printf("assigning %i to %i\n",temp,stack->array[i - 1] );
+	stack->array[i] = temp;
 }
 
 void rvrs_rot_stack(t_stack *stack)
@@ -73,11 +75,13 @@ void rvrs_rot_stack(t_stack *stack)
 	size_t elems;
 	int temp;
 
-	i = stack->max_size;
+	i = stack->max_size - 1;
 	elems = stack->max_size - stack->size;
-	temp = stack->array[i - 1];
+	temp = stack->array[i];
+	//ft_printf("temp = %i, elems = %i, i = %i\n",temp,elems,i);
 	while(i > elems)
 	{
+		//ft_printf("assigning %i to %i\n", stack->array[i - 1],stack->array[i]);
 		stack->array[i] = stack->array[i - 1];
 		i--;
 	}
