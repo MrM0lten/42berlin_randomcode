@@ -58,6 +58,7 @@ void rot_stack(t_stack *stack)
 
 	i = stack->max_size - stack->size;
 	temp = stack->array[i];
+	//ft_printf("temp = %i, i = %i\n",temp,(int)i);
 	while(i < stack->max_size)
 	{
 		stack->array[i] = stack->array[i + 1];

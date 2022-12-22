@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "./libft/includes/libft.h"
 #include "./libft/includes/ft_printf.h"
 
@@ -34,7 +35,14 @@ void rvrs_rot_stack(t_stack *stack);
 void push_stack(t_stack *from,t_stack *to);
 void run_sorting_algo(t_prog *prog);
 
-//random
+//program & struct utils
 t_stack *generate_stack(int *values,size_t num, size_t stacksize);
+t_prog *initprog(int ac, char**av);
+void free_prog(t_prog *prog);
+void free_stack(t_stack *stack);
+
+//error Handling
+void error_handler(char *message);
+int err_arr_is_unique(int *arr, int len);
 
 #endif
