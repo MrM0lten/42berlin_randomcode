@@ -36,7 +36,7 @@ void put_instruction(char *instruction, t_prog *prog)
 	else
 		ft_printf("An Error occured, did you input the right command?\n");
 
-	get_state(prog);
+	//get_state(prog);
 	ft_printf("%s\n",instruction);
 }
 
@@ -45,6 +45,8 @@ void stack_swap(t_stack *stack)
 	size_t i;
 	int temp;
 
+	if(stack->size < 2)
+		return ;
 	i = stack->max_size - stack->size;
 	temp = stack->array[i];
 	stack->array[i] = stack->array[i + 1];
@@ -92,6 +94,8 @@ void push_stack(t_stack *from,t_stack *to)
 	size_t from_i;
 	size_t to_i;
 
+	if(from->size < 1)
+		return ;
 	from_i = from->max_size - from->size;
 	to_i = to->max_size - to->size;
 

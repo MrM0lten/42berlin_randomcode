@@ -16,7 +16,7 @@ int main(int ac, char**av)
 	
 	get_state(prog);
 	run_sorting_algo(prog);
-	//put_instruction("rra",prog);
+	
 	
 
 

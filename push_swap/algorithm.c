@@ -78,6 +78,7 @@ int elem_in_lis(int val, t_stack *lis)
 t_stack *generate_LIS(t_prog *prog)
 {
 	int *lis;
+	int *temparr;
 	t_stack *temp;
 	size_t i;	
 	size_t j;
@@ -89,7 +90,6 @@ t_stack *generate_LIS(t_prog *prog)
 	i = 0;
 	while(i < prog->stack_a->max_size)
 		lis[i++] = 1;
-
 	//main loop //holy shit thats such a simple loop 
 	i = 1; 
 	while(i < prog->stack_a->max_size)
@@ -113,24 +113,29 @@ t_stack *generate_LIS(t_prog *prog)
 			lis_max = lis[i];
 		i++;
 	}
-	
 	//generate temp stack with the alreay sorted values
-	temp = generate_stack(lis,(size_t)lis_max,(size_t)lis_max); 
+	temparr = ft_calloc(lis_max,sizeof(int));
+	temp = generate_stack(temparr,(size_t)lis_max,(size_t)lis_max); 
 	i = prog->stack_a->max_size - 1;
 	while(lis_max != lis[i])
 		i--;
 	j = 0;
+	//print_arr(temp->array,temp->max_size);
+	//ft_printf("i = %i,prog->stack_a->max_size %i\n",i,(int)prog->stack_a->max_size );
 	temp->array[j++] = prog->stack_a->array[i];
+
 	while(lis_max != 1)
 	{
 		if(lis[i] == lis_max - 1)
 		{
+			//printf("lis max = %i,j = %i \n",lis_max, (int)j);
 			temp->array[j] = prog->stack_a->array[i];
 			j++;
 			lis_max--;
 		}
 		i--;
 	}
+	free(lis);
 	//print_arr(temp->array ,temp->max_size);
 	return (temp);
 }
