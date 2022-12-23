@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 #include "./libft/includes/libft.h"
 #include "./libft/includes/ft_printf.h"
 
@@ -46,6 +47,7 @@ void push_stack(t_stack *from,t_stack *to);
 void run_sorting_algo(t_prog *prog);
 void insert_algorithm(t_prog *prog);
 int calc_smallest_rot(t_stack *stack, int elem);
+int find_pos_for_val(t_stack *stack, int elem_nbr);
 
 //program & struct utils
 t_stack *generate_stack(int *values,size_t num, size_t stacksize);

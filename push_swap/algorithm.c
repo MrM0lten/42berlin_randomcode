@@ -13,6 +13,8 @@ void run_sorting_algo(t_prog *prog)
 	get_state(prog);
 	//rotating to smallest number for easy LIS Generation
 	rot_to_smallest(prog);
+	get_state(prog);
+	
 	t_stack *temp = generate_LIS(prog);
 	//print_arr(temp->array,temp->max_size);
 	move_unsorted(prog, temp);
