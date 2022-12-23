@@ -2,37 +2,39 @@
 
 void insert_algorithm(t_prog *prog)
 {
-	ft_printf("-------------------------------------\n");
-	ft_printf("-------------------------------------\n");
-	get_state(prog);
+	//ft_printf("-------------------------------------\n");
+	//ft_printf("-------------------------------------\n");
+	//get_state(prog);
 	int elem;
 	size_t i;
 	t_2Dpoint **arr;
 
-	//while(prog->stack_b->size > 0)
-	//{
-
-	ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
-	arr = generate_points_arr(prog);
-	elem = prog->stack_b->max_size - prog->stack_b->size; // get top most element of stack b
-	//get element at B[i]
-
-	ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
-	i = 0;
-	while(arr[i] != NULL)
+	while(prog->stack_b->size > 0)
 	{
-		arr[i]->val_a = find_pos_for_val(prog->stack_a, prog->stack_b->array[elem]);
-		arr[i]->val_b = calc_smallest_rot(prog->stack_b, elem);
-		i++;
-		elem++;
+		//ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
+		arr = generate_points_arr(prog);
+		elem = prog->stack_b->max_size - prog->stack_b->size; // get top most element of stack b
+		//get element at B[i]
+
+		//ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
+		i = 0;
+		while(arr[i] != NULL)
+		{
+			arr[i]->val_a = find_pos_for_val(prog->stack_a, prog->stack_b->array[elem]);
+			arr[i]->val_b = calc_smallest_rot(prog->stack_b, elem);
+			i++;
+			elem++;
+		}
+		rot_and_move(prog,get_best_elem(arr));
+		//print2D_arr(arr);
+		free_points_arr(arr);
+		arr = 0;
+		//get_state(prog);
+		//ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
 	}
-	rot_and_move(prog,get_best_elem(arr));
-	//print2D_arr(arr);
-	free_points_arr(arr);
-	arr = 0;
-	get_state(prog);
-	ft_printf("prog->stack_b->size = %i\n",(int)prog->stack_b->size);
-	//}
+
+	//final rotation if they are not already in order
+	rot_to_smallest(prog,prog->stack_a);
 }
 
 t_2Dpoint *get_best_elem(t_2Dpoint **arr)
@@ -62,7 +64,7 @@ t_2Dpoint *get_best_elem(t_2Dpoint **arr)
 		}
 		i++;
 	}
-	print_arr(totals,arr_len);	
+	//print_arr(totals,arr_len);	
 	i = 0;
 	arr_pos = 0;
 	temp_val = totals[i];
@@ -73,18 +75,17 @@ t_2Dpoint *get_best_elem(t_2Dpoint **arr)
 			temp_val = totals[i];
 			arr_pos = i;
 		}
-			
 		i++;
 	}
 	free(totals);
-	printf("smallest = %i\n",arr_pos);
+	//printf("smallest = %i\n",arr_pos);
 	return(arr[arr_pos]);
 
 }
 
 void rot_and_move(t_prog *prog,t_2Dpoint *arr)
 {
-	ft_printf("\nbest elem = <%i,%i>\n\n",arr->val_a,arr->val_b);
+	//ft_printf("\nbest elem = <%i,%i>\n\n",arr->val_a,arr->val_b);
 
 	while((arr->val_a > 0 && arr->val_b > 0))
 	{
@@ -95,8 +96,8 @@ void rot_and_move(t_prog *prog,t_2Dpoint *arr)
 	while((arr->val_a < 0 && arr->val_b < 0))
 	{
 		put_instruction("rrr",prog);
-		arr->val_a--;
-		arr->val_b--;
+		arr->val_a++;
+		arr->val_b++;
 	}
 	while(arr->val_a != 0)
 	{
@@ -148,19 +149,19 @@ int find_pos_for_val(t_stack *stack, int elem_nbr)
 		}
 		top++;
 	}
-	ft_printf("elem_pos = %i,elem = %i, next_smallest = %i\n",elem_pos,elem_nbr,next_smallest);
+	//ft_printf("elem_pos = %i,elem = %i, next_smallest = %i\n",elem_pos,elem_nbr,next_smallest);
 	top = stack->max_size - stack->size;
 	mid = (top + stack->max_size)/ 2;
-	ft_printf("elem_pos = %i,top = %i, mid = %i\n",elem_pos,top,mid);
+	//ft_printf("elem_pos = %i,top = %i, mid = %i\n",elem_pos,top,mid);
 	if(elem_pos <= mid)
 	{
-		ft_printf("return %i - %i + 1 = %i\n",elem_pos,top,elem_pos - top  + 1);
+		//ft_printf("return %i - %i + 1 = %i\n",elem_pos,top,elem_pos - top  + 1);
 		return (elem_pos - top  + 1);
 	}
 	else
 	{
-		printf("------------------------------------\n");
-		printf("%i - %i = %i\n",elem_pos,(int)stack->max_size,elem_pos - (int)stack->max_size);
+		//printf("------------------------------------\n");
+		//printf("%i - %i = %i\n",elem_pos,(int)stack->max_size,elem_pos - (int)stack->max_size);
 		return (elem_pos - (stack->max_size -1));
 		return (0);
 	}
@@ -178,9 +179,9 @@ int calc_smallest_rot(t_stack *stack, int elem_pos)
 	top = stack->max_size - stack->size;
 	mid = (top + stack->max_size)/ 2;
 
-	ft_printf("top = %i\n",top);
-	ft_printf("mid = %i\n",mid);
-	ft_printf("elem_pos = %i\n",elem_pos);
+	//ft_printf("top = %i\n",top);
+	//ft_printf("mid = %i\n",mid);
+	//ft_printf("elem_pos = %i\n",elem_pos);
 	if(elem_pos <= mid)
 		return (elem_pos - top);
 	else

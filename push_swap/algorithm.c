@@ -1,8 +1,6 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-static int is_array_sorted(t_stack *stack_a);
-void rot_to_smallest(t_prog *prog);
 t_stack *generate_LIS(t_prog *prog);
 void move_unsorted(t_prog *prog, t_stack *lis);
 int elem_in_lis(int val, t_stack *lis);
@@ -12,24 +10,12 @@ void run_sorting_algo(t_prog *prog)
 	
 	get_state(prog);
 	//rotating to smallest number for easy LIS Generation
-	rot_to_smallest(prog);
-	get_state(prog);
-	
+	rot_to_smallest(prog,prog->stack_a);
+	//get_state(prog);
 	t_stack *temp = generate_LIS(prog);
-	//print_arr(temp->array,temp->max_size);
 	move_unsorted(prog, temp);
 	free_stack(temp);
-
 	insert_algorithm(prog);
-	//get_stack_info(prog->stack_a);
-	//get_stack_info(prog->stack_b);
-	//print_arr(temp->array,temp->max_size);
-	
-	//random might not be useful actually
-
-	//get_state(prog);
-	
-	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 }
 
 void move_unsorted(t_prog *prog, t_stack *lis)
@@ -143,7 +129,7 @@ t_stack *generate_LIS(t_prog *prog)
 	return (temp);
 }
 
-void rot_to_smallest(t_prog *prog)
+void rot_to_smallest(t_prog *prog,t_stack *stack)
 {
 	size_t i;
 	size_t pos;
@@ -151,39 +137,24 @@ void rot_to_smallest(t_prog *prog)
 
 	i = 0;
 	pos = 0;
-	val = prog->stack_a->array[i];
-	while((size_t)i < prog->stack_a->max_size)
+	val = stack->array[i];
+	while((size_t)i < stack->max_size)
 	{
-		if(prog->stack_a->array[i] < val)
+		if(stack->array[i] < val)
 		{
-			val = prog->stack_a->array[i];
+			val = stack->array[i];
 			pos = i;
 		}	
 		i++;
 	}
-	if((size_t)pos <= (prog->stack_a->max_size / 2))
+	if((size_t)pos <= (stack->max_size / 2))
 	{
 		while(pos-- != 0)
 			put_instruction("ra",prog);
 	}
 	else
 	{
-		while((size_t)pos++ < prog->stack_a->max_size)
+		while((size_t)pos++ < stack->max_size)
 			put_instruction("rra",prog);
 	}
-}
-
-static int is_array_sorted(t_stack *stack_a)
-{
-	size_t i;
-	if(stack_a->size != stack_a->max_size)
-		return (0);
-	i = 0;
-	while(i < stack_a->max_size - 1)
-	{
-		if(stack_a->array[i] > stack_a->array[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
 }
