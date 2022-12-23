@@ -1,10 +1,5 @@
 #include "push_swap.h"
 
-void error_handler(char *message)
-{
-	ft_printf("Programm Aborted, Reason: %s\n",message);
-}
-
 int err_arr_is_unique(int *arr,int len)
 {
 	int i;
@@ -18,10 +13,29 @@ int err_arr_is_unique(int *arr,int len)
 		{
 			if(arr[i] == arr[j])
 			{
-				error_handler("Array contains identical elements");
+				ft_printf("Error\n");
 				return (0);
 			}
 			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+int err_arr_is_all_num(char *str)
+{
+	int i;
+	char c;
+
+	i = 0;
+	while(str[i])
+	{
+		c = str[i];
+		if(str[i] != ' ' && str[i] != '-' && str[i] != '+' && !ft_isdigit(c))
+		{
+			ft_printf("%c\n",str[i]);
+			ft_printf("Error\n");
+			return (0);
 		}
 		i++;
 	}

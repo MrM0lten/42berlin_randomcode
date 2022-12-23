@@ -53,6 +53,8 @@ t_2Dpoint *get_best_elem(t_2Dpoint **arr);
 void rot_and_move(t_prog *prog,t_2Dpoint *arr);
 
 //program & struct utils
+size_t get_arg_count(int ac, char** av);
+int *fill_arr(size_t size, char* str);
 t_stack *generate_stack(int *values,size_t num, size_t stacksize);
 t_prog *initprog(int ac, char**av);
 void free_prog(t_prog *prog);
@@ -66,7 +68,7 @@ int largest_from_zero(int a, int b);
 int is_array_sorted(t_stack *stack_a);
 
 //error Handling
-void error_handler(char *message);
 int err_arr_is_unique(int *arr, int len);
+int err_arr_is_all_num(char *str);
 
 #endif

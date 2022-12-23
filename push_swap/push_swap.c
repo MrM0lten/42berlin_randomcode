@@ -8,9 +8,12 @@ int main(int ac, char**av)
 	t_prog *prog;
 
 	//do proper error handling
-	if(ac < 2)
+	if(ac != 2 || !err_arr_is_all_num(av[1]))
 		return 0;
+
+	//printf("%s\n",av[1]);
 	prog = initprog(ac,av);
+
 	if(!prog)
 		return (0);
 	
