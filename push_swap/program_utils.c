@@ -35,7 +35,7 @@ t_prog *initprog(int ac, char**av)
 t_stack *generate_stack(int *values,size_t num, size_t stacksize)
 {
 	t_stack *stack;
-	//size_t i;
+
 	if(!values)
 		return (NULL);
 	stack = (t_stack *)malloc(sizeof(t_stack));

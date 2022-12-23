@@ -8,7 +8,7 @@ int elem_in_lis(int val, t_stack *lis);
 void run_sorting_algo(t_prog *prog)
 {
 	
-	get_state(prog);
+	//get_state(prog);
 	//rotating to smallest number for easy LIS Generation
 	rot_to_smallest(prog,prog->stack_a);
 	//get_state(prog);

@@ -16,7 +16,7 @@ int main(int ac, char**av)
 	
 	//get_state(prog);
 	run_sorting_algo(prog);
-	get_state(prog);
+	//get_state(prog);
 	//ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 
 

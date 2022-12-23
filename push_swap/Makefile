@@ -1,4 +1,4 @@
-SRC = main.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c \
+SRC = push_swap.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c \
 	insert_algo.c general_utils.c
 OBJS = ${SRC:.c=.o}
 CC = cc
