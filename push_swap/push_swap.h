@@ -48,6 +48,8 @@ void run_sorting_algo(t_prog *prog);
 void insert_algorithm(t_prog *prog);
 int calc_smallest_rot(t_stack *stack, int elem);
 int find_pos_for_val(t_stack *stack, int elem_nbr);
+t_2Dpoint *get_best_elem(t_2Dpoint **arr);
+void rot_and_move(t_prog *prog,t_2Dpoint *arr);
 
 //program & struct utils
 t_stack *generate_stack(int *values,size_t num, size_t stacksize);
@@ -56,6 +58,10 @@ void free_prog(t_prog *prog);
 void free_stack(t_stack *stack);
 t_2Dpoint **generate_points_arr(t_prog *prog);
 void free_points_arr(t_2Dpoint **arr);
+
+//general utils
+size_t ft_abs(int i);
+int largest_from_zero(int a, int b);
 
 //error Handling
 void error_handler(char *message);
