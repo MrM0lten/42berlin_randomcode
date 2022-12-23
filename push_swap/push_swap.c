@@ -6,16 +6,29 @@
 int main(int ac, char**av)
 {
 	t_prog *prog;
+	size_t stacksize;
 
+	stacksize = get_arg_count(ac, av);
+	//printf("%zu",stacksize);
+	if(stacksize < 1)
+		return (0);
 	//do proper error handling
 	if(ac != 2 || !err_arr_is_all_num(av[1]))
+	{
+		//printf("err is al num issue\n");
+		write_error();
 		return 0;
+	}
+		
 
 	//printf("%s\n",av[1]);
 	prog = initprog(ac,av);
 
 	if(!prog)
-		return (0);
+	{
+		return 0;
+	}
+
 	
 	//get_state(prog);
 	run_sorting_algo(prog);

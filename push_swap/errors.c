@@ -5,6 +5,8 @@ int err_arr_is_unique(int *arr,int len)
 	int i;
 	int j;
 
+	if(len == 1)
+		return (1);
 	i = 0;
 	while (i < len)
 	{
@@ -13,7 +15,7 @@ int err_arr_is_unique(int *arr,int len)
 		{
 			if(arr[i] == arr[j])
 			{
-				ft_printf("Error\n");
+				//write_error();
 				return (0);
 			}
 			j++;
@@ -33,11 +35,24 @@ int err_arr_is_all_num(char *str)
 		c = str[i];
 		if(str[i] != ' ' && str[i] != '-' && str[i] != '+' && !ft_isdigit(c))
 		{
-			ft_printf("%c\n",str[i]);
-			ft_printf("Error\n");
+			//write_error();
 			return (0);
 		}
+		c = str[i + 1];
+		if(str[i] == '+' || str[i] == '-')
+		{
+			if(str[i + 1] == '-' || str[i + 1] == '+' || !ft_isdigit(c))
+			{
+				return (0);
+			}
+		}
+		
 		i++;
 	}
 	return (1);
+}
+
+void write_error()
+{
+	write(STDERR_FILENO, "Error\n", 6);
 }

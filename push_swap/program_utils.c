@@ -9,17 +9,24 @@ t_prog *initprog(int ac, char**av)
 	size_t i;
 
 	stacksize = get_arg_count(ac, av);
-	if (stacksize < 2)
-		return (NULL);
 	
 	prog = (t_prog *)malloc(sizeof(t_prog));
 	if(!prog)
 		return (NULL);
 	stack_a_vals = fill_arr(stacksize, av[1]);
-	//print_arr(stack_a_vals,stacksize);
+	//printf("killme\n");
+	//printf("%zu\n",stacksize);
+	//printf("%i\n",stack_a_vals[0]);
+	if(!stack_a_vals || !err_arr_is_unique(stack_a_vals, stacksize))
+	{
+		//print_arr(stack_a_vals,stacksize);
+		write(STDERR_FILENO, "Error\n", 6);
+		return (NULL);
+	}
+		 
+	
 	stack_b_vals = (int *)malloc(stacksize * sizeof(int));
-	if(!err_arr_is_unique(stack_a_vals, stacksize))
-		 return (NULL);
+
 	i = 0;
 	while(i < stacksize)
 	{
@@ -55,6 +62,7 @@ size_t get_arg_count(int ac, char** av)
 			word_flag = 0;
 		i++;
 	}
+	//printf("%zu\n",arg_count);
 	return (arg_count);
 }
 
@@ -63,20 +71,26 @@ int *fill_arr(size_t size, char* str)
 	int *arr;
 	int i;
 	size_t cnt;
-
-	if(size < 2)
-		return (NULL);
+	long int temp;
 
 	arr = (int *)malloc(size * sizeof(int));
 	if(!arr)
 		return (NULL);
 	i = 0;
-	cnt = 0; 
+	cnt = 0;
+	//printf("sadasd\n");
 	while(cnt < size)
 	{
 		while(str[i] == ' ')
 			i++;
-		arr[cnt] = ft_atoi(&str[i]);
+		temp = special_atoi(&str[i]);
+		if((temp < 0  && temp < INT_MIN) || (temp >= 0  && temp > INT_MAX)) // check if number is bigger than min and max int
+		{
+			//printf("help val = %zu\n",special_atoi(&str[i]));
+			free(arr);
+			return (NULL);
+		}
+		arr[cnt] = (int)temp;
 		//printf("arr[cnt] = %i\n",arr[cnt]);
 		cnt++;
 		while(str[i] != ' ')
@@ -85,6 +99,34 @@ int *fill_arr(size_t size, char* str)
 	}
 	//ft_printf("%i\n",cnt);
 	return (arr);
+}
+
+long int	special_atoi(const char *str)
+{
+	long int	total;
+	int	flag;
+	int	found;
+
+	total = 0;
+	flag = 1;
+	found = 1;
+	while (*str == ' ' || *str == '\t' || *str == '\n'
+		|| *str == '\f' || *str == '\r' || *str == '\v')
+		str++;
+	if (*str == '-')
+		flag = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str && found)
+	{
+		if (*str >= '0' && *str <= '9')
+			total = total * 10 + *str - '0';
+		else
+			found = 0;
+		str++;
+	}
+
+	return (flag * total);
 }
 
 t_stack *generate_stack(int *values,size_t num, size_t stacksize)

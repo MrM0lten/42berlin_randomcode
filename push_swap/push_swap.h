@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
+#include <unistd.h>
 #include "./libft/includes/libft.h"
 #include "./libft/includes/ft_printf.h"
 
@@ -62,12 +63,16 @@ void free_stack(t_stack *stack);
 t_2Dpoint **generate_points_arr(t_prog *prog);
 void free_points_arr(t_2Dpoint **arr);
 
+//annoying
+long int	special_atoi(const char *str);
+
 //general utils
 size_t ft_abs(int i);
 int largest_from_zero(int a, int b);
 int is_array_sorted(t_stack *stack_a);
 
 //error Handling
+void write_error();
 int err_arr_is_unique(int *arr, int len);
 int err_arr_is_all_num(char *str);
 
