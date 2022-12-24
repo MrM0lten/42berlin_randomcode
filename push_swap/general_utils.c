@@ -40,6 +40,24 @@ int is_array_sorted(t_stack *stack_a)
 	return (1);
 }
 
+int nextbiggest(int val,t_stack *stack)
+{
+	size_t i;
+	int next;
+
+	i = stack->max_size - stack->size;
+	next = get_biggest_arr_elem(stack);
+	//printf("next = %i\n", next);
+	while(i < stack->max_size)
+	{
+		if(stack->array[i] >= val && stack->array[i] < next)
+			next = stack->array[i];
+		i++;
+	}
+	//printf("next = %i\n", next);
+	return (next);
+}
+
 int arr_sorted_needs_rot(t_stack *stack_a)
 {
 	size_t i;
@@ -69,8 +87,8 @@ int arr_sorted_needs_rot(t_stack *stack_a)
 			i++;
 			continue;
 		}
-			
-		if(stack_a->array[i] > stack_a->array[i + 1])
+		//printf("i+1 =%i,next biggest = %i",stack_a->array[i + 1] , nextbiggest(stack_a->array[i],stack_a));
+		if(stack_a->array[i] > stack_a->array[i + 1] || stack_a->array[i + 1] != nextbiggest(stack_a->array[i],stack_a))
 			return (0);
 		i++;
 	}
@@ -94,7 +112,7 @@ int get_biggest_arr_elem(t_stack *stack)
 	int val;
 	size_t i;
 
-	i = stack->size;
+	i = stack->max_size - stack->size;
 	val = stack->array[i];
 	while(i < stack->max_size)
 	{
@@ -109,7 +127,7 @@ int get_arr_elem_pos(t_stack *stack,int val)
 {
 	size_t i;
 
-	i = stack->size;
+	i = stack->max_size - stack->size;
 	while(i < stack->max_size)
 	{
 		if(stack->array[i] == val)

@@ -13,6 +13,7 @@ void run_sorting_algo(t_prog *prog)
 	
 	if(arr_sorted_needs_rot(prog->stack_a))
 	{
+		ft_printf("wtf\n");
 		rot_to_smallest(prog,prog->stack_a);
 		return ;
 	}
@@ -33,7 +34,6 @@ void run_sorting_algo(t_prog *prog)
 		put_instruction("sa",prog);
 		temp = generate_LIS(prog);
 	}
-	//ft_printf("LIS = ");
 	//printf("LIS = %zu",temp->max_size);
 	//print_arr(temp->array,temp->max_size);
 	

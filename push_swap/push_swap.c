@@ -4,7 +4,7 @@
 #include "push_swap.h"
 
 
-/* int main(int ac, char**av)
+/*  int main(int ac, char**av)
 {
 	t_prog *prog;
 	size_t stacksize;
@@ -33,15 +33,15 @@
 	}
 
 	
-	//get_state(prog);
+	get_state(prog);
 	run_sorting_algo(prog);
-	//get_state(prog);
-	//ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
+	get_state(prog);
+	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 
 
 	free_prog(prog);
 	return (0);
-} */
+}  */
 
 
 #include <stdlib.h>

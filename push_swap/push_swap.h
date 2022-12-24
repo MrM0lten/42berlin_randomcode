@@ -65,6 +65,7 @@ void free_points_arr(t_2Dpoint **arr);
 
 //annoying
 long int	special_atoi(const char *str);
+int nextbiggest(int val,t_stack *stack);
 
 //general utils
 size_t ft_abs(int i);
