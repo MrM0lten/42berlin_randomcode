@@ -33,10 +33,10 @@
 	}
 
 	
-	get_state(prog);
+	//get_state(prog);
 	run_sorting_algo(prog);
-	get_state(prog);
-	ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
+	//get_state(prog);
+	//ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 
 
 	free_prog(prog);
@@ -45,6 +45,7 @@
 
 
 #include <stdlib.h>
+#include <time.h>
 
 int val_in_array(int *arr_a, int elems, int val)
 {
@@ -71,11 +72,11 @@ int *fill_arr_randomly(int *arr_a, int elems)
 	arr = (int *)malloc(sizeof(int) * elems);
 	while(i < elems)
 	{
-
-		rnd_val = random() / 1000000;
+		srand(time(NULL));
+		rnd_val = rand() / 1000000;
 		while(val_in_array(arr, elems, rnd_val))
 		{
-			rnd_val = random() / 1000000;
+			rnd_val = rand() / 1000000;
 		}
 		arr[i] = rnd_val;
 		arr_a[i] = rnd_val;
@@ -113,8 +114,8 @@ int main(int ac, char **av)
 		iterations--;
 		if(is_array_sorted(prog->stack_a))
 		{
-			//print_arr(arr_a,elems);
-			//print_arr(prog->stack_a->array,elems);
+			print_arr(arr_a,elems);
+			print_arr(prog->stack_a->array,elems);
 			ft_printf("SUCCESS = Array is sorted properly\n");
 		}
 		else
@@ -127,6 +128,10 @@ int main(int ac, char **av)
 		//print_arr(prog->stack_a->array,elems);
 		//get_state(prog);
 		free_prog(prog);
+		free(arr_a);
+		//free(arr_b);
+		arr_a = 0;
+		arr_b = 0;
 
 	}
 	return (0);
