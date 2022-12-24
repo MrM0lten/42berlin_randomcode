@@ -70,6 +70,7 @@ long int	special_atoi(const char *str);
 size_t ft_abs(int i);
 int largest_from_zero(int a, int b);
 int is_array_sorted(t_stack *stack_a);
+int arr_sorted_needs_rot(t_stack *stack_a);
 
 //error Handling
 void write_error();

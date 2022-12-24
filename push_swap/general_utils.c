@@ -39,3 +39,40 @@ int is_array_sorted(t_stack *stack_a)
 	}
 	return (1);
 }
+
+int arr_sorted_needs_rot(t_stack *stack_a)
+{
+	size_t i;
+	int biggest;
+	int smallest;
+
+	if(stack_a->size != stack_a->max_size)
+		return (0);
+	i = 0;
+	biggest = stack_a->array[i];
+	smallest = stack_a->array[i];
+	//ft_printf("smallest = %i, biggest = %i\n",smallest,biggest);
+	while(i < stack_a->max_size)
+	{
+		if(stack_a->array[i] <= smallest)
+			smallest = stack_a->array[i];
+		if(stack_a->array[i] >= biggest)
+			biggest = stack_a->array[i];
+		i++;
+	}
+	//ft_printf("smallest = %i, biggest = %i\n",smallest,biggest);
+	i = 0;
+	while(i < stack_a->max_size - 1)
+	{
+		if(stack_a->array[i] == biggest && stack_a->array[i + 1] == smallest)
+		{
+			i++;
+			continue;
+		}
+			
+		if(stack_a->array[i] > stack_a->array[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}

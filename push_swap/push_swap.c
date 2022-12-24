@@ -8,6 +8,8 @@ int main(int ac, char**av)
 	t_prog *prog;
 	size_t stacksize;
 
+
+	//printf("%s\n",av[1]);
 	stacksize = get_arg_count(ac, av);
 	//printf("%zu",stacksize);
 	if(stacksize < 1)
@@ -21,7 +23,7 @@ int main(int ac, char**av)
 	}
 		
 
-	//printf("%s\n",av[1]);
+	
 	prog = initprog(ac,av);
 
 	if(!prog)

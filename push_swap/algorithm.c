@@ -7,12 +7,26 @@ int elem_in_lis(int val, t_stack *lis);
 
 void run_sorting_algo(t_prog *prog)
 {
+
+	if(is_array_sorted(prog->stack_a))
+		return ;
 	
-	//get_state(prog);
-	//rotating to smallest number for easy LIS Generation
-	rot_to_smallest(prog,prog->stack_a);
-	//get_state(prog);
+	if(arr_sorted_needs_rot(prog->stack_a))
+	{
+		rot_to_smallest(prog,prog->stack_a);
+		return ;
+	}
+	if(prog->stack_a->max_size == 3) //bit hacky but i guess it works
+	{
+		put_instruction("sa",prog);
+		rot_to_smallest(prog,prog->stack_a);
+		return ;
+	}
+	//rot_to_smallest(prog,prog->stack_a);
+
+
 	t_stack *temp = generate_LIS(prog);
+	//print_arr(temp->array,temp->max_size);
 	move_unsorted(prog, temp);
 	free_stack(temp);
 	insert_algorithm(prog);
@@ -22,6 +36,18 @@ void move_unsorted(t_prog *prog, t_stack *lis)
 {
 	int push_amnt;
 	int top_item;
+
+	//print_arr(lis->array,lis->max_size);
+	//ft_printf("lis max size = %i\n",(int)lis->max_size);
+	// edge case when stack is completly reverse
+	if(lis->max_size < 2)
+	{
+		while(prog->stack_a->size > 2)
+		{
+			put_instruction("pb",prog);
+		}
+		return ;
+	}
 
 	push_amnt = prog->stack_a->max_size - lis->max_size;
 	top_item = prog->stack_a->max_size - prog->stack_a->size;
@@ -109,10 +135,14 @@ t_stack *generate_LIS(t_prog *prog)
 	while(lis_max != lis[i])
 		i--;
 	j = 0;
+
+	//temp->max_size = lis_max;
+	//temp->size = lis_max;
+
 	//print_arr(temp->array,temp->max_size);
 	//ft_printf("i = %i,prog->stack_a->max_size %i\n",i,(int)prog->stack_a->max_size );
 	temp->array[j++] = prog->stack_a->array[i];
-
+	
 	while(lis_max != 1)
 	{
 		if(lis[i] == lis_max - 1)
