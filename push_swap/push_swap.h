@@ -71,6 +71,9 @@ size_t ft_abs(int i);
 int largest_from_zero(int a, int b);
 int is_array_sorted(t_stack *stack_a);
 int arr_sorted_needs_rot(t_stack *stack_a);
+int smaller_elem_exists(t_stack *stack,int cmp_val);
+int get_biggest_arr_elem(t_stack *stack);
+int get_arr_elem_pos(t_stack *stack,int next_smallest);
 
 //error Handling
 void write_error();

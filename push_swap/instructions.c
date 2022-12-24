@@ -37,7 +37,9 @@ void put_instruction(char *instruction, t_prog *prog)
 		ft_printf("An Error occured, did you input the right command?\n");
 
 	//get_state(prog);
-	ft_printf("%s\n",instruction);
+
+	//TURN BACK ON LATER
+	//ft_printf("%s\n",instruction);
 }
 
 void stack_swap(t_stack *stack)

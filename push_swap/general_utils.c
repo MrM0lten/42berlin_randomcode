@@ -76,3 +76,45 @@ int arr_sorted_needs_rot(t_stack *stack_a)
 	}
 	return (1);
 }
+int smaller_elem_exists(t_stack *stack,int cmp_val)
+{
+	size_t i;
+
+	i = stack->max_size - stack->size;
+	while(i < stack->max_size)
+	{
+		if(stack->array[i] < cmp_val)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+int get_biggest_arr_elem(t_stack *stack)
+{
+	int val;
+	size_t i;
+
+	i = stack->size;
+	val = stack->array[i];
+	while(i < stack->max_size)
+	{
+		if(stack->array[i] > val)
+			val = stack->array[i];
+		i++;
+	}
+
+	return (val);
+}
+int get_arr_elem_pos(t_stack *stack,int val)
+{
+	size_t i;
+
+	i = stack->size;
+	while(i < stack->max_size)
+	{
+		if(stack->array[i] == val)
+			return ((int)i);
+		i++;
+	}
+	return (-1);
+}

@@ -26,7 +26,17 @@ void run_sorting_algo(t_prog *prog)
 
 
 	t_stack *temp = generate_LIS(prog);
+	//printf(" lis size = %zu\n",temp->size);
+	if(temp->size == 2 && prog->stack_a->array[0] >prog->stack_a->array[1]) //special case rotating once and regenerating lis will save lots of instructions
+	{
+		free_stack(temp);
+		put_instruction("sa",prog);
+		temp = generate_LIS(prog);
+	}
+	//ft_printf("LIS = ");
+	//printf("LIS = %zu",temp->max_size);
 	//print_arr(temp->array,temp->max_size);
+	
 	move_unsorted(prog, temp);
 	free_stack(temp);
 	insert_algorithm(prog);
@@ -136,8 +146,8 @@ t_stack *generate_LIS(t_prog *prog)
 		i--;
 	j = 0;
 
-	//temp->max_size = lis_max;
-	//temp->size = lis_max;
+	temp->max_size = lis_max;
+	temp->size = lis_max;
 
 	//print_arr(temp->array,temp->max_size);
 	//ft_printf("i = %i,prog->stack_a->max_size %i\n",i,(int)prog->stack_a->max_size );

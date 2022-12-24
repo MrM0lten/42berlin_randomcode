@@ -25,8 +25,9 @@ void insert_algorithm(t_prog *prog)
 			i++;
 			elem++;
 		}
-		rot_and_move(prog,get_best_elem(arr));
 		//print2D_arr(arr);
+		rot_and_move(prog,get_best_elem(arr));
+		
 		free_points_arr(arr);
 		arr = 0;
 		//get_state(prog);
@@ -149,6 +150,15 @@ int find_pos_for_val(t_stack *stack, int elem_nbr)
 		}
 		top++;
 	}
+	if(!smaller_elem_exists(stack,elem_nbr))
+	{
+		//ft_printf("ENTERED WIERD IF STATEMENT\n");
+		//ft_printf("looking at %i ,next_smallest = %i ,elem_pos = %i\n",elem_nbr,next_smallest,elem_pos);
+		next_smallest = get_biggest_arr_elem(stack);
+		elem_pos = get_arr_elem_pos(stack, next_smallest);
+		//ft_printf("looking at %i ,next_smallest = %i ,elem_pos = %i\n",elem_nbr,next_smallest,elem_pos);
+		
+	}
 	//ft_printf("elem_pos = %i,elem = %i, next_smallest = %i\n",elem_pos,elem_nbr,next_smallest);
 	top = stack->max_size - stack->size;
 	mid = (top + stack->max_size)/ 2;
@@ -163,9 +173,9 @@ int find_pos_for_val(t_stack *stack, int elem_nbr)
 		//printf("------------------------------------\n");
 		//printf("%i - %i = %i\n",elem_pos,(int)stack->max_size,elem_pos - (int)stack->max_size);
 		return (elem_pos - (stack->max_size -1));
-		return (0);
+		
 	}
-
+	
 
 	
 }
