@@ -7,7 +7,7 @@ int elem_in_lis(int val, t_stack *lis);
 
 void run_sorting_algo(t_prog *prog)
 {
-
+	t_stack *temp;
 	if(is_array_sorted(prog->stack_a))
 		return ;
 	
@@ -28,17 +28,13 @@ void run_sorting_algo(t_prog *prog)
 		brute_force(prog);
 		return ;
 	}
-	t_stack *temp = generate_LIS(prog);
-	//printf(" lis size = %zu\n",temp->size);
-	if(temp->size == 2 && prog->stack_a->array[0] >prog->stack_a->array[1]) //special case rotating once and regenerating lis will save lots of instructions
+	temp = generate_LIS(prog);
+	if(temp->size == 2 && prog->stack_a->array[0] >prog->stack_a->array[1])
 	{
 		free_stack(temp);
 		put_instruction("sa",prog);
 		temp = generate_LIS(prog);
 	}
-	//printf("LIS = %zu",temp->max_size);
-	//print_arr(temp->array,temp->max_size);
-	
 	move_unsorted(prog, temp);
 	free_stack(temp);
 	insert_algorithm(prog);
@@ -48,11 +44,8 @@ void brute_force(t_prog *prog)
 {
 	put_instruction("pb",prog);
 	put_instruction("pb",prog);
-
 	if(!arr_sorted_needs_rot(prog->stack_a))
-	{
 		put_instruction("sa",prog);
-	}
 	insert_algorithm(prog);
 }
 
@@ -61,25 +54,17 @@ void move_unsorted(t_prog *prog, t_stack *lis)
 	int push_amnt;
 	int top_item;
 
-	//print_arr(lis->array,lis->max_size);
-	//ft_printf("lis max size = %i\n",(int)lis->max_size);
-	// edge case when stack is completly reverse
+
 	if(lis->max_size < 2)
 	{
 		while(prog->stack_a->size > 2)
-		{
 			put_instruction("pb",prog);
-		}
 		return ;
 	}
-
 	push_amnt = prog->stack_a->max_size - lis->max_size;
 	top_item = prog->stack_a->max_size - prog->stack_a->size;
-	//ft_printf("push amt = %i, top item = %i\n",push_amnt,top_item);
-	
 	while(push_amnt > 0)
 	{
-		//ft_printf("stack a size = %i, top item = %i\n", (int)prog->stack_a->size,top_item);
 		if(!elem_in_lis(prog->stack_a->array[top_item], lis))
 		{
 			put_instruction("pb",prog);
@@ -87,10 +72,8 @@ void move_unsorted(t_prog *prog, t_stack *lis)
 			top_item++;
 		}
 		else
-			put_instruction("ra",prog); //might be worth calculating which rotation direction makes the most sense
-		
+			put_instruction("ra",prog);
 	}
-	
 }
 
 int elem_in_lis(int val, t_stack *lis)
@@ -98,18 +81,12 @@ int elem_in_lis(int val, t_stack *lis)
 	size_t i;
 
 	i = 0;
-	//ft_printf("checking for sorting\n");
 	while(i < lis->max_size)
 	{
-		//ft_printf("comparing %i against %i\n",lis->array[i] ,(int)val);
 		if(lis->array[i] == val)
-		{
-			return (1);
-		}
-			
+			return (1);	
 		i++;
 	}
-	//ft_printf("element not found\n");
 	return (0);
 }
 
@@ -129,7 +106,6 @@ t_stack *generate_LIS(t_prog *prog)
 	i = 0;
 	while(i < prog->stack_a->max_size)
 		lis[i++] = 1;
-	//main loop //holy shit thats such a simple loop 
 	i = 1; 
 	while(i < prog->stack_a->max_size)
 	{

@@ -3,14 +3,12 @@
 #include "./libft/includes/get_next_line.h"
 #include "push_swap.h"
 
-void readline(t_prog *prog);
+static void readline(t_prog *prog);
 
 int main(int ac, char**av)
 {
 	t_prog *prog;
 	size_t stacksize;
-	char * str;
-	int i;
 
 	if(ac <= 1)
 		return (0);
@@ -31,6 +29,9 @@ int main(int ac, char**av)
 } 
 static void readline(t_prog *prog)
 {
+	char * str;
+	int i;
+
 	prog->sim_flag = 1;
 	str = get_next_line(0);
 	while(str != NULL)

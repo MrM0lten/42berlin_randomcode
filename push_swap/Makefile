@@ -33,10 +33,12 @@ bonus: $(OBJS) $(LIBFT)
 clean:
 	@$(MAKE) clean -C ./libft 
 	@$(RM) $(OBJS)
+	@$(RM) $(OBJSBONUS)
 
 fclean: clean
 	@$(MAKE) fclean -C ./libft 
 	$(RM) $(NAME)
+	$(RM) $(BONNAME)
 
 re: fclean all re clean
 
