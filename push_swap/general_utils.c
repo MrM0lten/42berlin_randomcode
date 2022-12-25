@@ -50,3 +50,17 @@ int	is_array_sorted(t_stack *stack_a)
 	}
 	return (1);
 }
+
+int	calc_smallest_rot(t_stack *stack, int elem_pos)
+{
+	int	top;
+	int	mid;
+
+	top = stack->max_size - stack->size;
+	mid = (top + stack->max_size) / 2;
+	if (elem_pos <= mid)
+		return (elem_pos - top);
+	else
+		return ((elem_pos - stack->max_size));
+}
+

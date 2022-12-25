@@ -6,11 +6,14 @@
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:14:34 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/25 19:20:47 by jisserst         ###   ########.fr       */
+/*   Updated: 2022/12/25 20:17:50 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	rot_helper1(t_prog *prog, t_2dpoint *arr);
+static void	rot_helper2(t_prog *prog, t_2dpoint *arr);
 
 void	insert_algorithm(t_prog *prog)
 {
@@ -25,7 +28,8 @@ void	insert_algorithm(t_prog *prog)
 		i = 0;
 		while (arr[i] != NULL)
 		{
-			arr[i]->val_a = find_pos_for_val(prog->stack_a, prog->stack_b->array[elem]);
+			arr[i]->val_a = find_pos_for_val(prog->stack_a,
+					prog->stack_b->array[elem]);
 			arr[i]->val_b = calc_smallest_rot(prog->stack_b, elem);
 			i++;
 			elem++;
@@ -51,6 +55,13 @@ void	rot_and_move(t_prog *prog, t_2dpoint *arr)
 		arr->val_a++;
 		arr->val_b++;
 	}
+	rot_helper1(prog, arr);
+	rot_helper2(prog, arr);
+	put_instruction("pa", prog);
+}
+
+static void	rot_helper1(t_prog *prog, t_2dpoint *arr)
+{
 	while (arr->val_a != 0)
 	{
 		if (arr->val_a > 0)
@@ -64,6 +75,10 @@ void	rot_and_move(t_prog *prog, t_2dpoint *arr)
 			arr->val_a++;
 		}
 	}
+}
+
+static void	rot_helper2(t_prog *prog, t_2dpoint *arr)
+{
 	while (arr->val_b != 0)
 	{
 		if (arr->val_b > 0)
@@ -77,7 +92,6 @@ void	rot_and_move(t_prog *prog, t_2dpoint *arr)
 			arr->val_b++;
 		}
 	}
-	put_instruction("pa", prog);
 }
 
 int	find_pos_for_val(t_stack *stack, int elem_nbr)
@@ -99,27 +113,11 @@ int	find_pos_for_val(t_stack *stack, int elem_nbr)
 		top++;
 	}
 	if (!smaller_elem_exists(stack, elem_nbr))
-	{
-		next_smallest = get_biggest_arr_elem(stack);
-		elem_pos = get_arr_elem_pos(stack, next_smallest);
-	}
+		elem_pos = get_arr_elem_pos(stack, get_biggest_arr_elem(stack));
 	top = stack->max_size - stack->size;
 	mid = (top + stack->max_size) / 2;
 	if (elem_pos <= mid)
 		return (elem_pos - top + 1);
 	else
 		return (elem_pos - (stack->max_size -1));
-}
-
-int	calc_smallest_rot(t_stack *stack, int elem_pos)
-{
-	int	top;
-	int	mid;
-
-	top = stack->max_size - stack->size;
-	mid = (top + stack->max_size) / 2;
-	if (elem_pos <= mid)
-		return (elem_pos - top);
-	else
-		return ((elem_pos - stack->max_size));
 }
