@@ -26,6 +26,7 @@ int		ft_strlen1(char *s);
 int		ft_strchr1(char *str, char c);
 char	*ft_strjoin1(char *s1, char *s2, size_t s2_len);
 void	ft_bzero1(void *s, size_t n);
-void	*ft_calloc1(size_t nmemb, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*trim_buffer(char *buffer);
 
 #endif

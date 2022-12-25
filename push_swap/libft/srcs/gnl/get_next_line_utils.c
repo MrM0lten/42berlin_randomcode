@@ -51,7 +51,7 @@ char	*ft_strjoin1(char *s1, char *s2, size_t s2_len)
 		return (0);
 	s1_len = ft_strlen1(s1);
 	len = s1_len + s2_len;
-	ptr = ft_calloc1((len + 1), sizeof(char));
+	ptr = ft_calloc((len + 1), sizeof(char));
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -83,17 +83,30 @@ void	ft_bzero1(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc1(size_t nmemb, size_t size)
+char	*trim_buffer(char *buffer)
 {
-	void	*ptr;
-	size_t	total;
+	char	*temp;
+	int		i;
+	int		j;
+	int		len;
 
-	total = size * nmemb;
-	if (nmemb != 0 && size != 0 && total / nmemb != size)
-		return (0);
-	ptr = malloc(total);
-	if (!ptr)
-		return (0);
-	ft_bzero1(ptr, total);
-	return (ptr);
+	i = 0;
+	len = ft_strlen1(buffer);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (!buffer[i])
+	{
+		free(buffer);
+		return (NULL);
+	}
+	temp = ft_calloc(len - i + 1, sizeof(char));
+	if (!temp)
+		return (NULL);
+	j = 0;
+	i++;
+	while (buffer[i])
+		temp[j++] = buffer[i++];
+	free(buffer);
+	buffer = 0;
+	return (temp);
 }
