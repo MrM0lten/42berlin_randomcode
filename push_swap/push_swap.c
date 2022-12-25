@@ -56,10 +56,10 @@ int *fill_arr_randomly(int *arr_a, int elems)
 	while(i < elems)
 	{
 		srand(time(NULL));
-		rnd_val = rand() / 1000000;
+		rnd_val = rand() / 1000;
 		while(val_in_array(arr, elems, rnd_val))
 		{
-			rnd_val = rand() / 1000000;
+			rnd_val = rand() / 1000;
 		}
 		arr[i] = rnd_val;
 		arr_a[i] = rnd_val;

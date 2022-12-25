@@ -55,6 +55,7 @@ int find_pos_for_val(t_stack *stack, int elem_nbr);
 t_2Dpoint *get_best_elem(t_2Dpoint **arr);
 void rot_and_move(t_prog *prog,t_2Dpoint *arr);
 void brute_force(t_prog *prog);
+void	move_unsorted(t_prog *prog, t_stack *lis);
 
 //program & struct utils
 size_t get_arg_count(int ac, char** av);
@@ -65,6 +66,12 @@ void free_prog(t_prog *prog);
 void free_stack(t_stack *stack);
 t_2Dpoint **generate_points_arr(t_prog *prog);
 void free_points_arr(t_2Dpoint **arr);
+
+//lis utils
+int		elem_in_lis(int val, t_stack *lis);
+t_stack	*fill_lis_stack(t_prog *prog, int *lis, int lis_max);
+int		get_max_lis(t_prog *prog, int *lis);
+t_stack	*generate_lis(t_prog *prog);
 
 //annoying
 long int	special_atoi(const char *str);
