@@ -80,7 +80,7 @@ int get_biggest_arr_elem(t_stack *stack);
 int get_arr_elem_pos(t_stack *stack,int next_smallest);
 
 //error Handling
-void write_error();
+void write_error(void);
 int err_arr_is_unique(int *arr, int len);
 int err_arr_is_all_num(char *str);
 

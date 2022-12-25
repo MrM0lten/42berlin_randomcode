@@ -54,7 +54,6 @@ char	*fill_buffer(int fd, char *rtn_str)
 		buffer = 0;
 		return (NULL);
 	}
-		
 	bytes_read = 1;
 	i = 0;
 	while (bytes_read > 0)
