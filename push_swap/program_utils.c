@@ -14,6 +14,8 @@ t_prog *initprog(int ac, char**av)
 	if(!prog)
 		return (NULL);
 	stack_a_vals = fill_arr(stacksize, av[1]);
+	prog->instr_count = 0;
+	prog->sim_flag = 0;
 	//printf("killme\n");
 	//printf("%zu\n",stacksize);
 	//printf("%i\n",stack_a_vals[0]);

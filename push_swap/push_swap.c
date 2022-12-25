@@ -110,13 +110,15 @@ int main(int ac, char **av)
 		prog->stack_b = generate_stack(arr_b,0,elems);
 		//get_state(prog);
 		//print_arr(arr_a,elems);
+		prog->sim_flag = 1;
+		prog->instr_count = 0;
 		run_sorting_algo(prog);
 		iterations--;
 		if(is_array_sorted(prog->stack_a))
 		{
-			print_arr(arr_a,elems);
-			print_arr(prog->stack_a->array,elems);
-			ft_printf("SUCCESS = Array is sorted properly\n");
+			//print_arr(arr_a,elems);
+			//print_arr(prog->stack_a->array,elems);
+			ft_printf("SUCCESS in [%i] = Array is sorted properly \n",prog->instr_count);
 		}
 		else
 		{

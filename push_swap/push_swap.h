@@ -19,6 +19,8 @@ typedef struct s_stack
 
 typedef struct s_prog
 {
+	int sim_flag;
+	int instr_count;
 	t_stack *stack_a;
 	t_stack *stack_b;
 
