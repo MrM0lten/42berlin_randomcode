@@ -9,33 +9,24 @@ t_prog *initprog(int ac, char**av)
 	size_t i;
 
 	stacksize = get_arg_count(ac, av);
-	
 	prog = (t_prog *)malloc(sizeof(t_prog));
 	if(!prog)
 		return (NULL);
 	stack_a_vals = fill_arr(stacksize, av[1]);
 	prog->instr_count = 0;
 	prog->sim_flag = 0;
-	//printf("killme\n");
-	//printf("%zu\n",stacksize);
-	//printf("%i\n",stack_a_vals[0]);
 	if(!stack_a_vals || !err_arr_is_unique(stack_a_vals, stacksize))
 	{
-		//print_arr(stack_a_vals,stacksize);
 		write(STDERR_FILENO, "Error\n", 6);
 		return (NULL);
 	}
-		 
-	
 	stack_b_vals = (int *)malloc(stacksize * sizeof(int));
-
 	i = 0;
 	while(i < stacksize)
 	{
 		stack_b_vals[i] = 0;
 		i++;
 	}
-
 	prog->stack_a = generate_stack(stack_a_vals, stacksize, stacksize);
 	prog->stack_b = generate_stack(stack_b_vals, 0, stacksize);
 	if(!stack_a_vals || !(prog->stack_a) || !(prog->stack_b))
@@ -64,7 +55,6 @@ size_t get_arg_count(int ac, char** av)
 			word_flag = 0;
 		i++;
 	}
-	//printf("%zu\n",arg_count);
 	return (arg_count);
 }
 
@@ -80,26 +70,22 @@ int *fill_arr(size_t size, char* str)
 		return (NULL);
 	i = 0;
 	cnt = 0;
-	//printf("sadasd\n");
 	while(cnt < size)
 	{
 		while(str[i] == ' ')
 			i++;
 		temp = special_atoi(&str[i]);
-		if((temp < 0  && temp < INT_MIN) || (temp >= 0  && temp > INT_MAX)) // check if number is bigger than min and max int
+		if((temp < 0  && temp < INT_MIN) || (temp >= 0  && temp > INT_MAX))
 		{
-			//printf("help val = %zu\n",special_atoi(&str[i]));
 			free(arr);
 			return (NULL);
 		}
 		arr[cnt] = (int)temp;
-		//printf("arr[cnt] = %i\n",arr[cnt]);
 		cnt++;
 		while(str[i] != ' ' && str[i] != '\0')
 			i++;
 		i++;
 	}
-	//ft_printf("%i\n",cnt);
 	return (arr);
 }
 
@@ -127,7 +113,6 @@ long int	special_atoi(const char *str)
 			found = 0;
 		str++;
 	}
-
 	return (flag * total);
 }
 
@@ -140,7 +125,6 @@ t_stack *generate_stack(int *values,size_t num, size_t stacksize)
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if(!stack)
 		return (NULL);
-	
 	stack->array = values;
 	stack->max_size = stacksize;
 	stack->size = num;

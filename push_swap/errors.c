@@ -14,10 +14,7 @@ int err_arr_is_unique(int *arr,int len)
 		while(j < len)
 		{
 			if(arr[i] == arr[j])
-			{
-				//write_error();
 				return (0);
-			}
 			j++;
 		}
 		i++;
@@ -34,19 +31,13 @@ int err_arr_is_all_num(char *str)
 	{
 		c = str[i];
 		if(str[i] != ' ' && str[i] != '-' && str[i] != '+' && !ft_isdigit(c))
-		{
-			//write_error();
 			return (0);
-		}
 		c = str[i + 1];
 		if(str[i] == '+' || str[i] == '-')
 		{
 			if(str[i + 1] == '-' || str[i + 1] == '+' || !ft_isdigit(c))
-			{
 				return (0);
-			}
 		}
-		
 		i++;
 	}
 	return (1);

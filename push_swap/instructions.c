@@ -36,8 +36,6 @@ void put_instruction(char *instruction, t_prog *prog)
 	else
 		ft_printf("An Error occured, did you input the right command?\n");
 	prog->instr_count++;
-	//get_state(prog);
-
 	if(prog->sim_flag == 0)
 		ft_printf("%s\n",instruction);
 }
@@ -62,14 +60,11 @@ void rot_stack(t_stack *stack)
 
 	i = stack->max_size - stack->size;
 	temp = stack->array[i];
-	//ft_printf("temp = %i, i = %i\n",temp,(int)i);
 	while(i < stack->max_size -1)
 	{
-		//ft_printf("assigning %i to %i = %i\n",stack->array[i + 1],stack->array[i]);
 		stack->array[i] = stack->array[i + 1];
 		i++;
 	}
-	//ft_printf("assigning %i to %i\n",temp,stack->array[i - 1] );
 	stack->array[i] = temp;
 }
 

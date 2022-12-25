@@ -119,7 +119,6 @@ t_stack *generate_LIS(t_prog *prog)
 		}
 		i++;
 	}
-	//print_arr(lis,prog->stack_a->max_size);
 	i = 0;
 	lis_max = 0; //loop will get the max lis
 	while(i < prog->stack_a->max_size)
@@ -138,16 +137,11 @@ t_stack *generate_LIS(t_prog *prog)
 
 	temp->max_size = lis_max;
 	temp->size = lis_max;
-
-	//print_arr(temp->array,temp->max_size);
-	//ft_printf("i = %i,prog->stack_a->max_size %i\n",i,(int)prog->stack_a->max_size );
 	temp->array[j++] = prog->stack_a->array[i];
-	
 	while(lis_max != 1)
 	{
 		if(lis[i] == lis_max - 1)
 		{
-			//printf("lis max = %i,j = %i \n",lis_max, (int)j);
 			temp->array[j] = prog->stack_a->array[i];
 			j++;
 			lis_max--;
@@ -155,7 +149,6 @@ t_stack *generate_LIS(t_prog *prog)
 		i--;
 	}
 	free(lis);
-	//print_arr(temp->array ,temp->max_size);
 	return (temp);
 }
 

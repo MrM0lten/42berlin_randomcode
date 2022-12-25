@@ -3,24 +3,18 @@
 #include <stdio.h>
 #include "push_swap.h"
 
-
- int main(int ac, char**av)
+/*  int main(int ac, char**av)
 {
 	t_prog *prog;
 	size_t stacksize;
 
-
 	if(ac <= 1)
 		return (0);
-	//printf("%s\n",av[1]);
 	stacksize = get_arg_count(ac, av);
-	//printf("%zu",stacksize);
 	if(stacksize < 1)
 		return (0);
-	//do proper error handling
 	if(ac != 2 || !err_arr_is_all_num(av[1]))
 	{
-		//printf("err is al num issue\n");
 		write_error();
 		return 0;
 	}
@@ -31,9 +25,9 @@
 	free_prog(prog);
 	return (0);
 } 
+ */
 
-
-/* #include <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
 
 int val_in_array(int *arr_a, int elems, int val)
@@ -126,4 +120,4 @@ int main(int ac, char **av)
 
 	}
 	return (0);
-} */
+}

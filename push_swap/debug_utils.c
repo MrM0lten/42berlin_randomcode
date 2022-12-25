@@ -14,7 +14,6 @@ void get_stack_info(t_stack *stack)
 	ft_printf("\n");
 	ft_printf("size = %i\n",stack->size);
 	ft_printf("max size = %i\n",stack->max_size);
-	
 }
 void get_state(t_prog *prog)
 {
