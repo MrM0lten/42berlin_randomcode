@@ -25,7 +25,7 @@ void insert_algorithm(t_prog *prog)
 			i++;
 			elem++;
 		}
-		//print2D_arr(arr);
+		//print2d_arr(arr);
 		rot_and_move(prog,get_best_elem(arr));
 		
 		free_points_arr(arr);

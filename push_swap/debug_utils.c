@@ -53,7 +53,7 @@ void	print_arr(int *arr, int size)
 	ft_printf("\n");
 }
 
-void	print2D_arr(t_2dpoint **arr)
+void	print2d_arr(t_2dpoint **arr)
 {
 	size_t	i;
 

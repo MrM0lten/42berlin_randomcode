@@ -37,7 +37,7 @@ typedef struct s_2dpoint
 void get_stack_info(t_stack *stack);
 void get_state(t_prog *prog);
 void print_arr(int *arr, int size);
-void print2D_arr(t_2dpoint **arr);
+void print2d_arr(t_2dpoint **arr);
 
 //instructions
 void put_instruction(char *instruction, t_prog *prog);
