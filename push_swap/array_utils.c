@@ -47,17 +47,13 @@ int	arr_sorted_needs_rot(t_stack *stack_a)
 			biggest = stack_a->array[i];
 		i++;
 	}
-	i = stack_a->max_size - stack_a->size;
-	while (i < stack_a->max_size - 1)
+	i = stack_a->max_size - stack_a->size - 1;
+	while (++i < stack_a->max_size - 1)
 	{
 		if (stack_a->array[i] == biggest && stack_a->array[i + 1] == smallest)
-		{
-			i++;
 			continue ;
-		}
 		if (stack_a->array[i + 1] != nextbiggest(stack_a->array[i], stack_a))
 			return (0);
-		i++;
 	}
 	return (1);
 }
