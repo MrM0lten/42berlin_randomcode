@@ -54,6 +54,7 @@ void rot_to_smallest(t_prog *prog,t_stack *stack);
 int find_pos_for_val(t_stack *stack, int elem_nbr);
 t_2Dpoint *get_best_elem(t_2Dpoint **arr);
 void rot_and_move(t_prog *prog,t_2Dpoint *arr);
+void brute_force(t_prog *prog);
 
 //program & struct utils
 size_t get_arg_count(int ac, char** av);

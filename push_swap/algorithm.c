@@ -23,9 +23,11 @@ void run_sorting_algo(t_prog *prog)
 		rot_to_smallest(prog,prog->stack_a);
 		return ;
 	}
-	//rot_to_smallest(prog,prog->stack_a);
-
-
+	if(prog->stack_a->max_size > 3 && prog->stack_a->max_size < 6 ) 
+	{
+		brute_force(prog);
+		return ;
+	}
 	t_stack *temp = generate_LIS(prog);
 	//printf(" lis size = %zu\n",temp->size);
 	if(temp->size == 2 && prog->stack_a->array[0] >prog->stack_a->array[1]) //special case rotating once and regenerating lis will save lots of instructions
@@ -40,6 +42,14 @@ void run_sorting_algo(t_prog *prog)
 	move_unsorted(prog, temp);
 	free_stack(temp);
 	insert_algorithm(prog);
+}
+
+void brute_force(t_prog *prog)
+{
+	put_instruction("pb",prog);
+	put_instruction("pb",prog);
+	ft_printf("wtf\n");
+	//insert_algorithm(prog);
 }
 
 void move_unsorted(t_prog *prog, t_stack *lis)

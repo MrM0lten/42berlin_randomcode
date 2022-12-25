@@ -95,7 +95,7 @@ int *fill_arr(size_t size, char* str)
 		arr[cnt] = (int)temp;
 		//printf("arr[cnt] = %i\n",arr[cnt]);
 		cnt++;
-		while(str[i] != ' ')
+		while(str[i] != ' ' && str[i] != '\0')
 			i++;
 		i++;
 	}

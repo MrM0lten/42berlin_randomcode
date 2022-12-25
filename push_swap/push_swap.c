@@ -4,7 +4,7 @@
 #include "push_swap.h"
 
 
-/*  int main(int ac, char**av)
+ int main(int ac, char**av)
 {
 	t_prog *prog;
 	size_t stacksize;
@@ -41,9 +41,9 @@
 
 	free_prog(prog);
 	return (0);
-}  */
+} 
 
-
+/* 
 #include <stdlib.h>
 #include <time.h>
 
@@ -137,4 +137,4 @@ int main(int ac, char **av)
 
 	}
 	return (0);
-}
+} */
