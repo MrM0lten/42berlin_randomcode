@@ -24,22 +24,10 @@
 		write_error();
 		return 0;
 	}
-		
-
-	
 	prog = initprog(ac,av);
-
 	if(!prog)
-	{
 		return 0;
-	}
-
-	
-
 	run_sorting_algo(prog);
-	//ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
-
-
 	free_prog(prog);
 	return (0);
 } 

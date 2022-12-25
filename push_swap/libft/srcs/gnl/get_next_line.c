@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "../../includes/get_next_line.h"
+#include "../../includes/libft.h"
 
 char	*fill_buffer(int fd, char *buffer);
 char	*ft_realloc(char *s1, char *s2, size_t s2_len);
@@ -42,11 +43,11 @@ char	*fill_buffer(int fd, char *rtn_str)
 	int		bytes_read;
 	int		i;
 
-	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	buffer = ft_calloc1((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
 	if (rtn_str == NULL)
-		rtn_str = ft_calloc(1, sizeof(char));
+		rtn_str = ft_calloc1(1, sizeof(char));
 	if (!rtn_str)
 	{
 		free(buffer);
@@ -62,7 +63,7 @@ char	*fill_buffer(int fd, char *rtn_str)
 		if (read_failed(bytes_read, buffer, rtn_str))
 			return (NULL);
 		buffer[bytes_read] = '\0';
-		rtn_str = ft_strjoin(rtn_str, buffer, bytes_read);
+		rtn_str = ft_strjoin1(rtn_str, buffer, bytes_read);
 		if(!rtn_str)
 		{
 			read_failed(-1, buffer, rtn_str);

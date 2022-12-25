@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "../../includes/get_next_line.h"
 
-int	ft_strlen(char *s)
+int	ft_strlen1(char *s)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_strchr(char *str, char c)
+int	ft_strchr1(char *str, char c)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ int	ft_strchr(char *str, char c)
 		return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
+char	*ft_strjoin1(char *s1, char *s2, size_t s2_len)
 {
 	char	*ptr;
 	size_t	len;
@@ -49,9 +49,9 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 
 	if (!s1 && !s2)
 		return (0);
-	s1_len = ft_strlen(s1);
+	s1_len = ft_strlen1(s1);
 	len = s1_len + s2_len;
-	ptr = ft_calloc((len + 1), sizeof(char));
+	ptr = ft_calloc1((len + 1), sizeof(char));
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -69,7 +69,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 	return (ptr);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero1(void *s, size_t n)
 {
 	char	*c;
 	size_t	i;
@@ -83,7 +83,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc1(size_t nmemb, size_t size)
 {
 	void	*ptr;
 	size_t	total;
@@ -94,6 +94,6 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ptr = malloc(total);
 	if (!ptr)
 		return (0);
-	ft_bzero(ptr, total);
+	ft_bzero1(ptr, total);
 	return (ptr);
 }
