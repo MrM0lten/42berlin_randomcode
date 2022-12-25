@@ -7,7 +7,7 @@ void insert_algorithm(t_prog *prog)
 	//get_state(prog);
 	int elem;
 	size_t i;
-	t_2Dpoint **arr;
+	t_2dpoint **arr;
 
 	while(prog->stack_b->size > 0)
 	{
@@ -38,14 +38,13 @@ void insert_algorithm(t_prog *prog)
 	rot_to_smallest(prog,prog->stack_a);
 }
 
-t_2Dpoint *get_best_elem(t_2Dpoint **arr)
+t_2dpoint *get_best_elem(t_2dpoint **arr)
 {
 	int i;
 	int temp_val;
 	int arr_len;
 	int arr_pos;
 	int *totals;
-	//t_2Dpoint *best_elem;
 
 	i = 0;
 	while(arr[i] != NULL)
@@ -84,7 +83,7 @@ t_2Dpoint *get_best_elem(t_2Dpoint **arr)
 
 }
 
-void rot_and_move(t_prog *prog,t_2Dpoint *arr)
+void rot_and_move(t_prog *prog, t_2dpoint *arr)
 {
 	//ft_printf("\nbest elem = <%i,%i>\n\n",arr->val_a,arr->val_b);
 
@@ -199,16 +198,16 @@ int calc_smallest_rot(t_stack *stack, int elem_pos)
 
 }
 
-t_2Dpoint **generate_points_arr(t_prog *prog)
+t_2dpoint **generate_points_arr(t_prog *prog)
 {
-	t_2Dpoint **arr;
+	t_2dpoint **arr;
 	size_t i;
 
-	arr = (t_2Dpoint **)malloc(sizeof(t_2Dpoint *) * (prog->stack_b->size + 1));
+	arr = (t_2dpoint **)malloc(sizeof(t_2dpoint *) * (prog->stack_b->size + 1));
 	i = 0;
 	while(i < prog->stack_b->size)
 	{
-		arr[i] = (t_2Dpoint *)malloc(sizeof(t_2Dpoint));
+		arr[i] = (t_2dpoint *)malloc(sizeof(t_2dpoint));
 		arr[i]->val_a = 0;
 		arr[i]->val_b = 0;
 		i++;
@@ -216,7 +215,7 @@ t_2Dpoint **generate_points_arr(t_prog *prog)
 	arr[i] = NULL;
 	return (arr);
 }
-void free_points_arr(t_2Dpoint **arr)
+void free_points_arr(t_2dpoint **arr)
 {
 	size_t i;
 

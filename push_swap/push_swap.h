@@ -26,18 +26,18 @@ typedef struct s_prog
 
 } t_prog;
 
-typedef struct s_2Dpoint
+typedef struct s_2dpoint
 {
 	int val_a;
 	int val_b;
 
-} t_2Dpoint;
+} t_2dpoint;
 
 //debugging utils
 void get_stack_info(t_stack *stack);
 void get_state(t_prog *prog);
 void print_arr(int *arr, int size);
-void print2D_arr(t_2Dpoint **arr);
+void print2D_arr(t_2dpoint **arr);
 
 //instructions
 void put_instruction(char *instruction, t_prog *prog);
@@ -52,8 +52,8 @@ void insert_algorithm(t_prog *prog);
 int calc_smallest_rot(t_stack *stack, int elem);
 void rot_to_smallest(t_prog *prog,t_stack *stack);
 int find_pos_for_val(t_stack *stack, int elem_nbr);
-t_2Dpoint *get_best_elem(t_2Dpoint **arr);
-void rot_and_move(t_prog *prog,t_2Dpoint *arr);
+t_2dpoint *get_best_elem(t_2dpoint **arr);
+void rot_and_move(t_prog *prog,t_2dpoint *arr);
 void brute_force(t_prog *prog);
 void	move_unsorted(t_prog *prog, t_stack *lis);
 
@@ -64,8 +64,8 @@ t_stack *generate_stack(int *values,size_t num, size_t stacksize);
 t_prog *initprog(int ac, char**av);
 void free_prog(t_prog *prog);
 void free_stack(t_stack *stack);
-t_2Dpoint **generate_points_arr(t_prog *prog);
-void free_points_arr(t_2Dpoint **arr);
+t_2dpoint **generate_points_arr(t_prog *prog);
+void free_points_arr(t_2dpoint **arr);
 
 //lis utils
 int		elem_in_lis(int val, t_stack *lis);
