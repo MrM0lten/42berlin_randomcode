@@ -28,9 +28,8 @@ int largest_from_zero(int a, int b)
 int is_array_sorted(t_stack *stack_a)
 {
 	size_t i;
-	if(stack_a->size != stack_a->max_size)
-		return (0);
-	i = 0;
+
+	i = stack_a->max_size - stack_a->size;
 	while(i < stack_a->max_size - 1)
 	{
 		if(stack_a->array[i] > stack_a->array[i + 1])
@@ -50,8 +49,12 @@ int nextbiggest(int val,t_stack *stack)
 	//printf("next = %i\n", next);
 	while(i < stack->max_size)
 	{
-		if(stack->array[i] >= val && stack->array[i] < next)
+		if(stack->array[i] > val && stack->array[i] < next)
+		{
 			next = stack->array[i];
+			//ft_printf("next = %i\n",next);
+		}
+			
 		i++;
 	}
 	//printf("next = %i\n", next);
@@ -64,9 +67,7 @@ int arr_sorted_needs_rot(t_stack *stack_a)
 	int biggest;
 	int smallest;
 
-	if(stack_a->size != stack_a->max_size)
-		return (0);
-	i = 0;
+	i = stack_a->max_size - stack_a->size;
 	biggest = stack_a->array[i];
 	smallest = stack_a->array[i];
 	//ft_printf("smallest = %i, biggest = %i\n",smallest,biggest);
@@ -79,17 +80,27 @@ int arr_sorted_needs_rot(t_stack *stack_a)
 		i++;
 	}
 	//ft_printf("smallest = %i, biggest = %i\n",smallest,biggest);
-	i = 0;
+	i = stack_a->max_size - stack_a->size;
 	while(i < stack_a->max_size - 1)
 	{
+		//printf("\ni = %zu\n", i);
 		if(stack_a->array[i] == biggest && stack_a->array[i + 1] == smallest)
 		{
 			i++;
 			continue;
 		}
-		//printf("i+1 =%i,next biggest = %i",stack_a->array[i + 1] , nextbiggest(stack_a->array[i],stack_a));
-		if(stack_a->array[i] > stack_a->array[i + 1] || stack_a->array[i + 1] != nextbiggest(stack_a->array[i],stack_a))
+		//printf("i+1 =%i,next biggest = %i\n",stack_a->array[i + 1] , nextbiggest(stack_a->array[i],stack_a));
+		//printf("stack_a->array[i] = %i\n",stack_a->array[i]);
+		//printf("stack_a->array[i + 1] = %i\n",stack_a->array[i + 1]);
+		//printf("nextbiggest = %i\n",nextbiggest(stack_a->array[i],stack_a));
+		//printf("comparison 1 = %i\n",stack_a->array[i + 1] != nextbiggest(stack_a->array[i],stack_a));
+		//printf("comparison 2 = %i\n",(stack_a->array[i] > stack_a->array[i + 1]));
+		if(stack_a->array[i + 1] != nextbiggest(stack_a->array[i],stack_a))
+		{
+			//printf("whzzzzzzz\n");
 			return (0);
+		}
+			
 		i++;
 	}
 	return (1);

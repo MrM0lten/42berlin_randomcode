@@ -13,7 +13,7 @@ void run_sorting_algo(t_prog *prog)
 	
 	if(arr_sorted_needs_rot(prog->stack_a))
 	{
-		//ft_printf("wtf\n");
+		//ft_printf("wtfsadfsdf\n");
 		rot_to_smallest(prog,prog->stack_a);
 		return ;
 	}
@@ -48,8 +48,12 @@ void brute_force(t_prog *prog)
 {
 	put_instruction("pb",prog);
 	put_instruction("pb",prog);
-	ft_printf("wtf\n");
-	//insert_algorithm(prog);
+
+	if(!arr_sorted_needs_rot(prog->stack_a))
+	{
+		put_instruction("sa",prog);
+	}
+	insert_algorithm(prog);
 }
 
 void move_unsorted(t_prog *prog, t_stack *lis)

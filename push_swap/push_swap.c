@@ -10,6 +10,8 @@
 	size_t stacksize;
 
 
+	if(ac <= 1)
+		return (0);
 	//printf("%s\n",av[1]);
 	stacksize = get_arg_count(ac, av);
 	//printf("%zu",stacksize);
@@ -33,9 +35,8 @@
 	}
 
 	
-	//get_state(prog);
+
 	run_sorting_algo(prog);
-	//get_state(prog);
 	//ft_printf("Array Sorted %i\n",is_array_sorted(prog->stack_a));
 
 
@@ -43,8 +44,8 @@
 	return (0);
 } 
 
-/* 
-#include <stdlib.h>
+
+/* #include <stdlib.h>
 #include <time.h>
 
 int val_in_array(int *arr_a, int elems, int val)
