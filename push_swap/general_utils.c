@@ -6,7 +6,7 @@
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 18:49:09 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/25 18:52:23 by jisserst         ###   ########.fr       */
+/*   Updated: 2022/12/25 20:49:02 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,3 @@ int	calc_smallest_rot(t_stack *stack, int elem_pos)
 	else
 		return ((elem_pos - stack->max_size));
 }
-

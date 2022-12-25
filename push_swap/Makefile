@@ -1,9 +1,11 @@
 SRC = push_swap.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c \
-	insert_algo.c general_utils.c lis_utils.c array_utils.c point_utils.c instruction_manager.c
+	insert_algo.c general_utils.c lis_utils.c array_utils.c point_utils.c instruction_manager.c \
+	stack_utils.c
 OBJS = ${SRC:.c=.o}
 
 SRCBONUS = bonus.c debug_utils.c instructions.c algorithm.c program_utils.c errors.c \
-	insert_algo.c general_utils.c lis_utils.c array_utils.c point_utils.c instruction_manager.c
+	insert_algo.c general_utils.c lis_utils.c array_utils.c point_utils.c instruction_manager.c \
+	stack_utils.c
 
 OBJSBONUS = ${SRCBONUS:.c=.o}
 CC = cc

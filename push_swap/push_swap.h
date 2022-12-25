@@ -97,6 +97,7 @@ int			arr_sorted_needs_rot(t_stack *stack_a);
 int			smaller_elem_exists(t_stack *stack, int cmp_val);
 int			get_biggest_arr_elem(t_stack *stack);
 int			get_arr_elem_pos(t_stack *stack, int next_smallest);
+int			*init_zerod_arr(size_t len);
 
 //error Handling
 void		write_error(void);

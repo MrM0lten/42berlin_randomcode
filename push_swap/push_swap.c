@@ -1,35 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/25 20:49:58 by jisserst          #+#    #+#             */
+/*   Updated: 2022/12/25 20:51:07 by jisserst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "push_swap.h"
 
-/*  int main(int ac, char**av)
+int	main(int ac, char**av)
 {
-	t_prog *prog;
-	size_t stacksize;
+	t_prog	*prog;
+	size_t	stacksize;
 
-	if(ac <= 1)
+	if (ac <= 1)
 		return (0);
 	stacksize = get_arg_count(ac, av);
-	if(stacksize < 1)
+	if (stacksize < 1)
 		return (0);
-	if(ac != 2 || !err_arr_is_all_num(av[1]))
+	if (ac != 2 || !err_arr_is_all_num(av[1]))
 	{
 		write_error();
-		return 0;
+		return (0);
 	}
-	prog = initprog(ac,av);
-	if(!prog)
-		return 0;
+	prog = initprog(ac, av);
+	if (!prog)
+		return (0);
 	run_sorting_algo(prog);
 	free_prog(prog);
 	return (0);
-} 
- */
+}
 
-#include <stdlib.h>
+/* #include <stdlib.h>
 #include <time.h>
-
 int val_in_array(int *arr_a, int elems, int val)
 {
 	int i;
@@ -121,3 +130,4 @@ int main(int ac, char **av)
 	}
 	return (0);
 }
+ */
