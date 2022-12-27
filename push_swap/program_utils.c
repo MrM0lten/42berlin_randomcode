@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_prog	*initprog(int ac, char**av)
+t_prog	*initprog(int ac, char**av, int flag)
 {
 	t_prog	*prog;
 	int		*stack_a_vals;
@@ -23,11 +23,16 @@ t_prog	*initprog(int ac, char**av)
 	prog = (t_prog *)malloc(sizeof(t_prog));
 	if (!prog)
 		return (NULL);
-	stack_a_vals = fill_arr(stacksize, av[1]);
 	prog->instr_count = 0;
 	prog->sim_flag = 0;
+	if (flag)
+		stack_a_vals = fill_arr(stacksize, av[1]);
+	else
+		stack_a_vals = fill_arr_too(stacksize, av);
 	if (!stack_a_vals || !err_arr_is_unique(stack_a_vals, stacksize))
 	{
+		free(prog);
+		free(stack_a_vals);
 		write(STDERR_FILENO, "Error\n", 6);
 		return (NULL);
 	}
@@ -60,7 +65,8 @@ size_t	get_arg_count(int ac, char **av)
 	size_t	word_flag;
 	int		i;
 
-	(void)ac;
+	if (ac > 2)
+		return ((size_t)ac -1);
 	arg_count = 0;
 	i = 0;
 	word_flag = 0;
@@ -107,29 +113,28 @@ int	*fill_arr(size_t size, char *str)
 	return (arr);
 }
 
-long int	special_atoi(const char *str)
+int	*fill_arr_too(size_t size, char **str)
 {
-	long int	total;
-	int			flag;
-	int			found;
+	int			*arr;
+	int			i;
+	size_t		cnt;
+	long int	temp;
 
-	total = 0;
-	flag = 1;
-	found = 1;
-	while (*str == ' ' || *str == '\t' || *str == '\n'
-		|| *str == '\f' || *str == '\r' || *str == '\v')
-		str++;
-	if (*str == '-')
-		flag = -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str && found)
+	arr = (int *)malloc(size * sizeof(int));
+	if (!arr)
+		return (NULL);
+	i = 1;
+	cnt = 0;
+	while (cnt < size)
 	{
-		if (*str >= '0' && *str <= '9')
-			total = total * 10 + *str - '0';
-		else
-			found = 0;
-		str++;
+		temp = special_atoi(&str[i][0]);
+		if ((temp < 0 && temp < INT_MIN) || (temp >= 0 && temp > INT_MAX))
+		{
+			free(arr);
+			return (NULL);
+		}
+		arr[cnt++] = (int)temp;
+		i++;
 	}
-	return (flag * total);
+	return (arr);
 }

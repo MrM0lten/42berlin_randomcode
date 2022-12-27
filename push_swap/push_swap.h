@@ -72,8 +72,9 @@ void		move_unsorted(t_prog *prog, t_stack *lis);
 //program & struct utils
 size_t		get_arg_count(int ac, char **av);
 int			*fill_arr(size_t size, char *str);
+int			*fill_arr_too(size_t size, char **str);
 t_stack		*generate_stack(int *values, size_t num, size_t stacksize);
-t_prog		*initprog(int ac, char **av);
+t_prog		*initprog(int ac, char **av, int flag);
 void		free_prog(t_prog *prog);
 void		free_stack(t_stack *stack);
 t_2dpoint	**generate_points_arr(t_prog *prog);
@@ -88,6 +89,7 @@ t_stack		*generate_lis(t_prog *prog);
 //annoying
 long int	special_atoi(const char *str);
 int			nextbiggest(int val, t_stack *stack);
+int			input_flag(char **str);
 
 //general utils
 size_t		ft_abs(int i);

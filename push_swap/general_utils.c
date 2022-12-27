@@ -63,3 +63,30 @@ int	calc_smallest_rot(t_stack *stack, int elem_pos)
 	else
 		return ((elem_pos - stack->max_size));
 }
+
+long int	special_atoi(const char *str)
+{
+	long int	total;
+	int			flag;
+	int			found;
+
+	total = 0;
+	flag = 1;
+	found = 1;
+	while (*str == ' ' || *str == '\t' || *str == '\n'
+		|| *str == '\f' || *str == '\r' || *str == '\v')
+		str++;
+	if (*str == '-')
+		flag = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str && found)
+	{
+		if (*str >= '0' && *str <= '9')
+			total = total * 10 + *str - '0';
+		else
+			found = 0;
+		str++;
+	}
+	return (flag * total);
+}

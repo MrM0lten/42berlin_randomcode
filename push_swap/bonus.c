@@ -27,12 +27,17 @@ int	main(int ac, char**av)
 	stacksize = get_arg_count(ac, av);
 	if (stacksize < 1)
 		return (0);
-	if (ac != 2 || !err_arr_is_all_num(av[1]))
+	if (!input_flag(av))
 	{
-		write_error();
-		return (0);
+		if (!err_arr_is_all_num(av[1]))
+		{
+			write_error();
+			return (0);
+		}
+		prog = initprog(ac, av, 1);
 	}
-	prog = initprog(ac, av);
+	else
+		prog = initprog(ac, av, 0);
 	if (!prog)
 		return (0);
 	readline(prog);
@@ -55,7 +60,8 @@ static void	readline(t_prog *prog)
 		free(str);
 		str = get_next_line(0);
 	}
-	if (is_array_sorted(prog->stack_a))
+	if (is_array_sorted(prog->stack_a)
+		&& prog->stack_a->max_size == prog->stack_a->size)
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");

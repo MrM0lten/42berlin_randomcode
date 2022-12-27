@@ -42,3 +42,18 @@ void	free_stack(t_stack *stack)
 	free(stack);
 	stack = NULL;
 }
+
+int	input_flag(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[1][i])
+	{
+		if (str[1][i] == ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+

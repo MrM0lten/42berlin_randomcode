@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include "push_swap.h"
 
+
+
 int	main(int ac, char**av)
 {
 	t_prog	*prog;
@@ -24,18 +26,24 @@ int	main(int ac, char**av)
 	stacksize = get_arg_count(ac, av);
 	if (stacksize < 1)
 		return (0);
-	if (ac != 2 || !err_arr_is_all_num(av[1]))
+	if (!input_flag(av))
 	{
-		write_error();
-		return (0);
+		if (!err_arr_is_all_num(av[1]))
+		{
+			write_error();
+			return (0);
+		}
+		prog = initprog(ac, av, 1);
 	}
-	prog = initprog(ac, av);
+	else
+		prog = initprog(ac, av, 0);
 	if (!prog)
 		return (0);
 	run_sorting_algo(prog);
 	free_prog(prog);
 	return (0);
 }
+//checks whether the second string has only numbers, if not = 0 otherwise 1
 
 /* #include <stdlib.h>
 #include <time.h>
