@@ -1,4 +1,4 @@
-SRCDIRS = ./srcs/gnl/ ./srcs/printf ./srcs/stdlib
+SRCDIRS = ./srcs/gnl/ ./srcs/printf ./srcs/stdlib ./srcs/array_utils
 INCLDIR = ./includes/  
 
 SRC = $(foreach D,$(SRCDIRS),$(wildcard $(D)/*.c))
