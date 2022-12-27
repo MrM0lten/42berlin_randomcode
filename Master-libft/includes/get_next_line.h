@@ -20,12 +20,11 @@
 #  define BUFFER_SIZE 1
 # endif
 # include <stddef.h>
+# include "libft.h"
 
 char	*get_next_line(int fd);
-int		ft_strlen(char *s);
-int		ft_strchr(char *str, char c);
-char	*ft_strjoin(char *s1, char *s2, size_t s2_len);
-void	ft_bzero(void *s, size_t n);
+char	*ft_strjoin1(char *s1, char *s2, size_t s2_len);
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*trim_buffer(char *buffer);
 
 #endif

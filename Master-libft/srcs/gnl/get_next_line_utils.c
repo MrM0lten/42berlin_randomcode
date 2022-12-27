@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "../../includes/get_next_line.h"
 
-int	ft_strlen(char *s)
+int	ft_strlen1(char *s)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_strchr(char *str, char c)
+int	ft_strchr1(char *str, char c)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ int	ft_strchr(char *str, char c)
 		return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
+char	*ft_strjoin1(char *s1, char *s2, size_t s2_len)
 {
 	char	*ptr;
 	size_t	len;
@@ -49,7 +49,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 
 	if (!s1 && !s2)
 		return (0);
-	s1_len = ft_strlen(s1);
+	s1_len = ft_strlen1(s1);
 	len = s1_len + s2_len;
 	ptr = ft_calloc((len + 1), sizeof(char));
 	if (!ptr)
@@ -69,7 +69,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 	return (ptr);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero1(void *s, size_t n)
 {
 	char	*c;
 	size_t	i;
@@ -83,17 +83,30 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+char	*trim_buffer(char *buffer)
 {
-	void	*ptr;
-	size_t	total;
+	char	*temp;
+	int		i;
+	int		j;
+	int		len;
 
-	total = size * nmemb;
-	if (nmemb != 0 && size != 0 && total / nmemb != size)
-		return (0);
-	ptr = malloc(total);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, total);
-	return (ptr);
+	i = 0;
+	len = ft_strlen1(buffer);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (!buffer[i])
+	{
+		free(buffer);
+		return (NULL);
+	}
+	temp = ft_calloc(len - i + 1, sizeof(char));
+	if (!temp)
+		return (NULL);
+	j = 0;
+	i++;
+	while (buffer[i])
+		temp[j++] = buffer[i++];
+	free(buffer);
+	buffer = 0;
+	return (temp);
 }
