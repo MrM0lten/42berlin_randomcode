@@ -13,6 +13,39 @@
 #include <stdlib.h>
 #include "../../includes/libft.h"
 
+static size_t	calc_arr_elem(char const *s, char delim);
+static size_t	get_next_str_len(char const *s, char delim);
+static char		**free_arr(char **arr);
+
+char	**ft_split(char const *s, char delim)
+{
+	int		cnt;
+	char	**arr;
+	int		i;
+	size_t	str_len;
+
+	if (!s)
+		return (0);
+	cnt = calc_arr_elem(s, delim);
+	arr = (char **)malloc((cnt + 1) * sizeof(char *));
+	if (!arr)
+		return (0);
+	i = -1;
+	while (++i < cnt && *s)
+	{
+		while (*s == delim && *s)
+			s++;
+		str_len = get_next_str_len(s, delim);
+		arr[i] = (char *)malloc(str_len * sizeof(char) + 1);
+		if (!arr[i])
+			return (free_arr(arr));
+		ft_strlcpy(arr[i], s, str_len + 1);
+		s += str_len + 1;
+	}
+	arr[i] = 0;
+	return (arr);
+}
+
 static size_t	calc_arr_elem(char const *s, char delim)
 {
 	size_t	cnt;
@@ -44,30 +77,16 @@ static size_t	get_next_str_len(char const *s, char delim)
 	return (pos);
 }
 
-char	**ft_split(char const *s, char delim)
+static char	**free_arr(char **arr)
 {
-	int		cnt;
-	char	**arr;
-	int		i;
-	size_t	str_len;
+	int	i;
 
-	if (!s)
-		return (0);
-	cnt = calc_arr_elem(s, delim);
-	arr = (char **)malloc((cnt + 1) * sizeof(char *));
-	if (!arr)
-		return (0);
 	i = 0;
-	while (i < cnt && *s)
+	while (arr[i])
 	{
-		while (*s == delim && *s)
-			s++;
-		str_len = get_next_str_len(s, delim);
-		arr[i] = (char *)malloc(str_len * sizeof(char) + 1);
-		ft_strlcpy(arr[i], s, str_len + 1);
-		s += str_len + 1;
+		free(arr[i]);
 		i++;
 	}
-	arr[i] = 0;
-	return (arr);
+	free(arr);
+	return (NULL);
 }

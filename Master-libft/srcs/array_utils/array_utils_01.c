@@ -10,14 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_array_sorted(t_stack *stack_a)
+#include "../../includes/array_utils.h"
+//checks if an array is sorted
+int	is_arr_sorted(int *arr, int len)
 {
-	size_t	i;
+	int	i;
 
-	i = stack_a->max_size - stack_a->size;
-	while (i < stack_a->max_size - 1)
+	i = 0;
+	while (i < len - 1)
 	{
-		if (stack_a->array[i] > stack_a->array[i + 1])
+		if (arr[i] > arr[i + 1])
 			return (0);
 		i++;
 	}
@@ -30,52 +32,59 @@ void	print_array(int *arr, int size)
 
 	i = -1;
 	while (++i < size)
-		ft_printf("%i ", arr[i]);
-	ft_printf("\n");
+		ft_printf("elem[%i] = %i \n", i, arr[i]);
 }
 
-int	get_biggest_arr_elem(t_stack *stack)
+// returns the position of the biggest element in a given array
+int	biggest_arr_elem(int *arr, int len)
 {
-	int		val;
-	size_t	i;
+	int	val;
+	int	i;
+	int	j;
 
-	i = stack->max_size - stack->size;
-	val = stack->array[i];
-	while (i < stack->max_size)
+	i = 0;
+	j = 0;
+	val = arr[i];
+	while (i < len)
 	{
-		if (stack->array[i] > val)
-			val = stack->array[i];
+		if (arr[i] > val)
+		{
+			val = arr[i];
+			j = i;
+		}
 		i++;
 	}
-	return (val);
+	return (j);
 }
 
-int	get_arr_elem_pos(t_stack *stack, int val)
+//returns the position of the first occurrance of val
+int	arr_elem_pos(int *arr, int len, int val)
 {
-	size_t	i;
+	int	i;
 
-	i = stack->max_size - stack->size;
-	while (i < stack->max_size)
+	i = 0;
+	while (i < len)
 	{
-		if (stack->array[i] == val)
-			return ((int)i);
+		if (arr[i] == val)
+			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-int	nextbiggest(int val, t_stack *stack)
+//searches entire array and returns the next biggest value
+int	nextbiggest(int *arr, int len, int val)
 {
-	size_t	i;
-	int		next;
+	int	i;
+	int	next;
 
-	i = stack->max_size - stack->size;
-	next = get_biggest_arr_elem(stack);
-	while (i < stack->max_size)
+	i = 0;
+	next = biggest_arr_elem(arr, len);
+	while (i < len)
 	{
-		if (stack->array[i] > val && stack->array[i] < next)
+		if (arr[i] > val && arr[i] < next)
 		{
-			next = stack->array[i];
+			next = arr[i];
 		}
 		i++;
 	}
