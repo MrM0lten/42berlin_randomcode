@@ -1,4 +1,4 @@
-SRC = main.c
+SRC = main.c drawing_utils.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc
