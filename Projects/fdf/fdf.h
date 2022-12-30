@@ -35,17 +35,10 @@ typedef struct	s_p3
 	float z;
 }				p3;
 
-typedef struct s_plane
+typedef struct	s_matrix
 {
-	p3 x_vec;
-	p3 y_vec;
-}				t_plane;
-
-typedef struct s_camera
-{
-	p3 world_pos;
-	t_plane plane;
-}				camera;
+	float m[4][4];
+}				mat4x4;
 
 
 
@@ -59,6 +52,8 @@ void drawline(void *mlx_ptr, void *win_ptr, p3 *a, p3 *b, int color);
 
 //debugging
 void print_point(p3 *p);
+
+mat4x4 generate_mat4x4(void);
 
 
 #endif

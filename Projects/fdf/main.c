@@ -50,16 +50,7 @@ void draw_cube(t_prog *prog, p3 *p_arr)
 	drawline(prog->mlx, prog->win, &p_arr[2], &p_arr[6], 0xfffafa);
 	drawline(prog->mlx, prog->win, &p_arr[3], &p_arr[7], 0xfffafa);
 }
-p3 *convert_p3_to_p2(p3 *p)
-{	
-	p3 temp;
-	temp.x = ASPECT_RATIO*p->x/(p->z * tan((90 / 2)/(180 / M_PI)));
-	temp.y = ASPECT_RATIO*p->y/(p->z * tan((90 / 2)/(180 / M_PI)));
 
-	p->x = temp.x;
-	p->y = temp.y;
-	return (p);
-}
 void mulitplyMatrixVector(p3 *i, p3 *o)
 {
 	float fNear = 0.1f;
@@ -67,26 +58,27 @@ void mulitplyMatrixVector(p3 *i, p3 *o)
 	float fFov = 90.0f;
 	float fAspectRatio = X_SIZE / Y_SIZE;
 	float fFovRad = 1.0f / tan(fFov *0.5f / 180.0f * M_PI);
-	//mat4x4 m_proj;
-	float m[4][4] = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
-	m[0][0] = fAspectRatio * fFovRad;
-	m[1][1] = fFovRad;
-	m[2][2] = fFar / (fFar -fNear);
-	m[3][2] = (-fFar *fNear) / (fFar - fNear);
-	m[2][3] = 1.0f;
-	m[3][3] = 0.0f;
+	mat4x4 m;
+	m = generate_mat4x4();
+
+	m.m[0][0] = fAspectRatio * fFovRad;
+	m.m[1][1] = fFovRad;
+	m.m[2][2] = fFar / (fFar -fNear);
+	m.m[3][2] = (-fFar *fNear) / (fFar - fNear);
+	m.m[2][3] = 1.0f;
+	m.m[3][3] = 0.0f;
 
 
 
-	o->x = i->x * m[0][0] + i->y * m[1][0] + i->z * m[2][0] + m[3][0];
-	o->y = i->x * m[0][1] + i->y * m[1][1] + i->z * m[2][1] + m[3][1];
-	o->z = i->x * m[0][2] + i->y * m[1][2] + i->z * m[2][2] + m[3][2];
-	float w = i->x * m[0][3] + i->y * m[1][3] + i->z * m[2][3] + m[3][3];
+	o->x = i->x * m.m[0][0] + i->y * m.m[1][0] + i->z * m.m[2][0] + m.m[3][0];
+	o->y = i->x * m.m[0][1] + i->y * m.m[1][1] + i->z * m.m[2][1] + m.m[3][1];
+	o->z = i->x * m.m[0][2] + i->y * m.m[1][2] + i->z * m.m[2][2] + m.m[3][2];
+	float w = i->x * m.m[0][3] + i->y * m.m[1][3] + i->z * m.m[2][3] + m.m[3][3];
 	printf("\n");
-	printf("[%lf][%lf][%lf][%lf]\n", m[0][0],m[0][1],m[0][2],m[0][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m[1][0],m[1][1],m[1][2],m[1][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m[2][0],m[2][1],m[2][2],m[2][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m[3][0],m[3][1],m[3][2],m[3][3]);
+	printf("[%lf][%lf][%lf][%lf]\n", m.m[0][0],m.m[0][1],m.m[0][2],m.m[0][3]);
+	printf("[%lf][%lf][%lf][%lf]\n", m.m[1][0],m.m[1][1],m.m[1][2],m.m[1][3]);
+	printf("[%lf][%lf][%lf][%lf]\n", m.m[2][0],m.m[2][1],m.m[2][2],m.m[2][3]);
+	printf("[%lf][%lf][%lf][%lf]\n", m.m[3][0],m.m[3][1],m.m[3][2],m.m[3][3]);
 
 	if(w != 0.0f)
 	{
@@ -117,6 +109,7 @@ int	main(void)
 		i++;
 	}
 	 i = 0;
+
 	while(i < 8)
 	{
 		
@@ -154,7 +147,7 @@ int	main(void)
 
 
 
-	draw_cube(&prog,&p_out);
+	draw_cube(&prog,p_out);
 	ft_printf("fml\n");
 	mlx_loop(prog.mlx);
 	
