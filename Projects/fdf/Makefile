@@ -1,4 +1,4 @@
-SRC = main.c drawing_utils.c
+SRC = main.c drawing_utils.c point_utils.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc
@@ -12,7 +12,7 @@ LIBNAME = libft.a
 DIRLIB = ./libft/
 LIBFT = $(DIRLIB)$(LIBNAME)
 
-MLXLIBNAME = libmlx.a
+MLXLIBNAME = libmlx_Linux.a
 MLXDIRLIB = ./minilibx-linux/
 MLXLIB = $(MLXDIRLIB)$(MLXLIBNAME)
 

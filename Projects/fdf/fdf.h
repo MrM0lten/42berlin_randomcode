@@ -30,15 +30,29 @@ typedef struct  s_program
 
 typedef struct	s_p3
 {
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 }				p3;
 
+typedef struct s_plane
+{
+	p3 x_vec;
+	p3 y_vec;
+}				t_plane;
+
+typedef struct s_camera
+{
+	p3 world_pos;
+	t_plane plane;
+}				camera;
+
+
+
 //vector math
-p3 *p_add(p3 *a, p3 *b);
-p3 *p_sub(p3 *a, p3 *b);
-double vector_len(p3 *vec);
+p3 p_add(p3 *a, p3 *b);
+p3 p_sub(p3 *a, p3 *b);
+double vector_len(p3 vec);
 
 //Drawing utils
 void drawline(void *mlx_ptr, void *win_ptr, p3 *a, p3 *b, int color);
