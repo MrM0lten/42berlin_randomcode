@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-void drawline(void *mlx_ptr, void *win_ptr, p3 *a, p3 *b, int color)
+void drawline( t_prog *prog, p3 a, p3 b, int color)
 {
 	double len;
 	double i;
@@ -14,7 +14,7 @@ void drawline(void *mlx_ptr, void *win_ptr, p3 *a, p3 *b, int color)
 	{
 		t = i / len;
 		temp = p_sub(a,b);
-		mlx_pixel_put(mlx_ptr, win_ptr,(1 - t) * temp.x + b->x,(1 - t) * temp.y + b->y, color);
+		mlx_pixel_put(prog->mlx, prog->win,(1 - t) * temp.x + b.x,(1 - t) * temp.y + b.y, color);
 		i += 1;
 	}
 }

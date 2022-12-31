@@ -1,22 +1,22 @@
 #include "fdf.h"
 
-p3 p_add(p3 *a, p3 *b)
+p3 p_add(p3 a, p3 b)
 {
 	p3 new;
 
-	new.x = a->x + b->x;
-	new.y = a->y + b->y;
-	new.z = a->z + b->z;
+	new.x = a.x + b.x;
+	new.y = a.y + b.y;
+	new.z = a.z + b.z;
 	return (new);
 }
 
-p3 p_sub(p3 *a, p3 *b)
+p3 p_sub(p3 a, p3 b)
 {
 	p3 new;
 
-	new.x = a->x - b->x;
-	new.y = a->y - b->y;
-	new.z = a->z - b->z;
+	new.x = a.x - b.x;
+	new.y = a.y - b.y;
+	new.z = a.z - b.z;
 	return (new);
 }
 

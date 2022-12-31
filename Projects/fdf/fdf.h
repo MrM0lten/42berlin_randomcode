@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <math.h>
 # include <stdio.h>
+# include <stdlib.h>
 
 # include "./libft/includes/libft.h"
 # include "./libft/includes/ft_printf.h"
@@ -40,20 +41,37 @@ typedef struct	s_matrix
 	float m[4][4];
 }				mat4x4;
 
+typedef struct	s_edge
+{
+	int elem_a;
+	int elem_b;
+}				edge;
+
+typedef struct s_object
+{
+	p3 **verticies;
+	edge **edges;
+	int total_edges;
+	int total_verticies;
+}				object;
 
 
 //vector math
-p3 p_add(p3 *a, p3 *b);
-p3 p_sub(p3 *a, p3 *b);
+p3 p_add(p3 a, p3 b);
+p3 p_sub(p3 a, p3 b);
 double vector_len(p3 vec);
 
 //Drawing utils
-void drawline(void *mlx_ptr, void *win_ptr, p3 *a, p3 *b, int color);
+void drawline(t_prog *prog, p3 a, p3 b, int color);
+void draw_object(object *obj, t_prog *prog,int color);
 
 //debugging
 void print_point(p3 *p);
 
 mat4x4 generate_mat4x4(void);
-
+p3 project(p3 p);
+void transform_object(p3 *obj,p3 pos);
+p3 *generate_point(int x, int y, int z);
+void	iso(float *x, float *y, float z);
 
 #endif
