@@ -8,7 +8,7 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 	p3 temp;
 
 	len = vector_len(p_sub(a,b));
-	printf("%lf\n",len);
+	//printf("%lf\n",len);
 	i = 0;
 	while(i < len)
 	{

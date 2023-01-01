@@ -19,15 +19,6 @@ p3 p_sub(p3 a, p3 b)
 	new.z = a.z - b.z;
 	return (new);
 }
-
-void print_point(p3 *p)
-{
-	printf("p.x = %lf\n",p->x);
-	printf("p.y = %lf\n",p->y);
-	printf("p.z = %lf\n",p->z);
-	printf("---------------------\n");
-}
-
 //allocates space for a point on the heap and returns a pointer to it
 p3 *generate_point(int x, int y, int z)
 {

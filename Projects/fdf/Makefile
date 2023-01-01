@@ -1,4 +1,4 @@
-SRC = main.c drawing_utils.c point_utils.c random.c input.c object.c
+SRC = main.c drawing_utils.c point_utils.c random.c input.c object.c debug.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc
@@ -21,8 +21,8 @@ LIBS = libs
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+$(NAME): $(OBJS) #$(LIBS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 $(LIBS):
 	@$(MAKE) -C $(DIRLIB)

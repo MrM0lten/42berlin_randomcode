@@ -24,6 +24,7 @@
 # include "./libft/includes/libft.h"
 # include "./libft/includes/ft_printf.h"
 # include "./libft/includes/get_next_line.h"
+# include "./libft/includes/array_utils.h"
 # include "./minilibx-linux/mlx.h"
 
 # define ESC 65307
@@ -35,6 +36,7 @@
 # define NUM_PLUS 65451
 # define NUM_MIN 65453
 
+# define DEFAULTCOL 0xfffafa
 
 
 typedef struct	s_p3
@@ -44,11 +46,6 @@ typedef struct	s_p3
 	float z;
 }				p3;
 
-typedef struct	s_matrix
-{
-	float m[4][4];
-}				mat4x4;
-
 typedef struct	s_edge
 {
 	int elem_a;
@@ -57,8 +54,10 @@ typedef struct	s_edge
 
 typedef struct s_object
 {
-	p3 **verticies;
-	edge **edges;
+	p3 *verticies;
+	int *vertex_color;
+	edge *edges;
+	p3 object_dim;
 	int total_edges;
 	int total_verticies;
 }				object;
@@ -72,6 +71,8 @@ typedef struct  s_program
 	
 }               t_prog;
 
+
+
 //vector math
 p3 p_add(p3 a, p3 b);
 p3 p_sub(p3 a, p3 b);
@@ -84,15 +85,15 @@ void draw(t_prog *prog,object *obj);
 
 //debugging
 void print_point(p3 *p);
+void print_object(object *obj);
 
-mat4x4 generate_mat4x4(void);
 void transform_object(object *obj,p3 pos);
 void scale_object(object *obj, float factor);
 
 p3 *generate_point(int x, int y, int z);
 
 //projection
-void	iso(float *x, float *y, float z);
+void iso(float *x, float *y, float z);
 p3 project(p3 p);
 
 //error handling
@@ -102,7 +103,15 @@ int validate_filetype(char *file,char *expected);
 //input
 int handle_input(int keycode, void *param);
 
-//object inits
+//Map Parsing
 object *init_object(char *filename);
+
+void free_string_arr(char **arr);
+void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int y);
+void read_fdf_file(int fd);
+
+//general utility, use for libft later
+void *ft_realloc(void *old, size_t old_size, size_t new_size);
+void *ft_puterror(int fd,char * filename, char *err_mes);
 
 #endif

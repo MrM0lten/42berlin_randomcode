@@ -1,21 +1,16 @@
 #include "fdf.h"
 
-mat4x4 generate_mat4x4(void)
-{
-	mat4x4 m = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
-
-	return (m);
-}
 void transform_object(object *obj,p3 pos)
 {
 	int i;
 
 	i = 0;
+	//ft_printf("entered transform object\n");
 	while(i < obj->total_verticies)
 	{
-		obj->verticies[i]->x += pos.x;
-		obj->verticies[i]->y += pos.y;
-		obj->verticies[i]->z += pos.z;
+		obj->verticies[i].x += pos.x;
+		obj->verticies[i].y += pos.y;
+		obj->verticies[i].z += pos.z;
 		i++;
 	}
 
@@ -27,9 +22,9 @@ void scale_object(object *obj, float factor)
 	i = 0;
 	while(i < obj->total_verticies)
 	{
-		obj->verticies[i]->x *= factor;
-		obj->verticies[i]->y *= factor;
-		obj->verticies[i]->z *= factor;
+		obj->verticies[i].x *= factor;
+		obj->verticies[i].y *= factor;
+		obj->verticies[i].z *= factor;
 		i++;
 	}
 
@@ -47,26 +42,16 @@ void	iso(float *x, float *y, float z)
 	*y = -z + (temp_x + temp_y) * sin(0.523599);
 }
 
-void free_object(object *obj)
+void *ft_realloc(void *old, size_t old_size, size_t new_size)
 {
-	int i;
+	void *new;
+	size_t copy_size;
 
-	i = -1;
-	if(obj)
-	{
-		if(obj->edges)
-		{
-			while(++i < obj->total_edges)
-				free(obj->edges[i]);
-			free(obj->edges);
-		}
-		if(obj->verticies)
-		{
-			i = -1;
-			while(++i < obj->total_verticies)
-				free(obj->verticies[i]);
-			free(obj->verticies);
-		}
-		free(obj);
-	}
+	new = malloc(new_size);
+	copy_size = old_size;
+	if(new_size < old_size)
+		copy_size = new_size;
+	ft_memcpy(new,old,copy_size);
+	free(old);
+	return (new);
 }

@@ -13,103 +13,74 @@
 #include "fdf.h"
 #define Y_SIZE 500
 #define X_SIZE 500
-#define ASPECT_RATIO X_SIZE/Y_SIZE
+#define ASPECT_RATIO X_SIZE / Y_SIZE
 
-int test(int button, int x, int y,void *param)
+int test(int button, int x, int y, void *param)
 {
 	t_prog *prog = param;
-	mlx_pixel_put(prog->mlx,prog->win,x,y,0xfffafa);
-	
+	mlx_pixel_put(prog->mlx, prog->win, x, y, 0xfffafa);
+
 	return (0);
 }
 
 
-
-p3 matmult(mat4x4 m, p3 p)
-{
-	p3 temp;
-
-	temp = p;
-	p.x = temp.x * m.m[0][0] + temp.y * m.m[1][0] + temp.z * m.m[2][0] + m.m[3][0];
-	p.y = temp.x * m.m[0][1] + temp.y * m.m[1][1] + temp.z * m.m[2][1] + m.m[3][1];
-	p.z = temp.x * m.m[0][2] + temp.y * m.m[1][2] + temp.z * m.m[2][2] + m.m[3][2];
-	float w = temp.x * m.m[0][3] + temp.y * m.m[1][3] + temp.z * m.m[2][3] + m.m[3][3];
-
-	printf("\n");
-	printf("[%lf][%lf][%lf][%lf]\n", m.m[0][0],m.m[0][1],m.m[0][2],m.m[0][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m.m[1][0],m.m[1][1],m.m[1][2],m.m[1][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m.m[2][0],m.m[2][1],m.m[2][2],m.m[2][3]);
-	printf("[%lf][%lf][%lf][%lf]\n", m.m[3][0],m.m[3][1],m.m[3][2],m.m[3][3]); 
-
-	if(w != 0.0f)
-	{
-		p.x /= w;
-		p.y /= w;
-		p.z /= w;
-	}
-	return (p);
-}
-
 object *create_unitcube()
 {
 	object *cube;
-	p3 p_in[] =	{{0.f,0.f,0.f},{0.f,0.f,1.f},{1.f,0.f,1.f},{1.f,0.f,0.f},
-					{0.f,1.f,0.f},{0.f,1.f,1.f},{1.f,1.f,1.f},{1.f,1.f,0.f}};
-	cube =(object *)malloc(sizeof(object));
-	cube->verticies = (p3 **)malloc(sizeof(p3 *) * 8);
-	cube->edges = (edge **)malloc(sizeof(edge *) * 12);
+	p3 p_in[] = {{0.f, 0.f, 0.f}, {0.f, 0.f, 1.f}, {1.f, 0.f, 1.f}, {1.f, 0.f, 0.f}, {0.f, 1.f, 0.f}, {0.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 0.f}};
+	cube = (object *)malloc(sizeof(object));
+	cube->verticies = (p3 *)malloc(sizeof(p3) * 8);
+	cube->vertex_color = (int *)malloc(sizeof(int) * 8);
+	cube->edges = (edge *)malloc(sizeof(edge) * 12);
 	cube->total_edges = 12;
 	cube->total_verticies = 8;
 
 	int i = 0;
 	p3 *temp;
-	while(i < 8)
+	while (i < 8)
 	{
-		cube->verticies[i] = generate_point(p_in[i].x,p_in[i].y,p_in[i].z);
+		cube->verticies[i].x = p_in[i].x;
+		cube->verticies[i].y = p_in[i].y;
+		cube->verticies[i].z = p_in[i].z;
+		cube->vertex_color[i] = DEFAULTCOL;
 		i++;
 	}
-	i = 0;
-	while(i < 12)
-	{
-		cube->edges[i] = (edge *)ft_calloc(sizeof(edge),1);
-		i++;
-	}
-	cube->edges[0]->elem_a = 0;
-	cube->edges[0]->elem_b = 1;
-	cube->edges[1]->elem_a = 1;
-	cube->edges[1]->elem_b = 2;
-	cube->edges[2]->elem_a = 2;
-	cube->edges[2]->elem_b = 3;
-	cube->edges[3]->elem_a = 3;
-	cube->edges[3]->elem_b = 0;
-	cube->edges[4]->elem_a = 4;
-	cube->edges[4]->elem_b = 5;
-	cube->edges[5]->elem_a = 5;
-	cube->edges[5]->elem_b = 6;
-	cube->edges[6]->elem_a = 6;
-	cube->edges[6]->elem_b = 7;
-	cube->edges[7]->elem_a = 7;
-	cube->edges[7]->elem_b = 4;
-	cube->edges[8]->elem_a = 0;
-	cube->edges[8]->elem_b = 4;
-	cube->edges[9]->elem_a = 1;
-	cube->edges[9]->elem_b = 5;
-	cube->edges[10]->elem_a = 2;
-	cube->edges[10]->elem_b = 6;
-	cube->edges[11]->elem_a = 3;
-	cube->edges[11]->elem_b = 7;
+	cube->edges[0].elem_a = 0;
+	cube->edges[0].elem_b = 1;
+	cube->edges[1].elem_a = 1;
+	cube->edges[1].elem_b = 2;
+	cube->edges[2].elem_a = 2;
+	cube->edges[2].elem_b = 3;
+	cube->edges[3].elem_a = 3;
+	cube->edges[3].elem_b = 0;
+	cube->edges[4].elem_a = 4;
+	cube->edges[4].elem_b = 5;
+	cube->edges[5].elem_a = 5;
+	cube->edges[5].elem_b = 6;
+	cube->edges[6].elem_a = 6;
+	cube->edges[6].elem_b = 7;
+	cube->edges[7].elem_a = 7;
+	cube->edges[7].elem_b = 4;
+	cube->edges[8].elem_a = 0;
+	cube->edges[8].elem_b = 4;
+	cube->edges[9].elem_a = 1;
+	cube->edges[9].elem_b = 5;
+	cube->edges[10].elem_a = 2;
+	cube->edges[10].elem_b = 6;
+	cube->edges[11].elem_a = 3;
+	cube->edges[11].elem_b = 7;
 
-/* 	int i =0;
-	while(i < 8)
-	{
-		print_point(&cube->verticies[i]);
-		i++;
-	} */
-	
+	/* 	int i =0;
+		while(i < 8)
+		{
+			print_point(&cube->verticies[i]);
+			i++;
+		} */
+
 	return (cube);
 }
 
-//creates non allocated temp point
+// creates non allocated temp point
 p3 create_point(p3 *p)
 {
 	p3 p_new;
@@ -118,12 +89,12 @@ p3 create_point(p3 *p)
 	return (p_new);
 }
 
-//does all the interesting transformation and projections with the endresult of a 2d projected point
+// does all the interesting transformation and projections with the endresult of a 2d projected point
 p3 project(p3 p)
 {
-	iso(&p.x,&p.y,p.z);
+	iso(&p.x, &p.y, p.z);
 
-	//scale into view
+	// scale into view
 	p.x += 1.0f;
 	p.y += 1.0f;
 	p.x *= 0.5f * (float)X_SIZE / 2;
@@ -132,51 +103,42 @@ p3 project(p3 p)
 	return (p);
 }
 
-void draw(t_prog *prog,object *obj)
+void draw(t_prog *prog, object *obj)
 {
 	int i;
 
-	i =0;
-	while(i < obj->total_edges)
+	i = 0;
+	while (i < obj->total_edges)
 	{
 		drawline(prog,
-		project(create_point(obj->verticies[obj->edges[i]->elem_a])),
-		project(create_point(obj->verticies[obj->edges[i]->elem_b])),
-		0x228b22);
+				 project(create_point(&obj->verticies[obj->edges[i].elem_a])),
+				 project(create_point(&obj->verticies[obj->edges[i].elem_b])),
+				 obj->vertex_color[obj->edges[i].elem_b]);
 		i++;
 	}
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
 	t_prog prog;
 
-    prog.mlx = mlx_init();
-    prog.win = mlx_new_window(prog.mlx, X_SIZE, Y_SIZE, "PogBrudi");
-	prog.img = mlx_new_image(prog.mlx,X_SIZE,Y_SIZE);
-	if(ac == 1)
+	prog.mlx = mlx_init();
+	prog.win = mlx_new_window(prog.mlx, X_SIZE, Y_SIZE, "PogBrudi");
+	prog.img = mlx_new_image(prog.mlx, X_SIZE, Y_SIZE);
+	if (ac == 1)
 		prog.obj = create_unitcube();
-	if(av[1] != NULL)
+	if (av[1] != NULL)
 		prog.obj = init_object(av[1]);
 
 	mlx_mouse_hook(prog.win, &test, &prog);
 	mlx_key_hook(prog.win, &handle_input, &prog);
-	
 
-	
-
-	
-	if(prog.obj)
+	if (prog.obj)
 	{
-		draw(&prog,prog.obj);
 		ft_printf("fml\n");
+		draw(&prog, prog.obj);
 		mlx_loop(prog.mlx);
 	}
 
-
-	
-	
 	return (0);
 }
-
-

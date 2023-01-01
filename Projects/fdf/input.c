@@ -3,6 +3,7 @@
 int handle_input(int keycode, void *param)
 {
 	t_prog *prog = param;
+	ft_printf("keycode = %i\n",keycode);
 	if(keycode == W) //enter
 	{
 		p3 test= {0,-1,0};
