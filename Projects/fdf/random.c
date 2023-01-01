@@ -6,12 +6,35 @@ mat4x4 generate_mat4x4(void)
 
 	return (m);
 }
-void transform_object(p3 *obj,p3 pos)
+void transform_object(object *obj,p3 pos)
 {
-	obj->x += pos.x;
-	obj->y += pos.y;
-	obj->z += pos.z;
+	int i;
+
+	i = 0;
+	while(i < obj->total_verticies)
+	{
+		obj->verticies[i]->x += pos.x;
+		obj->verticies[i]->y += pos.y;
+		obj->verticies[i]->z += pos.z;
+		i++;
+	}
+
 }
+void scale_object(object *obj, float factor)
+{
+	int i;
+
+	i = 0;
+	while(i < obj->total_verticies)
+	{
+		obj->verticies[i]->x *= factor;
+		obj->verticies[i]->y *= factor;
+		obj->verticies[i]->z *= factor;
+		i++;
+	}
+
+}
+
 
 void	iso(float *x, float *y, float z)
 {

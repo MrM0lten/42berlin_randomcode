@@ -19,18 +19,11 @@ int test(int button, int x, int y,void *param)
 {
 	t_prog *prog = param;
 	mlx_pixel_put(prog->mlx,prog->win,x,y,0xfffafa);
+	
 	return (0);
 }
-int close_prog(int keycode, void *param)
-{
-	t_prog *prog = param;
-	if(keycode == 65307 || keycode == 65507 || keycode == 65535 )
-	{
-		mlx_destroy_window(prog->mlx,prog->win);
-		mlx_loop_end(prog->mlx);
-	}
-	return (0);
-}
+
+
 
 p3 matmult(mat4x4 m, p3 p)
 {
@@ -154,30 +147,33 @@ void draw(t_prog *prog,object *obj)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
-
 	t_prog prog;
-	p3 p_in[] =	{{0.f,0.f,0.f},{0.f,0.f,1.f},{1.f,0.f,1.f},{1.f,0.f,0.f},
-					{0.f,1.f,0.f},{0.f,1.f,1.f},{1.f,1.f,1.f},{1.f,1.f,0.f}};
-	p3 p_out[] =	{{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f},{0.f,0.f,0.f}};
-	int i = 0;
 
     prog.mlx = mlx_init();
     prog.win = mlx_new_window(prog.mlx, X_SIZE, Y_SIZE, "PogBrudi");
+	prog.img = mlx_new_image(prog.mlx,X_SIZE,Y_SIZE);
+	if(ac == 1)
+		prog.obj = create_unitcube();
+	if(av[1] != NULL)
+		prog.obj = init_object(av[1]);
+
 	mlx_mouse_hook(prog.win, &test, &prog);
-	mlx_key_hook(prog.win, &close_prog, &prog);
+	mlx_key_hook(prog.win, &handle_input, &prog);
+	
 
-	object *cube = create_unitcube();
-	 i =0;
-	 ft_printf("\n\n\n");
-	draw(&prog,cube);
+	
+
+	
+	if(prog.obj)
+	{
+		draw(&prog,prog.obj);
+		ft_printf("fml\n");
+		mlx_loop(prog.mlx);
+	}
 
 
-
-
-	ft_printf("fml\n");
-	mlx_loop(prog.mlx);
 	
 	
 	return (0);
