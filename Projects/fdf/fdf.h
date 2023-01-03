@@ -71,8 +71,6 @@ typedef struct  s_program
 	
 }               t_prog;
 
-
-
 //vector math
 p3 p_add(p3 a, p3 b);
 p3 p_sub(p3 a, p3 b);

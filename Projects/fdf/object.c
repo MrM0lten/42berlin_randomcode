@@ -1,4 +1,5 @@
 #include "fdf.h"
+#include "malloc.h"
 
 #define VERTEXBUFF 10000
 #define FDF_VERTEXDISTANCE 1
@@ -19,7 +20,8 @@ void put_object_edge_data(object *obj)
 	int edge_num;
 	size_t tot_edges;
 
-	tot_edges = 1000;//(obj->object_dim.y * (obj->object_dim.x - 1)+ obj->object_dim.x * (obj->object_dim.y - 1));
+	tot_edges = ((int)obj->object_dim.y * (int)(obj->object_dim.x - 1)+ (int)obj->object_dim.x * (int)(obj->object_dim.y - 1)) ;
+	printf("TOTAL EDGES %u\n",tot_edges);
 	obj->edges = (edge *)malloc(sizeof(edge) * tot_edges);
 	i = 0;
 	edge_num = 0;
@@ -36,16 +38,17 @@ void put_object_edge_data(object *obj)
 		i++;
 	}
 	i = 0;
-	while(i < obj->total_verticies - 1)
+	while(i < obj->total_verticies - obj->object_dim.x)
 	{
 		//ft_printf("i = %i, eval to %i\n",i,(i - ((int)obj->object_dim.x -1)) % 19 );
 		obj->edges[edge_num].elem_a = i;
 		obj->edges[edge_num].elem_b = i+(int)(obj->object_dim.x);
-		//ft_printf("connecting <%i,%i>\n",i,i+(int)(obj->object_dim.x));
+		ft_printf("connecting <%i,%i>\n",i,i+(int)(obj->object_dim.x));
 		edge_num++;
 		i++;
 	}
 	obj->total_edges = edge_num;
+	ft_printf("TOTAL EDGES in edge_num = %i\n", edge_num);
 	ft_printf("wtaf\n");
 }
 
@@ -121,18 +124,19 @@ object *parse_fdf_file(int fd)
 	mesh->object_dim.x = mesh->total_verticies / y;
 	mesh->object_dim.y = y;
 	
-	print_object(mesh);
+	//print_object(mesh);
 	put_object_edge_data(mesh);
 
-	//recheck if this really works
-	//mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * VERTEXBUFF, sizeof(p3) * mesh->total_verticies);
-	//mesh->vertex_color = ft_realloc(mesh->vertex_color, sizeof(int) * VERTEXBUFF, sizeof(int) * mesh->total_verticies);
+	//check how accurate it is, currently seems like it is the case
+	mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * VERTEXBUFF, sizeof(p3) * mesh->total_verticies);
+	mesh->vertex_color = ft_realloc(mesh->vertex_color, sizeof(int) * VERTEXBUFF, sizeof(int) * mesh->total_verticies);
 
-
+/* 	printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
+	malloc_stats(); */
 
 	
 	ft_printf("test\n");
-	print_object(mesh);
+	//print_object(mesh);
 	return (mesh);
 }
 
