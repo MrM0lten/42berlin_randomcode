@@ -1,7 +1,7 @@
 #include "fdf.h"
 
 #define VERTEXBUFF 10000
-#define FDF_VERTEXDISTANCE 10
+#define FDF_VERTEXDISTANCE 1
 
 int count_elems(char **str)
 {
@@ -12,55 +12,40 @@ int count_elems(char **str)
 		i++;
 	return (i);
 }
-/* int ft_hex_to_i(char *str)
-{
-
-} */
 
 void put_object_edge_data(object *obj)
 {
 	int i;
-	int j;
 	int edge_num;
+	size_t tot_edges;
 
-	obj->edges = (edge *)malloc(sizeof(edge) * 1000);
-
+	tot_edges = 1000;//(obj->object_dim.y * (obj->object_dim.x - 1)+ obj->object_dim.x * (obj->object_dim.y - 1));
+	obj->edges = (edge *)malloc(sizeof(edge) * tot_edges);
 	i = 0;
 	edge_num = 0;
-	j = 0;
 	while(i < obj->total_verticies - 1)
 	{
-		if(i % 5 != 0 || i == 0)
-		{
+		//ft_printf("i = %i, eval to %i\n",i,(i - ((int)obj->object_dim.x -1)) % 19 );
+		if((i - (int)(obj->object_dim.x -1)) % (int)obj->object_dim.x != 0) //IMPORTANT THINK ABOUT A WAY TO HAVE DIMENSIONS BE FLOATS note: may not be important due to map handling
+		{	
 			obj->edges[edge_num].elem_a = i;
 			obj->edges[edge_num].elem_b = i+1;
-			ft_printf("connecting <%i,%i>\n",i,i+1);
+			//ft_printf("connecting <%i,%i>\n",i,i+1);
 			edge_num++;
 		}
-
-		
 		i++;
-		
 	}
-
-/* 	while(i < obj->object_dim.y -1)
+	i = 0;
+	while(i < obj->total_verticies - 1)
 	{
-		j = 0;
-		while(j < obj->object_dim.x - 1)
-		{
-			//edges[edge_num].elem_a = (obj->total_verticies % obj->object_dim.x) + (obj->total_verticies / obj->object_dim.x) * j + j;
-			//edges[edge_num].elem_b = (obj->total_verticies % obj->object_dim.x) + (obj->total_verticies / obj->object_dim.x) * j + j +1;
-			ft_printf("connecting <%i,%i>\n", ((obj->total_verticies % (int)obj->object_dim.x) + (obj->total_verticies / (int)obj->object_dim.x) * i + i + j),
-			(obj->total_verticies % (int)obj->object_dim.x) + (obj->total_verticies / (int)obj->object_dim.x) * i + i + j + 1);
-			j++;
-			edge_num++;
-		}
+		//ft_printf("i = %i, eval to %i\n",i,(i - ((int)obj->object_dim.x -1)) % 19 );
+		obj->edges[edge_num].elem_a = i;
+		obj->edges[edge_num].elem_b = i+(int)(obj->object_dim.x);
+		//ft_printf("connecting <%i,%i>\n",i,i+(int)(obj->object_dim.x));
+		edge_num++;
 		i++;
-	} */
-
-
-	//obj->total_edges = edge_num;
-
+	}
+	obj->total_edges = edge_num;
 	ft_printf("wtaf\n");
 }
 
@@ -74,22 +59,26 @@ void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int
 	{
 		if(ft_strrchr(splitline[i],','))
 		{
-			printf("adasdsa");
-			mesh->verticies[mesh->total_verticies + i].x = i * FDF_VERTEXDISTANCE;
-			mesh->verticies[mesh->total_verticies + i].y = y * FDF_VERTEXDISTANCE;
-			//mesh->verticies[mesh->total_verticies + i].z = ft_atoi(ft_substr(splitline[i],0,ft_strrchr(splitline[i],',')));
-			//mesh->vertex_color[mesh->total_verticies + i] = ft_hex_to_i(ft_substr(splitline[i],ft_strrchr(splitline[i],',') +1,20));
+			//printf("adasdsa");
+			mesh->verticies[mesh->total_verticies].x = i * FDF_VERTEXDISTANCE;
+			mesh->verticies[mesh->total_verticies].y = y * FDF_VERTEXDISTANCE;
+			mesh->verticies[mesh->total_verticies].z = ft_atoi(ft_substr(splitline[i],0,ft_poschr(splitline[i],',')));
+			mesh->vertex_color[mesh->total_verticies] = ft_hextoi(ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20));
+			//ft_printf(" i* fdf = %i",i * FDF_VERTEXDISTANCE);
 		}
 		else
 		{
-			printf("here");
-			mesh->verticies[mesh->total_verticies + i].x = i * FDF_VERTEXDISTANCE;
-			mesh->verticies[mesh->total_verticies + i].y = y * FDF_VERTEXDISTANCE;
-			mesh->verticies[mesh->total_verticies + i].z = ft_atoi(splitline[i]);
+			//printf("here\n");
+			mesh->verticies[mesh->total_verticies ].x = i * FDF_VERTEXDISTANCE;
+			mesh->verticies[mesh->total_verticies ].y = y * FDF_VERTEXDISTANCE;
+			mesh->verticies[mesh->total_verticies ].z = ft_atoi(splitline[i]);
+			//ft_printf(" i* fdf = %i",i * FDF_VERTEXDISTANCE);
 			//ft_printf("ft_atoi(splitline[i]) = %i\n",ft_atoi(splitline[i]));
 			//print_point(&mesh->verticies[mesh->total_verticies + i]);
-			mesh->vertex_color[mesh->total_verticies + i] = DEFAULTCOL;
+			mesh->vertex_color[mesh->total_verticies] = DEFAULTCOL;
 		}
+		if(mesh->verticies[mesh->total_verticies ].z > mesh->object_dim.z)
+			mesh->object_dim.z = mesh->verticies[mesh->total_verticies ].z;
 		i++;
 		mesh->total_verticies++;
 	}
@@ -107,8 +96,11 @@ object *parse_fdf_file(int fd)
 	mesh = (object *)malloc(sizeof(object));
 	mesh->verticies = (p3 *)malloc(sizeof(p3 ) * VERTEXBUFF);
 	mesh->vertex_color = (int *)malloc(sizeof(int) * VERTEXBUFF);
+
 	mesh->total_verticies = 0;
-	
+	mesh->total_edges = 0;
+	mesh->object_dim.z = 0;
+
 	line = get_next_line(fd);
 	y = 0;
 	while(line)
@@ -128,24 +120,19 @@ object *parse_fdf_file(int fd)
 	}
 	mesh->object_dim.x = mesh->total_verticies / y;
 	mesh->object_dim.y = y;
-	mesh->object_dim.z = 0; //calculate z later based on max z height
 	
-	//mesh->total_verticies = ft_realloc(mesh->total_verticies, sizeof(p3) * VertexBuffer, sizeof(p3) * mesh->total_verticies);
-	//mesh->vertex_color = ft_realloc(mesh->total_verticies, sizeof(int) * VertexBuffer, sizeof(int) * mesh->total_verticies);
-
-
-
+	print_object(mesh);
 	put_object_edge_data(mesh);
-	ft_printf("test\n");
-	mesh->edges[0].elem_a = 0;
-	mesh->edges[0].elem_b = 1;
-	mesh->edges[1].elem_a = 1;
-	mesh->edges[1].elem_b = 2;
-	mesh->edges[2].elem_a = 1;
-	mesh->edges[2].elem_b = 19;
-	mesh->total_edges =3;
 
-	//print_object(mesh);
+	//recheck if this really works
+	//mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * VERTEXBUFF, sizeof(p3) * mesh->total_verticies);
+	//mesh->vertex_color = ft_realloc(mesh->vertex_color, sizeof(int) * VERTEXBUFF, sizeof(int) * mesh->total_verticies);
+
+
+
+	
+	ft_printf("test\n");
+	print_object(mesh);
 	return (mesh);
 }
 

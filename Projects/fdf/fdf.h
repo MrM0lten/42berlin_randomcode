@@ -113,5 +113,7 @@ void read_fdf_file(int fd);
 //general utility, use for libft later
 void *ft_realloc(void *old, size_t old_size, size_t new_size);
 void *ft_puterror(int fd,char * filename, char *err_mes);
+size_t	ft_poschr(const char *str, int c);
+int ft_hextoi(char *str);
 
 #endif

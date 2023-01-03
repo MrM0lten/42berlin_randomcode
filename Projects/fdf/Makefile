@@ -21,7 +21,7 @@ LIBS = libs
 
 all: $(NAME)
 
-$(NAME): $(OBJS) #$(LIBS)
+$(NAME): $(OBJS) $(LIBS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 $(LIBS):

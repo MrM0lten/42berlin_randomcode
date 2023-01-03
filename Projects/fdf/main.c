@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#define Y_SIZE 500
-#define X_SIZE 500
+#define Y_SIZE 1000
+#define X_SIZE 1000
 #define ASPECT_RATIO X_SIZE / Y_SIZE
 
 int test(int button, int x, int y, void *param)
@@ -70,13 +70,6 @@ object *create_unitcube()
 	cube->edges[11].elem_a = 3;
 	cube->edges[11].elem_b = 7;
 
-	/* 	int i =0;
-		while(i < 8)
-		{
-			print_point(&cube->verticies[i]);
-			i++;
-		} */
-
 	return (cube);
 }
 
@@ -120,24 +113,26 @@ void draw(t_prog *prog, object *obj)
 
 int main(int ac, char **av)
 {
-	t_prog prog;
+	t_prog *prog;
 
-	prog.mlx = mlx_init();
-	prog.win = mlx_new_window(prog.mlx, X_SIZE, Y_SIZE, "PogBrudi");
-	prog.img = mlx_new_image(prog.mlx, X_SIZE, Y_SIZE);
+	prog = malloc(sizeof(t_prog));
+
+	prog->mlx = mlx_init();
+	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "PogBrudi");
+	prog->img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
 	if (ac == 1)
-		prog.obj = create_unitcube();
+		prog->obj = create_unitcube();
 	if (av[1] != NULL)
-		prog.obj = init_object(av[1]);
+		prog->obj = init_object(av[1]);
 
-	mlx_mouse_hook(prog.win, &test, &prog);
-	mlx_key_hook(prog.win, &handle_input, &prog);
+	mlx_mouse_hook(prog->win, &test, prog);
+	mlx_key_hook(prog->win, &handle_input, prog);
 
-	if (prog.obj)
+	if (prog->obj)
 	{
 		ft_printf("fml\n");
-		draw(&prog, prog.obj);
-		mlx_loop(prog.mlx);
+		draw(prog, prog->obj);
+		mlx_loop(prog->mlx);
 	}
 
 	return (0);
