@@ -2,7 +2,7 @@
 
 void print_point(p3 *p)
 {
-	printf(" <%lf,%lf,%lf>",p->x,p->y,p->z);
+	printf(" <%lf,%lf,%lf>\n",p->x,p->y,p->z);
 }
 
 

@@ -135,6 +135,7 @@ int main(int ac, char **av)
 		draw(prog, prog->obj);
 		mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
 		ft_printf("end\n");
+		print_object(prog->obj);
 		mlx_loop(prog->mlx);
 	}
 

@@ -1,7 +1,7 @@
 #include "fdf.h"
 #include "malloc.h"
 
-#define VERTEXBUFF 10000
+#define VERTEXBUFF 50000
 #define FDF_VERTEXDISTANCE 1
 
 int count_elems(char **str)

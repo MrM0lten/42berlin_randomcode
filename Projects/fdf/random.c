@@ -91,4 +91,11 @@ int ft_hextoi(char *str)
 		i++;
 	}
 	return (rtn);
-} 
+}
+
+int ft_abs(int x)
+{
+	if(x < 0)
+		return (-x);
+	return (x);
+}
