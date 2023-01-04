@@ -1,4 +1,4 @@
-SRC = main.c drawing_utils.c point_utils.c random.c input.c object.c debug.c
+SRC = main.c drawing_utils.c point_utils.c random.c input.c object.c debug.c project.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc

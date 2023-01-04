@@ -65,6 +65,24 @@ int handle_input(int keycode, void *param)
 		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
+	if(keycode == NUM4) //scale XY
+	{
+		prog->rot.x += 0.05;
+		put_image(prog,0,0);
+		draw(prog,prog->obj);
+	}
+	if(keycode == NUM8) //scale XY
+	{
+		prog->rot.y += 0.05;
+		put_image(prog,0,0);
+		draw(prog,prog->obj);
+	}
+	if(keycode == NUM6) //scale XY
+	{
+		prog->rot.z += 0.05;
+		put_image(prog,0,0);
+		draw(prog,prog->obj);
+	}
 	
 	return (0);
 }

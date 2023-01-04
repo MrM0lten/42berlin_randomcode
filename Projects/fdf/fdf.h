@@ -37,6 +37,10 @@
 # define NUM_MIN 65453
 # define NUMPOINT 65439
 # define NUMZERO 65438
+# define NUM4 65430
+# define NUM8 65431
+# define NUM6 65432
+# define NUM2 65433
 
 # define DEFAULTCOL 0xfffafa
 
@@ -82,6 +86,7 @@ typedef struct  s_program
     void *win;
 	img_data img;
 	object *obj;
+	p3 rot;
 }               t_prog;
 
 
@@ -93,6 +98,7 @@ double vector_len(p3 vec);
 
 //Drawing utils
 void drawline(t_prog *prog, p3 a, p3 b, int color);
+void drawline2(t_prog *prog, p3 a, p3 b, int color);
 void draw_object(object *obj, t_prog *prog,int color);
 void draw(t_prog *prog,object *obj);
 
@@ -107,7 +113,10 @@ p3 *generate_point(int x, int y, int z);
 
 //projection
 void iso(float *x, float *y, float z);
-p3 project(p3 p);
+p3 project(p3 p,t_prog *prog);
+void rotate_x(float *y, float *z, float alpha);
+void	rotate_y(float *x, float *z, float beta);
+void	rotate_z(float *x, float *y, float gamma);
 
 //error handling
 void *ft_puterror(int fd,char * filename, char *err_mes);

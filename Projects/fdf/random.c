@@ -30,7 +30,6 @@ void scale_object(object *obj, p3 factor)
 
 }
 
-
 void	iso(float *x, float *y, float z)
 {
 	float temp_x;

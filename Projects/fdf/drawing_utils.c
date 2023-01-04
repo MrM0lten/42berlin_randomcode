@@ -9,8 +9,6 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 	int x;
 	int y;
 
-	print_point(&a);
-	print_point(&b);
 	len = vector_len(p_sub(a,b));
 	//printf("%lf\n",len);
 	i = 0;
@@ -34,9 +32,10 @@ void drawline2( t_prog *prog, p3 a, p3 b, int color)
 	int dy;
 	int p;
 
-	print_point(&a);
-	print_point(&b);
-	if(a.x < X_SIZE && a.x > 0 && a.y < Y_SIZE && a.y > 0)
+/* 	print_point(&a);
+	print_point(&b); */
+
+/* 	if(a.x < X_SIZE && a.x > 0 && a.y < Y_SIZE && a.y > 0)
 		return ;
 	
 	dx = a.x - b.x;
@@ -54,7 +53,7 @@ void drawline2( t_prog *prog, p3 a, p3 b, int color)
 			p = p + 2 * dy - 2 * dx;
 			a.y++;
 		}
-	}
+	} */
 
 }
 

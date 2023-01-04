@@ -80,19 +80,6 @@ p3 create_point(p3 *p)
 	return (p_new);
 }
 
-// does all the interesting transformation and projections with the endresult of a 2d projected point
-p3 project(p3 p)
-{
-	iso(&p.x, &p.y, p.z);
-
-	// scale into view
-	p.x += 1.0f;
-	p.y += 1.0f;
-	p.x *= 0.5f * (float)X_SIZE / 2;
-	p.y *= 0.5f * (float)Y_SIZE / 2;
-
-	return (p);
-}
 
 void draw(t_prog *prog, object *obj)
 {
@@ -102,8 +89,8 @@ void draw(t_prog *prog, object *obj)
 	while (i < obj->total_edges)
 	{
 		drawline(prog,
-				 project(create_point(&obj->verticies[obj->edges[i].elem_a])),
-				 project(create_point(&obj->verticies[obj->edges[i].elem_b])),
+				 project(create_point(&obj->verticies[obj->edges[i].elem_a]),prog),
+				 project(create_point(&obj->verticies[obj->edges[i].elem_b]),prog),
 				 obj->vertex_color[obj->edges[i].elem_b]);
 		i++;
 	}
