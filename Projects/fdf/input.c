@@ -8,28 +8,28 @@ int handle_input(int keycode, void *param)
 	{
 		p3 test= {0,-1,0};
 		transform_object(prog->obj,test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	if(keycode == S) //enter
 	{
 		p3 test= {0,1,0};
 		transform_object(prog->obj,test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	if(keycode == A) //enter
 	{
 		p3 test= {-1,0,0};
 		transform_object(prog->obj,test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	if(keycode == D) //enter
 	{
 		p3 test= {1,0,0};
 		transform_object(prog->obj,test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	if(keycode == ESC || keycode == 65507 || keycode == 65535 )
@@ -39,16 +39,30 @@ int handle_input(int keycode, void *param)
 	}
 	if(keycode == NUM_MIN) //enter
 	{
-		float test = 0.5;
+		p3 test= {.5,.5,.5};
 		scale_object(prog->obj, test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	if(keycode == NUM_PLUS) //enter
 	{
-		float test = 2;
+		p3 test= {2,2,2};
 		scale_object(prog->obj, test);
-		mlx_clear_window(prog->mlx,prog->win);
+		put_image(prog,0,0);
+		draw(prog,prog->obj);
+	}
+	if(keycode == NUMPOINT) //scale Z
+	{
+		p3 test= {1,1,0.5};
+		scale_object(prog->obj, test);
+		put_image(prog,0,0);
+		draw(prog,prog->obj);
+	}
+	if(keycode == NUMZERO) //scale XY
+	{
+		p3 test= {2,2,1};
+		scale_object(prog->obj, test);
+		put_image(prog,0,0);
 		draw(prog,prog->obj);
 	}
 	

@@ -15,16 +15,16 @@ void transform_object(object *obj,p3 pos)
 	}
 
 }
-void scale_object(object *obj, float factor)
+void scale_object(object *obj, p3 factor)
 {
 	int i;
 
 	i = 0;
 	while(i < obj->total_verticies)
 	{
-		obj->verticies[i].x *= factor;
-		obj->verticies[i].y *= factor;
-		obj->verticies[i].z *= factor;
+		obj->verticies[i].x *= factor.x;
+		obj->verticies[i].y *= factor.y;
+		obj->verticies[i].z *= factor.z;
 		i++;
 	}
 

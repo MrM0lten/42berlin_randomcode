@@ -21,7 +21,7 @@ void put_object_edge_data(object *obj)
 	size_t tot_edges;
 
 	tot_edges = ((int)obj->object_dim.y * (int)(obj->object_dim.x - 1)+ (int)obj->object_dim.x * (int)(obj->object_dim.y - 1)) ;
-	printf("TOTAL EDGES %u\n",tot_edges);
+	printf("TOTAL EDGES %zu\n",tot_edges);
 	obj->edges = (edge *)malloc(sizeof(edge) * tot_edges);
 	i = 0;
 	edge_num = 0;

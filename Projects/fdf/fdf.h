@@ -35,8 +35,14 @@
 # define D 100
 # define NUM_PLUS 65451
 # define NUM_MIN 65453
+# define NUMPOINT 65439
+# define NUMZERO 65438
 
 # define DEFAULTCOL 0xfffafa
+
+#define Y_SIZE 1000
+#define X_SIZE 1000
+#define ASPECT_RATIO X_SIZE / Y_SIZE
 
 
 typedef struct	s_p3
@@ -62,14 +68,23 @@ typedef struct s_object
 	int total_verticies;
 }				object;
 
+typedef struct	s_imgdata {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				img_data;
+
 typedef struct  s_program
 {
     void *mlx;
     void *win;
-	void *img;
+	img_data img;
 	object *obj;
-	
 }               t_prog;
+
+
 
 //vector math
 p3 p_add(p3 a, p3 b);
@@ -86,7 +101,7 @@ void print_point(p3 *p);
 void print_object(object *obj);
 
 void transform_object(object *obj,p3 pos);
-void scale_object(object *obj, float factor);
+void scale_object(object *obj, p3 factor);
 
 p3 *generate_point(int x, int y, int z);
 
@@ -113,5 +128,7 @@ void *ft_realloc(void *old, size_t old_size, size_t new_size);
 void *ft_puterror(int fd,char * filename, char *err_mes);
 size_t	ft_poschr(const char *str, int c);
 int ft_hextoi(char *str);
+void put_pixel(img_data *data, int x, int y, int color);
+void put_image(t_prog *prog, int x, int y);
 
 #endif
