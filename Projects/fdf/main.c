@@ -106,7 +106,7 @@ int main(int ac, char **av)
 	
 	prog->mlx = mlx_init();
 	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "PogBrudi");
-	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
+
 	if (ac == 1)
 		prog->obj = create_unitcube();
 	if (av[1] != NULL)
@@ -115,16 +115,12 @@ int main(int ac, char **av)
 	mlx_mouse_hook(prog->win, &test, prog);
 	mlx_key_hook(prog->win, &handle_input, prog);
 
-	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
-						 &prog->img.line_length, &prog->img.endian);
-
 	if (prog->obj)
 	{
 		ft_printf("fml\n");
 		draw(prog, prog->obj);
-		mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
 		ft_printf("end\n");
-		print_object(prog->obj);
+		//print_object(prog->obj);
 		mlx_loop(prog->mlx);
 	}
 

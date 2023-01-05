@@ -72,7 +72,8 @@ void put_pixel(img_data *data, int x, int y, int color)
 
 void put_new_image(t_prog *prog, int x, int y)
 {
-	free(prog->img.img);
+	if(prog->img.img)
+		free(prog->img.img);
 	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
 	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
 						 &prog->img.line_length, &prog->img.endian);
