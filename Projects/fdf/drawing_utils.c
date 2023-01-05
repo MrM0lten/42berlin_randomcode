@@ -70,20 +70,10 @@ void put_pixel(img_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void put_image(t_prog *prog, int x, int y)
+void put_new_image(t_prog *prog, int x, int y)
 {
-	int i;
-	int j;
-
-	i = 0;
-	
-	//clear image first
-	while(i < Y_SIZE)
-	{
-		j = -1;
-		while(++j < X_SIZE)
-			put_pixel(&prog->img,j,i,0x0);
-		i++;
-	}
-	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, x, y);
+	free(prog->img.img);
+	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
+	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
+						 &prog->img.line_length, &prog->img.endian);
 }

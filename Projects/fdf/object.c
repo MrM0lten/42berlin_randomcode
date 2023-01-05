@@ -57,27 +57,20 @@ void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int
 	int i;
 
 	i = 0;
-	printf("y = %i\n",y);
 	while(i < split_elems)
 	{
 		if(ft_strrchr(splitline[i],','))
 		{
-			//printf("adasdsa");
 			mesh->verticies[mesh->total_verticies].x = i * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies].y = y * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies].z = ft_atoi(ft_substr(splitline[i],0,ft_poschr(splitline[i],',')));
 			mesh->vertex_color[mesh->total_verticies] = ft_hextoi(ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20));
-			//ft_printf(" i* fdf = %i",i * FDF_VERTEXDISTANCE);
 		}
 		else
 		{
-			//printf("here\n");
 			mesh->verticies[mesh->total_verticies ].x = i * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies ].y = y * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies ].z = ft_atoi(splitline[i]);
-			//ft_printf(" i* fdf = %i",i * FDF_VERTEXDISTANCE);
-			//ft_printf("ft_atoi(splitline[i]) = %i\n",ft_atoi(splitline[i]));
-			//print_point(&mesh->verticies[mesh->total_verticies + i]);
 			mesh->vertex_color[mesh->total_verticies] = DEFAULTCOL;
 		}
 		if(mesh->verticies[mesh->total_verticies ].z > mesh->object_dim.z)
@@ -88,6 +81,19 @@ void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int
 	
 }
 
+static object *generate_empty_object()
+{
+	object *mesh;
+	mesh = (object *)malloc(sizeof(object));
+	mesh->verticies = (p3 *)malloc(sizeof(p3 ) * VERTEXBUFF);
+	mesh->vertex_color = (int *)malloc(sizeof(int) * VERTEXBUFF);
+
+	mesh->total_verticies = 0;
+	mesh->total_edges = 0;
+	mesh->object_dim.z = 0;
+	return (mesh);
+}
+
 object *parse_fdf_file(int fd)
 {
 	char *line;
@@ -96,13 +102,7 @@ object *parse_fdf_file(int fd)
 	int split_elems;
 	int y;
 
-	mesh = (object *)malloc(sizeof(object));
-	mesh->verticies = (p3 *)malloc(sizeof(p3 ) * VERTEXBUFF);
-	mesh->vertex_color = (int *)malloc(sizeof(int) * VERTEXBUFF);
-
-	mesh->total_verticies = 0;
-	mesh->total_edges = 0;
-	mesh->object_dim.z = 0;
+	mesh = generate_empty_object();
 
 	line = get_next_line(fd);
 	y = 0;
@@ -124,7 +124,7 @@ object *parse_fdf_file(int fd)
 	mesh->object_dim.x = mesh->total_verticies / y;
 	mesh->object_dim.y = y;
 	
-	//print_object(mesh);
+
 	put_object_edge_data(mesh);
 
 	//check how accurate it is, currently seems like it is the case
@@ -134,9 +134,6 @@ object *parse_fdf_file(int fd)
 /* 	printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
 	malloc_stats(); */
 
-	
-	ft_printf("test\n");
-	//print_object(mesh);
 	return (mesh);
 }
 

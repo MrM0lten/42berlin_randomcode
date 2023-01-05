@@ -86,6 +86,7 @@ void draw(t_prog *prog, object *obj)
 	int i;
 
 	i = 0;
+	put_new_image(prog,0,0);
 	while (i < obj->total_edges)
 	{
 		drawline(prog,
@@ -94,6 +95,7 @@ void draw(t_prog *prog, object *obj)
 				 obj->vertex_color[obj->edges[i].elem_b]);
 		i++;
 	}
+	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
 }
 
 int main(int ac, char **av)

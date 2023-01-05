@@ -30,3 +30,13 @@ p3 *generate_point(int x, int y, int z)
 	p->z = z;
 	return (p);
 }
+
+p3 make_point(float x,float y,float z)
+{
+	p3 p;
+
+	p.x = x;
+	p.y = y;
+	p.z = z;
+	return (p);
+}

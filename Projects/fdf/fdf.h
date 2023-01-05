@@ -37,10 +37,15 @@
 # define NUM_MIN 65453
 # define NUMPOINT 65439
 # define NUMZERO 65438
-# define NUM4 65430
-# define NUM8 65431
-# define NUM6 65432
+# define NUM1 65436
 # define NUM2 65433
+# define NUM3 65435
+# define NUM4 65430
+# define NUM5 65437
+# define NUM6 65432
+# define NUM7 65429
+# define NUM8 65431
+# define NUM9 65434
 
 # define DEFAULTCOL 0xfffafa
 
@@ -109,7 +114,9 @@ void print_object(object *obj);
 void transform_object(object *obj,p3 pos);
 void scale_object(object *obj, p3 factor);
 
-p3 *generate_point(int x, int y, int z);
+p3 *generate_point(int x, int y, int z); //allocated
+p3 create_point(p3 *p); //non alocated
+p3 make_point(float x,float y,float z);
 
 //projection
 void iso(float *x, float *y, float z);
@@ -138,6 +145,6 @@ void *ft_puterror(int fd,char * filename, char *err_mes);
 size_t	ft_poschr(const char *str, int c);
 int ft_hextoi(char *str);
 void put_pixel(img_data *data, int x, int y, int color);
-void put_image(t_prog *prog, int x, int y);
+void put_new_image(t_prog *prog, int x, int y);
 
 #endif
