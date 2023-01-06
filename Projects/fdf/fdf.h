@@ -53,6 +53,9 @@
 #define X_SIZE 1000
 #define ASPECT_RATIO X_SIZE / Y_SIZE
 
+#define VERTEXBUFF 1000
+#define FDF_VERTEXDISTANCE 1
+
 
 typedef struct	s_p3
 {
@@ -108,7 +111,6 @@ double vector_len(p3 vec);
 
 //Drawing utils
 void drawline(t_prog *prog, p3 a, p3 b, int color);
-void drawline2(t_prog *prog, p3 a, p3 b, int color);
 void draw_object(object *obj, t_prog *prog,int color);
 void draw(t_prog *prog,object *obj);
 
@@ -141,9 +143,12 @@ int handle_input(int keycode, void *param);
 object *init_object(char *filename);
 void free_object(object *obj);
 void free_string_arr(char **arr);
-void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int y);
+void put_object_vertex_data(object *mesh, char **splitline, int split_elems);
+void put_object_edge_data(object *obj);
 void read_fdf_file(int fd);
 int is_valid_file(char *filename);
+object *parse_fdf_file(int fd, object *mesh);
+int count_elems(char **str);
 
 //general utility, use for libft later
 void *ft_realloc(void *old, size_t old_size, size_t new_size);

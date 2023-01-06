@@ -4,18 +4,18 @@ int handle_input(int keycode, void *param)
 {
 	t_prog *prog = param;
 	ft_printf("keycode = %i\n",keycode);
-	if(keycode == ESC || keycode == 65507 || keycode == 65535 )
+	if(keycode == ESC)
 	{
 		mlx_loop_end(prog->mlx);
 		return (0);
 	}
-	if(keycode == W) 
+	if(keycode == W)
 		transform_object(prog->obj,make_point(0,-1,0));
-	if(keycode == S) 
+	if(keycode == S)
 		transform_object(prog->obj, make_point(0,1,0));
-	if(keycode == A) 
+	if(keycode == A)
 		transform_object(prog->obj,make_point(-1,0,0));
-	if(keycode == D) 
+	if(keycode == D)
 		transform_object(prog->obj, make_point(1,0,0));
 	if(keycode == NUM_MIN) //enter
 		scale_object(prog->obj, make_point(0.5f,0.5f,0.5f));
@@ -39,14 +39,6 @@ int handle_input(int keycode, void *param)
 		prog->obj->rot.z -= 0.25;
 	if(keycode == BACKSPACE)
 		prog->obj->rot = make_point(0,0,0);
-	if(keycode == NUM9) 
-	{
-		while(1)
-		{
-			prog->obj->rot.x += 0.25;
-			draw(prog,prog->obj);
-		}	
-	}
 
 	draw(prog,prog->obj);
 	return (0);

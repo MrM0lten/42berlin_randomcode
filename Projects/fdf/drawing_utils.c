@@ -25,51 +25,6 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 	}
 }
 
-void drawline2( t_prog *prog, p3 a, p3 b, int color)
-{
-	p3	delta;
-	p3	inc;
-
-	//dont print anything if any of the 2 points are outside the screen
-	if(a.x > X_SIZE || a.x < 0 || a.y > Y_SIZE || a.y < 0)
-		return ;
-
-	delta.x = ft_abs(b.x - a.x);
-	delta.y = ft_abs(b.y - a.y);
-	if(delta.x > delta.y)
-	{
-		inc.x = delta.x/delta.x;
-		inc.y = delta.y/delta.x;
-	}
-	else
-	{
-		inc.x = delta.x/delta.y;
-		inc.y = delta.y/delta.y;
-	}
-
-	while (ft_round(a.x) != ft_round(b.x) && ft_round(a.y) != ft_round(b.y))
-	{
-		ft_printf("test\n");
-		put_pixel(&prog->img,a.x, a.y, color);
-		if(ft_round(a.x) < ft_round(b.x))
-			a.x += inc.x;
-		else
-			a.x -= inc.x;
-		if(a.y < b.y)
-			a.y += inc.y;
-		else
-			a.y -= inc.y;
-	}
-
-}
-
-int ft_round(double nbr)
-{
-	if((int)(nbr + 0.5f) > (int)nbr)
-		return (nbr + 0.5f);
-	return (nbr);
-}
-
 double vector_len(p3 vec)
 {
 	return (sqrt(pow(vec.x,2) + pow(vec.y,2) + pow(vec.z,2)));

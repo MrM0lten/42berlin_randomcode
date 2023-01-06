@@ -5,7 +5,6 @@ void transform_object(object *obj,p3 pos)
 	int i;
 
 	i = 0;
-	//ft_printf("entered transform object\n");
 	while(i < obj->total_verticies)
 	{
 		obj->verticies[i].x += pos.x;
@@ -29,8 +28,6 @@ void scale_object(object *obj, p3 factor)
 	}
 
 }
-
-
 
 void *ft_realloc(void *old, size_t old_size, size_t new_size)
 {
@@ -88,4 +85,14 @@ int ft_abs(int x)
 	if(x < 0)
 		return (-x);
 	return (x);
+}
+
+int count_elems(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return (i);
 }
