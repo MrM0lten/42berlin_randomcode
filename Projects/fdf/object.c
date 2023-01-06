@@ -66,7 +66,9 @@ static object *generate_empty_object()
 		return (NULL);
 	mesh->total_verticies = 0;
 	mesh->total_edges = 0;
+	mesh->pos = make_point(0,0,0);
 	mesh->rot = make_point(0,0,0);
+	mesh->scale = make_point(1,1,1);
 	mesh->object_dim = make_point(0,0,0);
 	return (mesh);
 }
@@ -81,7 +83,6 @@ object *init_object(char *filename)
 	obj = parse_fdf_file(fd, obj);
 	if(!obj)
 		return (NULL);
-	
 	close(fd);
 	return (obj);
 }

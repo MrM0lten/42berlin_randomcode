@@ -47,13 +47,28 @@ void	iso(double *x, double *y, double z)
 	*y = -z + (temp_x + temp_y) * sin(0.523599);
 }
 
+void transform_obj(object *obj,p3 *pos)
+{
+	pos->x += obj->pos.x;
+	pos->y += obj->pos.y;
+	pos->z += obj->pos.z;
+}
+void scale_obj(object *obj, p3 *p)
+{
+	p->x *= obj->scale.x;
+	p->y *= obj->scale.y;
+	p->z *= obj->scale.z;
+}
 // does all the interesting transformation and projections with the endresult of a 2d projected point
 p3 project(p3 p,t_prog *prog)
 {
+	scale_obj(prog->obj,&p);
 	rotate_x(&p.y,&p.z,prog->obj->rot.x);
     rotate_y(&p.x,&p.z,prog->obj->rot.y);
     rotate_z(&p.x,&p.y,prog->obj->rot.z);
-	iso(&p.x, &p.y, p.z);
+	transform_obj(prog->obj,&p);
+	if(prog->iso)
+		iso(&p.x, &p.y, p.z);
 
 	// scale into view
 	p.x += 1.0f;

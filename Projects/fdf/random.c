@@ -1,34 +1,5 @@
 #include "fdf.h"
 
-void transform_object(object *obj,p3 pos)
-{
-	int i;
-
-	i = 0;
-	while(i < obj->total_verticies)
-	{
-		obj->verticies[i].x += pos.x;
-		obj->verticies[i].y += pos.y;
-		obj->verticies[i].z += pos.z;
-		i++;
-	}
-
-}
-void scale_object(object *obj, p3 factor)
-{
-	int i;
-
-	i = 0;
-	while(i < obj->total_verticies)
-	{
-		obj->verticies[i].x *= factor.x;
-		obj->verticies[i].y *= factor.y;
-		obj->verticies[i].z *= factor.z;
-		i++;
-	}
-
-}
-
 void *ft_realloc(void *old, size_t old_size, size_t new_size)
 {
 	void *new;

@@ -1,5 +1,13 @@
 #include "fdf.h"
 
+static void toggle_iso(t_prog *prog)
+{
+	if(prog->iso)
+		prog->iso = 0;
+	else
+		prog->iso = 1;
+}
+
 int handle_input(int keycode, void *param)
 {
 	t_prog *prog = param;
@@ -10,35 +18,52 @@ int handle_input(int keycode, void *param)
 		return (0);
 	}
 	if(keycode == W)
-		transform_object(prog->obj,make_point(0,-1,0));
+		prog->obj->pos.y--;
 	if(keycode == S)
-		transform_object(prog->obj, make_point(0,1,0));
+		prog->obj->pos.y++;
 	if(keycode == A)
-		transform_object(prog->obj,make_point(-1,0,0));
+		prog->obj->pos.x--;
 	if(keycode == D)
-		transform_object(prog->obj, make_point(1,0,0));
-	if(keycode == NUM_MIN) //enter
-		scale_object(prog->obj, make_point(0.5f,0.5f,0.5f));
-	if(keycode == NUM_PLUS) //enter
-		scale_object(prog->obj, make_point(2,2,2));
+		prog->obj->pos.x++;
+	if(keycode == LEFTCTRL)
+		prog->obj->pos.z--;
+	if(keycode == LEFTSHIFT)
+		prog->obj->pos.z++;
+	if(keycode == NUM_MIN)
+	{
+		prog->obj->scale.x *= 0.8;
+		prog->obj->scale.y *= 0.8;
+		prog->obj->scale.z *= 0.8;
+	}
+	if(keycode == NUM_PLUS)
+	{
+		prog->obj->scale.x *= 1.2;
+		prog->obj->scale.y *= 1.2;
+		prog->obj->scale.z *= 1.2;
+	}
 	if(keycode == NUMPOINT) //scale Z
-		scale_object(prog->obj, make_point(1,1,0.5));
-	if(keycode == NUMZERO) //scale XY
-		scale_object(prog->obj, make_point(2,2,1));
+		prog->obj->scale.z *= 0.9;
 	if(keycode == NUM1) //rotx
-		prog->obj->rot.x += 0.25;
+		prog->obj->rot.x += 0.20;
 	if(keycode == NUM4) //rotx
-		prog->obj->rot.x -= 0.25;
+		prog->obj->rot.x -= 0.20;
 	if(keycode == NUM2) //roty
-		prog->obj->rot.y += 0.25;
+		prog->obj->rot.y += 0.20;
 	if(keycode == NUM5) //roty
-		prog->obj->rot.y -= 0.25;
+		prog->obj->rot.y -= 0.20;
 	if(keycode == NUM3) //rotz
-		prog->obj->rot.z += 0.25;
+		prog->obj->rot.z += 0.20;
 	if(keycode == NUM6) //rotz
-		prog->obj->rot.z -= 0.25;
+		prog->obj->rot.z -= 0.20;
+	if(keycode == NUM7)
+		toggle_iso(prog);
 	if(keycode == BACKSPACE)
+	{
 		prog->obj->rot = make_point(0,0,0);
+		prog->obj->pos = make_point(1,0,0);
+		prog->obj->scale = make_point(.01,.01,.01);
+	}
+		
 
 	draw(prog,prog->obj);
 	return (0);

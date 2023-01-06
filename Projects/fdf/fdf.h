@@ -46,6 +46,8 @@
 # define NUM7 65429
 # define NUM8 65431
 # define NUM9 65434
+# define LEFTCTRL 65507
+# define LEFTSHIFT 65505
 
 # define DEFAULTCOL 0xfffafa
 
@@ -83,7 +85,9 @@ typedef struct s_object
 	p3 *verticies;
 	edge *edges;
 	p3 object_dim;
+	p3 pos;
 	p3 rot;
+	p3 scale;
 	int total_edges;
 	int total_verticies;
 }				object;
@@ -102,6 +106,7 @@ typedef struct  s_program
     void *win;
 	img_data img;
 	object *obj;
+	int iso;
 }               t_prog;
 
 //vector math

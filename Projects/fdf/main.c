@@ -28,6 +28,7 @@ int main(int ac, char **av)
 	prog = malloc(sizeof(t_prog));
 	if(!prog)
 		return (0);
+	prog->iso = 1;
 	prog->mlx = mlx_init();
 	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "FdF");
 	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
