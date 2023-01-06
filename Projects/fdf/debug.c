@@ -1,11 +1,19 @@
-#include "fdf.h"
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/06 19:42:40 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/06 19:42:41 by jisserst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+/* #include "fdf.h"
 void print_point(p3 *p)
 {
 	printf(" <%lf,%lf,%lf> col = %i\n",p->x,p->y,p->z,p->color);
 }
-
-
 void print_object(object *obj)
 {
 	int i;
@@ -31,3 +39,4 @@ void print_object(object *obj)
 
 	
 }
+ */

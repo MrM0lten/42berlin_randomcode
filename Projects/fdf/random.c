@@ -1,22 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   random.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/06 19:42:57 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/06 19:42:58 by jisserst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-void *ft_realloc(void *old, size_t old_size, size_t new_size)
+void	*ft_realloc(void *old, size_t old_size, size_t new_size)
 {
-	void *new;
-	size_t copy_size;
+	void	*new;
+	size_t	copy_size;
 
 	new = malloc(new_size);
 	copy_size = old_size;
-	if(new_size < old_size)
+	if (new_size < old_size)
 		copy_size = new_size;
-	ft_memcpy(new,old,copy_size);
+	ft_memcpy(new, old, copy_size);
 	free(old);
 	return (new);
 }
 
 size_t	ft_poschr(const char *str, int c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != (char)c)
@@ -27,21 +39,21 @@ size_t	ft_poschr(const char *str, int c)
 		return (0);
 }
 
-int ft_hextoi(char *str)
+int	ft_hextoi(char *str)
 {
-	int i;
-	int rtn;
-	int byte;
+	int	i;
+	int	rtn;
+	int	byte;
 
 	i = 0;
 	rtn = 0;
-	if(str[i] == '0' && str[i + 1] == 'x')
+	if (str[i] == '0' && str[i + 1] == 'x')
 		i += 2;
-	while(str[i]) //could have also done it with rtn = rtn * 16 -(15 -character)
+	while (str[i])
 	{
-		if(str[i] >= 'a' && str[i] <= 'f')
+		if (str[i] >= 'a' && str[i] <= 'f')
 			byte = str[i] - 'a' + 10;
-		else if(str[i] >= 'A' && str[i] <= 'F')
+		else if (str[i] >= 'A' && str[i] <= 'F')
 			byte = str[i] - 'A' + 10;
 		else
 			byte = str[i] - '0';
@@ -51,19 +63,19 @@ int ft_hextoi(char *str)
 	return (rtn);
 }
 
-int ft_abs(int x)
+int	ft_abs(int x)
 {
-	if(x < 0)
+	if (x < 0)
 		return (-x);
 	return (x);
 }
 
-int count_elems(char **str)
+int	count_elems(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
 }

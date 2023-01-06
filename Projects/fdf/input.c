@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/06 19:43:08 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/06 19:43:09 by jisserst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static void toggle_iso(t_prog *prog)
@@ -18,17 +30,17 @@ int handle_input(int keycode, void *param)
 		return (0);
 	}
 	if(keycode == W)
-		prog->obj->pos.y--;
+		prog->obj->pos.y -= 0.5;
 	if(keycode == S)
-		prog->obj->pos.y++;
+		prog->obj->pos.y += 0.5;
 	if(keycode == A)
-		prog->obj->pos.x--;
+		prog->obj->pos.x -= 0.5;
 	if(keycode == D)
-		prog->obj->pos.x++;
+		prog->obj->pos.x += 0.5;
 	if(keycode == LEFTCTRL)
-		prog->obj->pos.z--;
+		prog->obj->pos.z -= 0.5;
 	if(keycode == LEFTSHIFT)
-		prog->obj->pos.z++;
+		prog->obj->pos.z += 0.5;
 	if(keycode == NUM_MIN)
 	{
 		prog->obj->scale.x *= 0.8;

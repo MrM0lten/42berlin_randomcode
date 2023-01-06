@@ -20,7 +20,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-
 # include "./libft/includes/libft.h"
 # include "./libft/includes/ft_printf.h"
 # include "./libft/includes/get_next_line.h"
@@ -51,118 +50,107 @@
 
 # define DEFAULTCOL 0xfffafa
 
-#define Y_SIZE 1000
-#define X_SIZE 1000
-#define ASPECT_RATIO X_SIZE / Y_SIZE
+# define Y_SIZE 1000
+# define X_SIZE 1000
 
-#define VERTEXBUFF 1000
-#define FDF_VERTEXDISTANCE 1
+# define VERTEXBUFF 1000
+# define FDF_VERTEXDISTANCE 1
 
-
-typedef struct	s_p3
+typedef struct s_p3
 {
-	double x;
-	double y;
-	double z;
-	int color;
-}				p3;
+	double	x;
+	double	y;
+	double	z;
+	int		color;
+}				t_p3;
 
-typedef struct	s_p2
+typedef struct s_p2
 {
-	int x;
-	int y;
-	int color;
-}				p2;
+	int	x;
+	int	y;
+	int	color;
+}				t_p2;
 
-typedef struct	s_edge
+typedef struct s_edge
 {
-	int elem_a;
-	int elem_b;
-}				edge;
+	int	elem_a;
+	int	elem_b;
+}				t_edge;
 
 typedef struct s_object
 {
-	p3 *verticies;
-	edge *edges;
-	p3 object_dim;
-	p3 pos;
-	p3 rot;
-	p3 scale;
-	int total_edges;
-	int total_verticies;
-}				object;
+	t_p3	*verticies;
+	t_edge	*edges;
+	t_p3	object_dim;
+	t_p3	pos;
+	t_p3	rot;
+	t_p3	scale;
+	int		total_edges;
+	int		total_verticies;
+}				t_object;
 
-typedef struct	s_imgdata {
+typedef struct s_imgdata
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				img_data;
+}				t_imgdata;
 
-typedef struct  s_program
+typedef struct s_program
 {
-    void *mlx;
-    void *win;
-	img_data img;
-	object *obj;
-	int iso;
-}               t_prog;
-
+	void		*mlx;
+	void		*win;
+	t_imgdata	img;
+	t_object	*obj;
+	int			iso;
+}				t_prog;
 //vector math
-p3 p_add(p3 a, p3 b);
-p3 p_sub(p3 a, p3 b);
-double vector_len(p3 vec);
-
+t_p3		p_add(t_p3 a, t_p3 b);
+t_p3		p_sub(t_p3 a, t_p3 b);
+double		vector_len(t_p3 vec);
 //Drawing utils
-void drawline(t_prog *prog, p3 a, p3 b, int color);
-void draw_object(object *obj, t_prog *prog,int color);
-void draw(t_prog *prog,object *obj);
-
+void		drawline(t_prog *prog, t_p3 a, t_p3 b, int color);
+void		draw_object(t_object *obj, t_prog *prog, int color);
+void		draw(t_prog *prog, t_object *obj);
 //debugging
-void print_point(p3 *p);
-void print_object(object *obj);
-
-void transform_object(object *obj,p3 pos);
-void scale_object(object *obj, p3 factor);
-
-p3 *generate_point(int x, int y, int z); //allocated
-p3 create_point(p3 *p); //non alocated
-p3 make_point(double x,double y,double z);
-
+void		print_point(t_p3 *p);
+void		print_object(t_object *obj);
+void		transform_object(t_object *obj, t_p3 pos);
+void		scale_object(t_object *obj, t_p3 factor);
+t_p3		*generate_point(int x, int y, int z); //allocated
+t_p3		create_point(t_p3 *p); //non alocated
+t_p3		make_point(double x, double y, double z);
 //projection
-p3 project(p3 p,t_prog *prog);
-void iso(double *x, double *y, double z);
-void rotate_x(double *y, double *z, double alpha);
-void rotate_y(double *x, double *z, double beta);
-void rotate_z(double *x, double *y, double gamma);
-
+t_p3		project(t_p3 p, t_prog *prog);
+void		iso(double *x, double *y, double z);
+void		rotate_x(double *y, double *z, double alpha);
+void		rotate_y(double *x, double *z, double beta);
+void		rotate_z(double *x, double *y, double gamma);
 //error handling
-int validate_filetype(char *file,char *expected);
-void shutdown_programm(t_prog *prog);
-
+int			validate_filetype(char *file, char *expected);
+void		shutdown_programm(t_prog *prog);
 //input
-int handle_input(int keycode, void *param);
-
+int			handle_input(int keycode, void *param);
 //Map Parsing
-object *init_object(char *filename);
-void free_object(object *obj);
-void free_string_arr(char **arr);
-void put_object_vertex_data(object *mesh, char **splitline, int split_elems);
-void put_object_edge_data(object *obj);
-void read_fdf_file(int fd);
-int is_valid_file(char *filename);
-object *parse_fdf_file(int fd, object *mesh);
-int count_elems(char **str);
-
+t_object	*init_object(char *filename);
+void		free_object(t_object *obj);
+void		free_string_arr(char **arr);
+void		put_object_vertex_data(t_object *mesh, char **splitline,
+				int split_elems);
+void		put_object_edge_data(t_object *obj);
+void		read_fdf_file(int fd);
+int			is_valid_file(char *filename);
+t_object	*parse_fdf_file(int fd, t_object *mesh);
+int			count_elems(char **str);
 //general utility, use for libft later
-void *ft_realloc(void *old, size_t old_size, size_t new_size);
-int ft_puterror(int fd,char * filename, char *err_mes);
-size_t	ft_poschr(const char *str, int c);
-int ft_hextoi(char *str);
-void put_pixel(img_data *data, int x, int y, int color);
-void put_new_image(t_prog *prog, int x, int y);
-int ft_abs(int x);
-int ft_round(double nbr);
-
+void		*ft_realloc(void *old, size_t old_size, size_t new_size);
+int			ft_puterror(int fd, char *filename, char *err_mes);
+size_t		ft_poschr(const char *str, int c);
+int			ft_hextoi(char *str);
+void		put_pixel(t_imgdata *data, int x, int y, int color);
+void		put_new_image(t_prog *prog, int x, int y);
+int			ft_abs(int x);
+int			ft_round(double nbr);
 #endif
