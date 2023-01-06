@@ -12,26 +12,17 @@
 
 #include "fdf.h"
 
-
-int test(int button, int x, int y, void *param)
-{
-	t_prog *prog = param;
-	mlx_pixel_put(prog->mlx, prog->win, x, y, 0xfffafa);
-
-	return (0);
-}
-
-
 object *create_unitcube()
 {
 	object *cube;
-	p3 p_in[] = {{0.f, 0.f, 0.f}, {0.f, 0.f, 1.f}, {1.f, 0.f, 1.f}, {1.f, 0.f, 0.f}, {0.f, 1.f, 0.f}, {0.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 0.f}};
+	p3 p_in[] = {{0.f, 0.f, 0.f, DEFAULTCOL}, {0.f, 0.f, 1.f}, {1.f, 0.f, 1.f}, {1.f, 0.f, 0.f}, {0.f, 1.f, 0.f}, {0.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 0.f}};
 	cube = (object *)malloc(sizeof(object));
 	cube->verticies = (p3 *)malloc(sizeof(p3) * 8);
 	cube->edges = (edge *)malloc(sizeof(edge) * 12);
+	if(!cube || !cube->verticies || !cube->edges)
+		return (NULL);
 	cube->total_edges = 12;
 	cube->total_verticies = 8;
-
 	int i = 0;
 	p3 *temp;
 	while (i < 8)
@@ -82,23 +73,6 @@ p3 create_point(p3 *p)
 	return (p_new);
 }
 
-
-void draw(t_prog *prog, object *obj)
-{
-	int i;
-
-	i = 0;
-	put_new_image(prog, X_SIZE, Y_SIZE);
-	while (i < obj->total_edges)
-	{
-		drawline(prog,
-				 project(create_point(&obj->verticies[obj->edges[i].elem_a]),prog),
-				 project(create_point(&obj->verticies[obj->edges[i].elem_b]),prog),
-				 obj->verticies[obj->edges[i].elem_a].color);
-		i++;
-	}
-	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
-}
 int close_programm(void *param)
 {
 	(void)param;
@@ -111,7 +85,6 @@ int main(int ac, char **av)
 	t_prog *prog;
 
 	prog = malloc(sizeof(t_prog));
-	
 	prog->mlx = mlx_init();
 	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "PogBrudi");
 
@@ -120,14 +93,14 @@ int main(int ac, char **av)
 	if (av[1] != NULL)
 		prog->obj = init_object(av[1]);
 
-	mlx_mouse_hook(prog->win, &test, prog);
 	mlx_key_hook(prog->win, &handle_input, prog);
-	mlx_hook(prog->win,17,0L, &close_programm,prog);
+	//mlx_hook(prog->win,17,0L, &close_programm,prog);
 	if (prog->obj)
 	{
 		draw(prog, prog->obj);
-		mlx_loop(prog->mlx);
+		
 	}
+	mlx_loop(prog->mlx);
 	ft_printf("test\n");
 	return (0);
 }

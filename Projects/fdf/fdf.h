@@ -80,6 +80,7 @@ typedef struct s_object
 	p3 *verticies;
 	edge *edges;
 	p3 object_dim;
+	p3 rot;
 	int total_edges;
 	int total_verticies;
 }				object;
@@ -98,7 +99,6 @@ typedef struct  s_program
     void *win;
 	img_data img;
 	object *obj;
-	p3 rot;
 }               t_prog;
 
 //vector math

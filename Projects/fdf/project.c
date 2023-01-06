@@ -50,9 +50,9 @@ void	iso(double *x, double *y, double z)
 // does all the interesting transformation and projections with the endresult of a 2d projected point
 p3 project(p3 p,t_prog *prog)
 {
-	rotate_x(&p.y,&p.z,prog->rot.x);
-    rotate_y(&p.x,&p.z,prog->rot.y);
-    rotate_z(&p.x,&p.y,prog->rot.z);
+	rotate_x(&p.y,&p.z,prog->obj->rot.x);
+    rotate_y(&p.x,&p.z,prog->obj->rot.y);
+    rotate_z(&p.x,&p.y,prog->obj->rot.z);
 	iso(&p.x, &p.y, p.z);
 
 	// scale into view

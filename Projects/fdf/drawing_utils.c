@@ -25,22 +25,36 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 void drawline2( t_prog *prog, p3 a, p3 b, int color)
 {
 	p3	delta;
-	p2	sign;
-	p3	cur;
+	p3	inc;
 
 	//dont print anything if any of the 2 points are outside the screen
-	if(a.x > X_SIZE && a.x < 0 && b.y > Y_SIZE && b.y < 0)
+	if(a.x > X_SIZE || a.x < 0 || a.y > Y_SIZE || a.y < 0)
 		return ;
 
 	delta.x = ft_abs(b.x - a.x);
 	delta.y = ft_abs(b.y - a.y);
-	sign.x = a.x < b.x ? 1 : -1;
-	sign.y = a.y < b.y ? 1 : -1;
-	cur = a;
-	while (cur.x != b.x || cur.y != b.y)
+	if(delta.x > delta.y)
 	{
-		put_pixel(&prog->img,cur.x, cur.y, color);
-		
+		inc.x = delta.x/delta.x;
+		inc.y = delta.y/delta.x;
+	}
+	else
+	{
+		inc.x = delta.x/delta.y;
+		inc.y = delta.y/delta.y;
+	}
+
+	while (a.x != b.x || a.y != b.y)
+	{
+		put_pixel(&prog->img,a.x, a.y, color);
+		if(a.x < b.x)
+			a.x += inc.x;
+		else
+			a.x -= inc.x;
+		if(a.y < b.y)
+			a.y += inc.y;
+		else
+			a.y -= inc.y;
 	}
 
 }
@@ -65,4 +79,21 @@ void put_new_image(t_prog *prog, int x, int y)
 	prog->img.img = mlx_new_image(prog->mlx, x, y);
 	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
 						 &prog->img.line_length, &prog->img.endian);
+}
+
+void draw(t_prog *prog, object *obj)
+{
+	int i;
+
+	i = 0;
+	put_new_image(prog, X_SIZE, Y_SIZE);
+	while (i < obj->total_edges)
+	{
+		drawline(prog,
+				 project(create_point(&obj->verticies[obj->edges[i].elem_a]),prog),
+				 project(create_point(&obj->verticies[obj->edges[i].elem_b]),prog),
+				 obj->verticies[obj->edges[i].elem_a].color);
+		i++;
+	}
+	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
 }
