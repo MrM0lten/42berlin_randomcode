@@ -131,7 +131,6 @@ void rotate_y(double *x, double *z, double beta);
 void rotate_z(double *x, double *y, double gamma);
 
 //error handling
-void *ft_puterror(int fd,char * filename, char *err_mes);
 int validate_filetype(char *file,char *expected);
 void shutdown_programm(t_prog *prog);
 
@@ -141,18 +140,19 @@ int handle_input(int keycode, void *param);
 //Map Parsing
 object *init_object(char *filename);
 void free_object(object *obj);
-
 void free_string_arr(char **arr);
 void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int y);
 void read_fdf_file(int fd);
+int is_valid_file(char *filename);
 
 //general utility, use for libft later
 void *ft_realloc(void *old, size_t old_size, size_t new_size);
-void *ft_puterror(int fd,char * filename, char *err_mes);
+int ft_puterror(int fd,char * filename, char *err_mes);
 size_t	ft_poschr(const char *str, int c);
 int ft_hextoi(char *str);
 void put_pixel(img_data *data, int x, int y, int color);
 void put_new_image(t_prog *prog, int x, int y);
 int ft_abs(int x);
+int ft_round(double nbr);
 
 #endif

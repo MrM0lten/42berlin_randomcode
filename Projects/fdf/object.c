@@ -1,7 +1,7 @@
 #include "fdf.h"
 #include "malloc.h"
 
-#define VERTEXBUFF 50000
+#define VERTEXBUFF 1000
 #define FDF_VERTEXDISTANCE 1
 
 int count_elems(char **str)
@@ -21,7 +21,7 @@ void put_object_edge_data(object *obj)
 	size_t tot_edges;
 
 	tot_edges = ((int)obj->object_dim.y * (int)(obj->object_dim.x - 1)+ (int)obj->object_dim.x * (int)(obj->object_dim.y - 1)) ;
-	printf("TOTAL EDGES %zu\n",tot_edges);
+	//printf("TOTAL EDGES %zu\n",tot_edges);
 	obj->edges = (edge *)malloc(sizeof(edge) * tot_edges);
 	i = 0;
 	edge_num = 0;
@@ -43,7 +43,7 @@ void put_object_edge_data(object *obj)
 		//ft_printf("i = %i, eval to %i\n",i,(i - ((int)obj->object_dim.x -1)) % 19 );
 		obj->edges[edge_num].elem_a = i;
 		obj->edges[edge_num].elem_b = i+(int)(obj->object_dim.x);
-		ft_printf("connecting <%i,%i>\n",i,i+(int)(obj->object_dim.x));
+		//ft_printf("connecting <%i,%i>\n",i,i+(int)(obj->object_dim.x));
 		edge_num++;
 		i++;
 	}
@@ -55,16 +55,22 @@ void put_object_edge_data(object *obj)
 void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int y)
 {
 	int i;
+	char *str_int;
+	char *str_col;
 
 	i = 0;
 	while(i < split_elems)
 	{
-		if(ft_strrchr(splitline[i],','))
+		if(ft_poschr(splitline[i],','))
 		{
+			str_int = ft_substr(splitline[i],0,ft_poschr(splitline[i],','));
+			str_col = ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20);
 			mesh->verticies[mesh->total_verticies].x = i * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies].y = y * FDF_VERTEXDISTANCE;
-			mesh->verticies[mesh->total_verticies].z = ft_atoi(ft_substr(splitline[i],0,ft_poschr(splitline[i],',')));
-			mesh->verticies[mesh->total_verticies].color = ft_hextoi(ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20));
+			mesh->verticies[mesh->total_verticies].z = ft_atoi(str_int);
+			mesh->verticies[mesh->total_verticies].color = ft_hextoi(str_col);
+			free (str_int);
+			free (str_col);
 		}
 		else
 		{
@@ -85,11 +91,16 @@ static object *generate_empty_object()
 {
 	object *mesh;
 	mesh = (object *)malloc(sizeof(object));
+	if(!mesh)
+		return (NULL);
 	mesh->verticies = (p3 *)malloc(sizeof(p3 ) * VERTEXBUFF);
-
+	if(!mesh->verticies)
+		return (NULL);
 	mesh->total_verticies = 0;
 	mesh->total_edges = 0;
 	mesh->object_dim.z = 0;
+	mesh->rot = make_point(0,0,0);
+	mesh->object_dim = make_point(0,0,0);
 	return (mesh);
 }
 
@@ -99,19 +110,29 @@ object *parse_fdf_file(int fd)
 	char **splitline;
 	object *mesh;
 	int split_elems;
+	size_t buff;
 	int y;
 
 	mesh = generate_empty_object();
-
+	buff = VERTEXBUFF;
 	line = get_next_line(fd);
 	y = 0;
 	while(line)
 	{
 		splitline = ft_split(line, ' ');
 		split_elems = count_elems(splitline);
-		if(split_elems < VERTEXBUFF - mesh->total_verticies)
+		printf("curr buff = %zu, new elems = %i, already filled verticies = %i\n", buff,split_elems,mesh->total_verticies);
+		printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
+		if(split_elems < buff - mesh->total_verticies)
 			put_object_vertex_data(mesh, splitline, split_elems, y);
-		ft_printf("split elems = %i\n", split_elems);
+		else
+		{
+			
+			printf("buff to small needs realloc buff = %zu\n",buff);
+			mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * buff, sizeof(p3) * (buff * 2));
+			buff *= 2;
+			put_object_vertex_data(mesh, splitline, split_elems, y);
+		}
 		free_string_arr(splitline);
 		free(line);
 		line = NULL;
@@ -124,15 +145,28 @@ object *parse_fdf_file(int fd)
 	mesh->object_dim.y = y;
 	
 
+	
+
+
+	mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * buff, sizeof(p3) * mesh->total_verticies);
 	put_object_edge_data(mesh);
+	printf("curr buff = %zu, new elems = %i, already filled verticies = %i\n", buff,split_elems,mesh->total_verticies);
+ 	printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
 
-	//check how accurate it is, currently seems like it is the case
-	mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * VERTEXBUFF, sizeof(p3) * mesh->total_verticies);
-
-/* 	printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
-	malloc_stats(); */
 
 	return (mesh);
+}
+
+int is_valid_file(char *filename)
+{
+	int fd;
+	if(!validate_filetype(filename,".fdf"))
+		return (ft_puterror(STDERR_FILENO,filename," .File does not have the proper .fdf format"));
+	fd = open(filename,O_RDONLY);
+	if(fd == -1)
+		return (ft_puterror(STDERR_FILENO,filename," .File does not exist"));
+	close(fd);
+	return (1);
 }
 
 object *init_object(char *filename)
@@ -140,18 +174,11 @@ object *init_object(char *filename)
 	int fd;
 	object *obj;
 
-	if(!validate_filetype(filename,".fdf"))
-		return (ft_puterror(STDERR_FILENO,filename," .File does not have the proper .fdf format"));
 	fd = open(filename,O_RDONLY);
-	if(fd == -1)
-		return (ft_puterror(STDERR_FILENO,filename," .File does not exist"));
-
 	obj = parse_fdf_file(fd);
-
-	//print_object(obj);
-	
+	if(!obj)
+		return (NULL);
 	close(fd);
-	
 	return (obj);
 }
 
@@ -165,12 +192,12 @@ int validate_filetype(char *file,char *expected)
 	return (ft_strncmp(&file[i],expected, 4));
 }
 
-void *ft_puterror(int fd,char * filename, char *err_mes)
+int ft_puterror(int fd,char * filename, char *err_mes)
 {
 	ft_putstr_fd("Error ",fd);
 	ft_putstr_fd(filename,fd);
 	ft_putstr_fd(err_mes,fd);
-	return (NULL);
+	return (0);
 }
 void free_string_arr(char **arr)
 {

@@ -23,8 +23,10 @@ object *create_unitcube()
 		return (NULL);
 	cube->total_edges = 12;
 	cube->total_verticies = 8;
+
+	cube->rot = make_point(0,0,0);
+	cube->object_dim = make_point(0,0,0);
 	int i = 0;
-	p3 *temp;
 	while (i < 8)
 	{
 		cube->verticies[i].x = p_in[i].x;
@@ -61,17 +63,6 @@ object *create_unitcube()
 	return (cube);
 }
 
-// creates non allocated temp point
-p3 create_point(p3 *p)
-{
-	p3 p_new;
-
-	p_new.x = p->x;
-	p_new.y = p->y;
-	p_new.z = p->z;
-	p_new.color = p->color;
-	return (p_new);
-}
 
 int close_programm(void *param)
 {
@@ -84,23 +75,26 @@ int main(int ac, char **av)
 {
 	t_prog *prog;
 
+	if (av[1] == NULL || ac != 2 || !is_valid_file(av[1]))
+		return (0);
+
 	prog = malloc(sizeof(t_prog));
+	if(!prog)
+		return (0);
 	prog->mlx = mlx_init();
-	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "PogBrudi");
-
-	if (ac == 1)
-		prog->obj = create_unitcube();
-	if (av[1] != NULL)
-		prog->obj = init_object(av[1]);
-
-	mlx_key_hook(prog->win, &handle_input, prog);
+	prog->win = mlx_new_window(prog->mlx, X_SIZE, Y_SIZE, "FdF");
+	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
+	prog->obj = init_object(av[1]);
+	
 	//mlx_hook(prog->win,17,0L, &close_programm,prog);
-	if (prog->obj)
+	if (prog->obj == NULL || !prog->mlx || !prog->win || !prog->img.img)
 	{
-		draw(prog, prog->obj);
-		
+		shutdown_programm(prog);
+		return (0);
 	}
+	mlx_key_hook(prog->win, &handle_input, prog);
+	draw(prog, prog->obj);
 	mlx_loop(prog->mlx);
-	ft_printf("test\n");
+	shutdown_programm(prog);
 	return (0);
 }

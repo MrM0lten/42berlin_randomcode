@@ -8,6 +8,10 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 	p3 temp;
 	p2 val;
 
+	if(a.x > X_SIZE || a.x < 0 || a.y > Y_SIZE || a.y < 0
+	|| b.x > X_SIZE || b.x < 0 || b.y > Y_SIZE || b.y < 0)
+		return ;
+
 	len = vector_len(p_sub(a,b));
 	i = 0;
 	while(i < len)
@@ -16,8 +20,7 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 		temp = p_sub(a,b);
 		val.x = (1 - t) * temp.x + b.x;
 		val.y = (1 - t) * temp.y + b.y;
-		if(val.x < X_SIZE && val.x > 0 && val.y < Y_SIZE && val.y > 0)
-			put_pixel(&prog->img,val.x, val.y, color);
+		put_pixel(&prog->img,val.x, val.y, color);
 		i += 1;
 	}
 }
@@ -44,10 +47,11 @@ void drawline2( t_prog *prog, p3 a, p3 b, int color)
 		inc.y = delta.y/delta.y;
 	}
 
-	while (a.x != b.x || a.y != b.y)
+	while (ft_round(a.x) != ft_round(b.x) && ft_round(a.y) != ft_round(b.y))
 	{
+		ft_printf("test\n");
 		put_pixel(&prog->img,a.x, a.y, color);
-		if(a.x < b.x)
+		if(ft_round(a.x) < ft_round(b.x))
 			a.x += inc.x;
 		else
 			a.x -= inc.x;
@@ -57,6 +61,13 @@ void drawline2( t_prog *prog, p3 a, p3 b, int color)
 			a.y -= inc.y;
 	}
 
+}
+
+int ft_round(double nbr)
+{
+	if((int)(nbr + 0.5f) > (int)nbr)
+		return (nbr + 0.5f);
+	return (nbr);
 }
 
 double vector_len(p3 vec)
@@ -75,7 +86,7 @@ void put_pixel(img_data *data, int x, int y, int color)
 void put_new_image(t_prog *prog, int x, int y)
 {
 	if(prog->img.img)
-		mlx_destroy_image(prog->mlx,prog->img.img); //may not work properly
+		mlx_destroy_image(prog->mlx,prog->img.img); 
 	prog->img.img = mlx_new_image(prog->mlx, x, y);
 	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
 						 &prog->img.line_length, &prog->img.endian);

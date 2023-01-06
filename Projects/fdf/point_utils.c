@@ -40,3 +40,14 @@ p3 make_point(double x,double y,double z)
 	p.z = z;
 	return (p);
 }
+// creates non allocated temp point
+p3 create_point(p3 *p)
+{
+	p3 p_new;
+
+	p_new.x = p->x;
+	p_new.y = p->y;
+	p_new.z = p->z;
+	p_new.color = p->color;
+	return (p_new);
+}

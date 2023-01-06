@@ -6,7 +6,7 @@ int handle_input(int keycode, void *param)
 	ft_printf("keycode = %i\n",keycode);
 	if(keycode == ESC || keycode == 65507 || keycode == 65535 )
 	{
-		shutdown_programm(prog);
+		mlx_loop_end(prog->mlx);
 		return (0);
 	}
 	if(keycode == W) 
@@ -55,18 +55,12 @@ int handle_input(int keycode, void *param)
 
 void shutdown_programm(t_prog *prog)
 {
-	mlx_loop_end(prog->mlx);
-	ft_printf("1\n");
 	mlx_destroy_image(prog->mlx,prog->img.img);
-	ft_printf("2\n");
 	mlx_destroy_window(prog->mlx,prog->win);
-	ft_printf("3\n");
 	mlx_destroy_display(prog->mlx);
-	ft_printf("4\n");
 	free_object(prog->obj);
-	ft_printf("5\n");
+
 	free(prog->mlx);
-	ft_printf("6\n");
 	free(prog);
 	ft_printf("shutdown complete\n");
 }
