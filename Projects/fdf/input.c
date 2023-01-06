@@ -6,16 +6,16 @@ int handle_input(int keycode, void *param)
 	ft_printf("keycode = %i\n",keycode);
 	if(keycode == ESC || keycode == 65507 || keycode == 65535 )
 	{
-		mlx_destroy_window(prog->mlx,prog->win);
-		mlx_loop_end(prog->mlx);
+		shutdown_programm(prog);
+		return (0);
 	}
-	if(keycode == W) //enter
+	if(keycode == W) 
 		transform_object(prog->obj,make_point(0,-1,0));
-	if(keycode == S) //enter
+	if(keycode == S) 
 		transform_object(prog->obj, make_point(0,1,0));
-	if(keycode == A) //enter
+	if(keycode == A) 
 		transform_object(prog->obj,make_point(-1,0,0));
-	if(keycode == D) //enter
+	if(keycode == D) 
 		transform_object(prog->obj, make_point(1,0,0));
 	if(keycode == NUM_MIN) //enter
 		scale_object(prog->obj, make_point(0.5f,0.5f,0.5f));
@@ -50,4 +50,15 @@ int handle_input(int keycode, void *param)
 
 	draw(prog,prog->obj);
 	return (0);
+}
+
+
+void shutdown_programm(t_prog *prog)
+{
+	free_object(prog->obj);
+	mlx_destroy_image(prog->mlx,prog->img.img);
+	mlx_destroy_window(prog->mlx,prog->win);
+	free(prog->mlx);
+	free(prog);
+	mlx_loop_end(prog->mlx);
 }

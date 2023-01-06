@@ -6,54 +6,42 @@ void drawline( t_prog *prog, p3 a, p3 b, int color)
 	double i;
 	double t;
 	p3 temp;
-	int x;
-	int y;
+	p2 val;
 
 	len = vector_len(p_sub(a,b));
-	//printf("%lf\n",len);
 	i = 0;
 	while(i < len)
 	{
 		t = i / len;
 		temp = p_sub(a,b);
-		//mlx_pixel_put(prog->mlx, prog->win,(1 - t) * temp.x + b.x,(1 - t) * temp.y + b.y, color);
-		//ft_printf("trying to put a pixel at <%i,%i>\n",(1 - t) * temp.x + b.x, (1 - t) * temp.y + b.y);
-		x = (1 - t) * temp.x + b.x;
-		y = (1 - t) * temp.y + b.y;
-		if(x < X_SIZE && x > 0 && y < Y_SIZE && y > 0)
-			put_pixel(&prog->img,x, y, color);
+		val.x = (1 - t) * temp.x + b.x;
+		val.y = (1 - t) * temp.y + b.y;
+		if(val.x < X_SIZE && val.x > 0 && val.y < Y_SIZE && val.y > 0)
+			put_pixel(&prog->img,val.x, val.y, color);
 		i += 1;
 	}
 }
 
 void drawline2( t_prog *prog, p3 a, p3 b, int color)
 {
-	int dx;
-	int dy;
-	int p;
+	p3	delta;
+	p2	sign;
+	p3	cur;
 
-/* 	print_point(&a);
-	print_point(&b); */
-
-/* 	if(a.x < X_SIZE && a.x > 0 && a.y < Y_SIZE && a.y > 0)
+	//dont print anything if any of the 2 points are outside the screen
+	if(a.x > X_SIZE && a.x < 0 && b.y > Y_SIZE && b.y < 0)
 		return ;
-	
-	dx = a.x - b.x;
-	dy = a.y - b.y;
-	p = 2 * dy - dx;
 
-	while(a.x <= b.x)
+	delta.x = ft_abs(b.x - a.x);
+	delta.y = ft_abs(b.y - a.y);
+	sign.x = a.x < b.x ? 1 : -1;
+	sign.y = a.y < b.y ? 1 : -1;
+	cur = a;
+	while (cur.x != b.x || cur.y != b.y)
 	{
-		put_pixel(&prog->img,(int)a.x, (int)a.y, color);
-		a.x += 1;
-		if(p < 0)
-			p = p + 2 * dy;
-		else
-		{
-			p = p + 2 * dy - 2 * dx;
-			a.y++;
-		}
-	} */
+		put_pixel(&prog->img,cur.x, cur.y, color);
+		
+	}
 
 }
 
@@ -73,8 +61,8 @@ void put_pixel(img_data *data, int x, int y, int color)
 void put_new_image(t_prog *prog, int x, int y)
 {
 	if(prog->img.img)
-		free(prog->img.img);
-	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
+		mlx_destroy_image(prog->mlx,prog->img.img); //may not work properly
+	prog->img.img = mlx_new_image(prog->mlx, x, y);
 	prog->img.addr = mlx_get_data_addr(prog->img.img, &prog->img.bits_per_pixel,
 						 &prog->img.line_length, &prog->img.endian);
 }

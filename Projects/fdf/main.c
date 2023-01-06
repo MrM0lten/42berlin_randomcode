@@ -28,7 +28,6 @@ object *create_unitcube()
 	p3 p_in[] = {{0.f, 0.f, 0.f}, {0.f, 0.f, 1.f}, {1.f, 0.f, 1.f}, {1.f, 0.f, 0.f}, {0.f, 1.f, 0.f}, {0.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 0.f}};
 	cube = (object *)malloc(sizeof(object));
 	cube->verticies = (p3 *)malloc(sizeof(p3) * 8);
-	cube->vertex_color = (int *)malloc(sizeof(int) * 8);
 	cube->edges = (edge *)malloc(sizeof(edge) * 12);
 	cube->total_edges = 12;
 	cube->total_verticies = 8;
@@ -40,7 +39,7 @@ object *create_unitcube()
 		cube->verticies[i].x = p_in[i].x;
 		cube->verticies[i].y = p_in[i].y;
 		cube->verticies[i].z = p_in[i].z;
-		cube->vertex_color[i] = DEFAULTCOL;
+		cube->verticies[i].color = DEFAULTCOL;
 		i++;
 	}
 	cube->edges[0].elem_a = 0;
@@ -76,7 +75,10 @@ p3 create_point(p3 *p)
 {
 	p3 p_new;
 
-	p_new = *p;
+	p_new.x = p->x;
+	p_new.y = p->y;
+	p_new.z = p->z;
+	p_new.color = p->color;
 	return (p_new);
 }
 
@@ -86,16 +88,22 @@ void draw(t_prog *prog, object *obj)
 	int i;
 
 	i = 0;
-	put_new_image(prog,0,0);
+	put_new_image(prog, X_SIZE, Y_SIZE);
 	while (i < obj->total_edges)
 	{
 		drawline(prog,
 				 project(create_point(&obj->verticies[obj->edges[i].elem_a]),prog),
 				 project(create_point(&obj->verticies[obj->edges[i].elem_b]),prog),
-				 obj->vertex_color[obj->edges[i].elem_b]);
+				 obj->verticies[obj->edges[i].elem_a].color);
 		i++;
 	}
 	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);
+}
+int close_programm(void *param)
+{
+	(void)param;
+	printf("close prog was called\n");
+	return (0);
 }
 
 int main(int ac, char **av)
@@ -114,15 +122,12 @@ int main(int ac, char **av)
 
 	mlx_mouse_hook(prog->win, &test, prog);
 	mlx_key_hook(prog->win, &handle_input, prog);
-
+	mlx_hook(prog->win,17,0L, &close_programm,prog);
 	if (prog->obj)
 	{
-		ft_printf("fml\n");
 		draw(prog, prog->obj);
-		ft_printf("end\n");
-		//print_object(prog->obj);
 		mlx_loop(prog->mlx);
 	}
-
+	ft_printf("test\n");
 	return (0);
 }

@@ -64,14 +64,14 @@ void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int
 			mesh->verticies[mesh->total_verticies].x = i * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies].y = y * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies].z = ft_atoi(ft_substr(splitline[i],0,ft_poschr(splitline[i],',')));
-			mesh->vertex_color[mesh->total_verticies] = ft_hextoi(ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20));
+			mesh->verticies[mesh->total_verticies].color = ft_hextoi(ft_substr(splitline[i],ft_poschr(splitline[i],',') +1,20));
 		}
 		else
 		{
 			mesh->verticies[mesh->total_verticies ].x = i * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies ].y = y * FDF_VERTEXDISTANCE;
 			mesh->verticies[mesh->total_verticies ].z = ft_atoi(splitline[i]);
-			mesh->vertex_color[mesh->total_verticies] = DEFAULTCOL;
+			mesh->verticies[mesh->total_verticies].color = DEFAULTCOL;
 		}
 		if(mesh->verticies[mesh->total_verticies ].z > mesh->object_dim.z)
 			mesh->object_dim.z = mesh->verticies[mesh->total_verticies ].z;
@@ -86,7 +86,6 @@ static object *generate_empty_object()
 	object *mesh;
 	mesh = (object *)malloc(sizeof(object));
 	mesh->verticies = (p3 *)malloc(sizeof(p3 ) * VERTEXBUFF);
-	mesh->vertex_color = (int *)malloc(sizeof(int) * VERTEXBUFF);
 
 	mesh->total_verticies = 0;
 	mesh->total_edges = 0;
@@ -129,7 +128,6 @@ object *parse_fdf_file(int fd)
 
 	//check how accurate it is, currently seems like it is the case
 	mesh->verticies = ft_realloc(mesh->verticies, sizeof(p3) * VERTEXBUFF, sizeof(p3) * mesh->total_verticies);
-	mesh->vertex_color = ft_realloc(mesh->vertex_color, sizeof(int) * VERTEXBUFF, sizeof(int) * mesh->total_verticies);
 
 /* 	printf("MALLOC USEFUL SIZE %zu\n",malloc_usable_size(mesh->verticies));
 	malloc_stats(); */

@@ -30,16 +30,7 @@ void scale_object(object *obj, p3 factor)
 
 }
 
-void	iso(float *x, float *y, float z)
-{
-	float temp_x;
-	float temp_y;
 
-	temp_x = *x;
-	temp_y = *y;
-	*x = (temp_x - temp_y) * cos(0.523599);
-	*y = -z + (temp_x + temp_y) * sin(0.523599);
-}
 
 void *ft_realloc(void *old, size_t old_size, size_t new_size)
 {

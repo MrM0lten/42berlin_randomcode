@@ -2,7 +2,7 @@
 
 void print_point(p3 *p)
 {
-	printf(" <%lf,%lf,%lf>\n",p->x,p->y,p->z);
+	printf(" <%lf,%lf,%lf> col = %i\n",p->x,p->y,p->z,p->color);
 }
 
 
@@ -12,7 +12,7 @@ void print_object(object *obj)
 	i = 0;
  	while(i < obj->total_verticies)
 	{
-		printf("point[%i] = <(%lf,%lf,%lf),col = %i>\n",i,obj->verticies[i].x, obj->verticies[i].y, obj->verticies[i].z, obj->vertex_color[i]);
+		printf("point[%i] = <(%lf,%lf,%lf),col = %i>\n",i,obj->verticies[i].x, obj->verticies[i].y, obj->verticies[i].z, obj->verticies[i].color);
 		i++;
 	}
 	i = 0;

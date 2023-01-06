@@ -56,10 +56,18 @@
 
 typedef struct	s_p3
 {
-	float x;
-	float y;
-	float z;
+	double x;
+	double y;
+	double z;
+	int color;
 }				p3;
+
+typedef struct	s_p2
+{
+	int x;
+	int y;
+	int color;
+}				p2;
 
 typedef struct	s_edge
 {
@@ -70,7 +78,6 @@ typedef struct	s_edge
 typedef struct s_object
 {
 	p3 *verticies;
-	int *vertex_color;
 	edge *edges;
 	p3 object_dim;
 	int total_edges;
@@ -94,8 +101,6 @@ typedef struct  s_program
 	p3 rot;
 }               t_prog;
 
-
-
 //vector math
 p3 p_add(p3 a, p3 b);
 p3 p_sub(p3 a, p3 b);
@@ -116,24 +121,26 @@ void scale_object(object *obj, p3 factor);
 
 p3 *generate_point(int x, int y, int z); //allocated
 p3 create_point(p3 *p); //non alocated
-p3 make_point(float x,float y,float z);
+p3 make_point(double x,double y,double z);
 
 //projection
-void iso(float *x, float *y, float z);
 p3 project(p3 p,t_prog *prog);
-void rotate_x(float *y, float *z, float alpha);
-void	rotate_y(float *x, float *z, float beta);
-void	rotate_z(float *x, float *y, float gamma);
+void iso(double *x, double *y, double z);
+void rotate_x(double *y, double *z, double alpha);
+void rotate_y(double *x, double *z, double beta);
+void rotate_z(double *x, double *y, double gamma);
 
 //error handling
 void *ft_puterror(int fd,char * filename, char *err_mes);
 int validate_filetype(char *file,char *expected);
+void shutdown_programm(t_prog *prog);
 
 //input
 int handle_input(int keycode, void *param);
 
 //Map Parsing
 object *init_object(char *filename);
+void free_object(object *obj);
 
 void free_string_arr(char **arr);
 void put_object_vertex_data(object *mesh, char **splitline, int split_elems, int y);
@@ -146,5 +153,6 @@ size_t	ft_poschr(const char *str, int c);
 int ft_hextoi(char *str);
 void put_pixel(img_data *data, int x, int y, int color);
 void put_new_image(t_prog *prog, int x, int y);
+int ft_abs(int x);
 
 #endif

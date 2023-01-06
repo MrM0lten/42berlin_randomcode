@@ -1,10 +1,10 @@
 #include "fdf.h"
 
-void	rotate_x(float *y, float *z, float alpha)
+void	rotate_x(double *y, double *z, double alpha)
 {
 
-	float temp_y;
-    float temp_z;
+	double temp_y;
+    double temp_z;
 
 	temp_y = *y;
     temp_z = *z;
@@ -12,11 +12,11 @@ void	rotate_x(float *y, float *z, float alpha)
     *z = temp_y * sin(alpha) + temp_z * cos(alpha);
 }
 
-void	rotate_y(float *x, float *z, float beta)
+void	rotate_y(double *x, double *z, double beta)
 {
 
-	float temp_x;
-    float temp_z;
+	double temp_x;
+    double temp_z;
 
 	temp_x = *x;
     temp_z = *z;
@@ -24,11 +24,11 @@ void	rotate_y(float *x, float *z, float beta)
     *z = temp_x * (-sin(beta)) + temp_z * cos(beta);
 }
 
-void	rotate_z(float *x, float *y, float gamma)
+void	rotate_z(double *x, double *y, double gamma)
 {
 
-	float temp_x;
-    float temp_y;
+	double temp_x;
+    double temp_y;
 
 	temp_y = *y;
     temp_x = *x;
@@ -36,6 +36,16 @@ void	rotate_z(float *x, float *y, float gamma)
     *y = temp_x * sin(gamma) + temp_y * cos(gamma);
 }
 
+void	iso(double *x, double *y, double z)
+{
+	double temp_x;
+	double temp_y;
+
+	temp_x = *x;
+	temp_y = *y;
+	*x = (temp_x - temp_y) * cos(0.523599);
+	*y = -z + (temp_x + temp_y) * sin(0.523599);
+}
 
 // does all the interesting transformation and projections with the endresult of a 2d projected point
 p3 project(p3 p,t_prog *prog)
