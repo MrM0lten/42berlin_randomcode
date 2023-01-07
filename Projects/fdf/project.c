@@ -19,6 +19,7 @@ void	rotate_x(double *y, double *z, double alpha)
 
 	temp_y = *y;
 	temp_z = *z;
+	alpha = alpha * M_PI/180;
 	*y = temp_y * cos(alpha) + temp_z * (-sin(alpha));
 	*z = temp_y * sin(alpha) + temp_z * cos(alpha);
 }
@@ -30,6 +31,7 @@ void	rotate_y(double *x, double *z, double beta)
 
 	temp_x = *x;
 	temp_z = *z;
+	beta = beta * M_PI/180;
 	*x = temp_x * cos(beta) + temp_z * sin(beta);
 	*z = temp_x * (-sin(beta)) + temp_z * cos(beta);
 }
@@ -41,6 +43,7 @@ void	rotate_z(double *x, double *y, double gamma)
 
 	temp_y = *y;
 	temp_x = *x;
+	gamma = gamma * M_PI/180;
 	*x = temp_x * cos(gamma) + temp_y * (-sin(gamma));
 	*y = temp_x * sin(gamma) + temp_y * cos(gamma);
 }

@@ -24,7 +24,11 @@ int	main(int ac, char **av)
 	t_prog	*prog;
 
 	if (av[1] == NULL || ac != 2 || !is_valid_file(av[1]))
+	{
+		ft_printf("test\n");
 		return (0);
+	}
+		
 	prog = malloc(sizeof(t_prog));
 	if (!prog)
 		return (0);
@@ -43,5 +47,14 @@ int	main(int ac, char **av)
 	draw(prog, prog->obj);
 	mlx_loop(prog->mlx);
 	shutdown_programm(prog);
+	
 	return (0);
+}
+
+void terminate(char *message)
+{
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	exit (0);
 }

@@ -18,30 +18,30 @@ void	put_object_edge_data(t_object *obj)
 	int		i;
 
 	obj->edges = (t_edge *)malloc(sizeof(t_edge)
-			*((int)obj->object_dim.y * (int)(obj->object_dim.x - 1)
-				+(int)obj->object_dim.x * (int)(obj->object_dim.y - 1)));
+			*((int)obj->dim.y * (int)(obj->dim.x - 1)
+				+(int)obj->dim.x * (int)(obj->dim.y - 1)));
 	i = 0;
-	while (i < obj->total_verticies - 1)
+	while (i < obj->tot_verts - 1)
 	{
-		if ((i - (int)(obj->object_dim.x -1)) % (int)obj->object_dim.x != 0)
+		if ((i - (int)(obj->dim.x -1)) % (int)obj->dim.x != 0)
 		{	
-			obj->edges[obj->total_edges].elem_a = i;
-			obj->edges[obj->total_edges].elem_b = i + 1;
-			obj->total_edges++;
+			obj->edges[obj->tot_edges].elem_a = i;
+			obj->edges[obj->tot_edges].elem_b = i + 1;
+			obj->tot_edges++;
 		}
 		i++;
 	}
 	i = 0;
-	while (i < obj->total_verticies - obj->object_dim.x)
+	while (i < obj->tot_verts - obj->dim.x)
 	{
-		obj->edges[obj->total_edges].elem_a = i;
-		obj->edges[obj->total_edges].elem_b = i + (int)(obj->object_dim.x);
-		obj->total_edges++;
+		obj->edges[obj->tot_edges].elem_a = i;
+		obj->edges[obj->tot_edges].elem_b = i + (int)(obj->dim.x);
+		obj->tot_edges++;
 		i++;
 	}
 }
 
-void	put_object_vertex_data(t_object *mesh, char **splitline, int split_elems)
+void	put_object_vertex_data(t_object *mesh, char **splt, int split_elems)
 {
 	int		i;
 	char	*str_col;
@@ -49,23 +49,22 @@ void	put_object_vertex_data(t_object *mesh, char **splitline, int split_elems)
 	i = 0;
 	while (i < split_elems)
 	{
-		mesh->verticies[mesh->total_verticies].x = i * FDF_VERTEXDISTANCE;
-		mesh->verticies[mesh->total_verticies].y = mesh->object_dim.y
-			* FDF_VERTEXDISTANCE;
-		mesh->verticies[mesh->total_verticies].z = ft_atoi(splitline[i]);
-		if (ft_poschr(splitline[i], ','))
+		mesh->verts[mesh->tot_verts].x = i * VERTDIST;
+		mesh->verts[mesh->tot_verts].y = mesh->dim.y
+			* VERTDIST;
+		mesh->verts[mesh->tot_verts].z = ft_atoi(splt[i]);
+		if (ft_poschr(splt[i], ','))
 		{
-			str_col = ft_substr(splitline[i],
-					ft_poschr(splitline[i], ',') + 1, 20);
-			mesh->verticies[mesh->total_verticies].color = ft_hextoi(str_col);
+			str_col = ft_substr(splt[i], ft_poschr(splt[i], ',') + 1, 20);
+			mesh->verts[mesh->tot_verts].color = ft_hextoi(str_col);
 			free (str_col);
 		}
 		else
-			mesh->verticies[mesh->total_verticies].color = DEFAULTCOL;
-		if (mesh->verticies[mesh->total_verticies].z > mesh->object_dim.z)
-			mesh->object_dim.z = mesh->verticies[mesh->total_verticies].z;
+			mesh->verts[mesh->tot_verts].color = DEFAULTCOL;
+		if (mesh->verts[mesh->tot_verts].z > mesh->dim.z)
+			mesh->dim.z = mesh->verts[mesh->tot_verts].z;
 		i++;
-		mesh->total_verticies++;
+		mesh->tot_verts++;
 	}
 }
 
@@ -76,15 +75,15 @@ static t_object	*generate_empty_object(void)
 	mesh = (t_object *)malloc(sizeof(t_object));
 	if (!mesh)
 		return (NULL);
-	mesh->verticies = (t_p3 *)malloc(sizeof(t_p3) * VERTEXBUFF);
-	if (!mesh->verticies)
+	mesh->verts = (t_p3 *)malloc(sizeof(t_p3) * VERTEXBUFF);
+	if (!mesh->verts)
 		return (NULL);
-	mesh->total_verticies = 0;
-	mesh->total_edges = 0;
+	mesh->tot_verts = 0;
+	mesh->tot_edges = 0;
 	mesh->pos = make_point(0, 0, 0);
 	mesh->rot = make_point(0, 0, 0);
-	mesh->scale = make_point(1, 1, 1);
-	mesh->object_dim = make_point(0, 0, 0);
+	mesh->scale = make_point(.1, .1, .1);
+	mesh->dim = make_point(0, 0, 0);
 	return (mesh);
 }
 
@@ -97,7 +96,7 @@ t_object	*init_object(char *filename)
 	obj = generate_empty_object();
 	obj = parse_fdf_file(fd, obj);
 	if (!obj)
-		return (NULL);
+		terminate("Object Initialization failed");
 	close(fd);
 	return (obj);
 }
@@ -108,8 +107,8 @@ void	free_object(t_object *obj)
 	{
 		if (obj->edges)
 			free(obj->edges);
-		if (obj->verticies)
-			free(obj->verticies);
+		if (obj->verts)
+			free(obj->verts);
 		free(obj);
 	}
 }

@@ -55,18 +55,20 @@ int handle_input(int keycode, void *param)
 	}
 	if(keycode == NUMPOINT) //scale Z
 		prog->obj->scale.z *= 0.9;
-	if(keycode == NUM1) //rotx
-		prog->obj->rot.x += 0.20;
-	if(keycode == NUM4) //rotx
-		prog->obj->rot.x -= 0.20;
-	if(keycode == NUM2) //roty
-		prog->obj->rot.y += 0.20;
-	if(keycode == NUM5) //roty
-		prog->obj->rot.y -= 0.20;
-	if(keycode == NUM3) //rotz
-		prog->obj->rot.z += 0.20;
-	if(keycode == NUM6) //rotz
-		prog->obj->rot.z -= 0.20;
+	if(keycode == NUM1) //rotx in degrees
+		prog->obj->rot.x += 10;
+	if(keycode == NUM4) //rotx in degrees
+		prog->obj->rot.x -= 10;
+	if(keycode == NUM2) //roty in degrees
+		prog->obj->rot.y += 10;
+	if(keycode == NUM5) //roty in degrees
+		prog->obj->rot.y -= 10;
+	if(keycode == NUM3) //rotz in degrees
+		prog->obj->rot.z += 10;
+	if(keycode == NUM6) //rotz in degrees
+		prog->obj->rot.z -= 10;
+	if(keycode == NUM9) //rotz in degrees
+		prog->obj->rot.z = 1.5708;
 	if(keycode == NUM7)
 		toggle_iso(prog);
 	if(keycode == BACKSPACE)
@@ -75,8 +77,16 @@ int handle_input(int keycode, void *param)
 		prog->obj->pos = make_point(1,0,0);
 		prog->obj->scale = make_point(.01,.01,.01);
 	}
-		
-
+	if(keycode == T)
+		prog->obj->rot = make_point(0,0,0);
+	if(keycode == F)
+		prog->obj->rot = make_point(90,0,0);
+	if(keycode == B)
+		prog->obj->rot = make_point(-90,0,180);
+	if(keycode == L)
+		prog->obj->rot = make_point(90,90,0);
+	if(keycode == R)
+		prog->obj->rot = make_point(90,270,0);
 	draw(prog,prog->obj);
 	return (0);
 }

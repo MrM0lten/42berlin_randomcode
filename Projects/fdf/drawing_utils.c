@@ -20,8 +20,8 @@ void	drawline( t_prog *prog, t_p3 a, t_p3 b, int color)
 	t_p3		temp;
 	t_p2		val;
 
-	if (a.x > X_SIZE || a.x < 0 || a.y > Y_SIZE || a.y < 0
-		|| b.x > X_SIZE || b.x < 0 || b.y > Y_SIZE || b.y < 0)
+	if (a.x >= X_SIZE || a.x <= 0 || a.y >= Y_SIZE || a.y <= 0
+		|| b.x >= X_SIZE || b.x <= 0 || b.y >= Y_SIZE || b.y <= 0)
 		return ;
 	len = vector_len(p_sub(a, b));
 	i = 0;
@@ -64,12 +64,12 @@ void	draw(t_prog *prog, t_object *obj)
 
 	i = 0;
 	put_new_image(prog, X_SIZE, Y_SIZE);
-	while (i < obj->total_edges)
+	while (i < obj->tot_edges)
 	{
 		drawline(prog,
-			project(create_point(&obj->verticies[obj->edges[i].elem_a]), prog),
-			project(create_point(&obj->verticies[obj->edges[i].elem_b]), prog),
-			obj->verticies[obj->edges[i].elem_a].color);
+			project(create_point(&obj->verts[obj->edges[i].elem_a]), prog),
+			project(create_point(&obj->verts[obj->edges[i].elem_b]), prog),
+			obj->verts[obj->edges[i].elem_a].color);
 		i++;
 	}
 	mlx_put_image_to_window(prog->mlx, prog->win, prog->img.img, 0, 0);

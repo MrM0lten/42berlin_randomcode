@@ -48,13 +48,19 @@
 # define LEFTCTRL 65507
 # define LEFTSHIFT 65505
 
+# define T 116
+# define F 102
+# define B 98
+# define L 108
+# define R 114
+
 # define DEFAULTCOL 0xfffafa
 
 # define Y_SIZE 1000
 # define X_SIZE 1000
 
 # define VERTEXBUFF 1000
-# define FDF_VERTEXDISTANCE 1
+# define VERTDIST 1
 
 typedef struct s_p3
 {
@@ -79,14 +85,14 @@ typedef struct s_edge
 
 typedef struct s_object
 {
-	t_p3	*verticies;
+	t_p3	*verts;
 	t_edge	*edges;
-	t_p3	object_dim;
+	t_p3	dim;
 	t_p3	pos;
 	t_p3	rot;
 	t_p3	scale;
-	int		total_edges;
-	int		total_verticies;
+	int		tot_edges;
+	int		tot_verts;
 }				t_object;
 
 typedef struct s_imgdata
@@ -131,6 +137,7 @@ void		rotate_z(double *x, double *y, double gamma);
 //error handling
 int			validate_filetype(char *file, char *expected);
 void		shutdown_programm(t_prog *prog);
+void		terminate(char *message);
 //input
 int			handle_input(int keycode, void *param);
 //Map Parsing
@@ -146,7 +153,6 @@ t_object	*parse_fdf_file(int fd, t_object *mesh);
 int			count_elems(char **str);
 //general utility, use for libft later
 void		*ft_realloc(void *old, size_t old_size, size_t new_size);
-int			ft_puterror(int fd, char *filename, char *err_mes);
 size_t		ft_poschr(const char *str, int c);
 int			ft_hextoi(char *str);
 void		put_pixel(t_imgdata *data, int x, int y, int color);

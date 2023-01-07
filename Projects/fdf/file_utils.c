@@ -22,26 +22,29 @@ int	validate_filetype(char *file, char *expected)
 	return (ft_strncmp(&file[i], expected, 4));
 }
 
-int	ft_puterror(int fd, char *filename, char *err_mes)
-{
-	ft_putstr_fd("Error ", fd);
-	ft_putstr_fd(filename, fd);
-	ft_putstr_fd(err_mes, fd);
-	return (0);
-}
-
 int	is_valid_file(char *filename)
 {
 	int	fd;
 
 	if (!validate_filetype(filename, ".fdf"))
-		return (ft_puterror(STDERR_FILENO, filename,
-				" .File does not have the proper .fdf format"));
+		terminate("File does not have the proper .fdf format");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (ft_puterror(STDERR_FILENO, filename, " .File does not exist"));
+		terminate("File does not exist");
 	close(fd);
 	return (1);
+}
+
+static void	check_buff(size_t *buff, int split_elems, t_object * mesh)
+{
+	if (split_elems > *buff - mesh->tot_verts)
+	{
+		mesh->verts = ft_realloc(mesh->verts, sizeof(t_p3) * (*buff),
+				sizeof(t_p3) * (*buff * 2));
+		if(!mesh->verts)
+			terminate("vertex reallocation failed");
+		*buff *= 2;
+	}
 }
 
 t_object	*parse_fdf_file(int fd, t_object *mesh)
@@ -57,22 +60,19 @@ t_object	*parse_fdf_file(int fd, t_object *mesh)
 	{
 		splitline = ft_split(line, ' ');
 		split_elems = count_elems(splitline);
-		if (split_elems > buff - mesh->total_verticies)
-		{
-			mesh->verticies = ft_realloc(mesh->verticies, sizeof(t_p3) * buff,
-					sizeof(t_p3) * (buff * 2));
-			buff *= 2;
-		}
+		check_buff(&buff, split_elems, mesh);
 		put_object_vertex_data(mesh, splitline, split_elems);
 		free_string_arr(splitline);
 		free(line);
 		line = get_next_line(fd);
-		mesh->object_dim.y++;
+		mesh->dim.y++;
 	}
-	mesh->object_dim.x = mesh->total_verticies / mesh->object_dim.y;
-	mesh->verticies = ft_realloc(mesh->verticies, sizeof(t_p3) * buff,
-			sizeof(t_p3) * mesh->total_verticies);
+	mesh->dim.x = mesh->tot_verts / mesh->dim.y;
+	mesh->verts = ft_realloc(mesh->verts, sizeof(t_p3) * buff,
+			sizeof(t_p3) * mesh->tot_verts);
 	put_object_edge_data(mesh);
+	if(!mesh->verts || !mesh->edges)
+		return (NULL);
 	return (mesh);
 }
 
