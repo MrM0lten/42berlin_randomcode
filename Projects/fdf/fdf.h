@@ -136,7 +136,7 @@ void		rotate_y(double *x, double *z, double beta);
 void		rotate_z(double *x, double *y, double gamma);
 //error handling
 int			validate_filetype(char *file, char *expected);
-void		shutdown_programm(t_prog *prog);
+int			shutdown_programm(t_prog *prog);
 void		terminate(char *message);
 //input
 int			handle_input(int keycode, void *param);
@@ -149,7 +149,7 @@ void		put_object_vertex_data(t_object *mesh, char **splitline,
 void		put_object_edge_data(t_object *obj);
 void		read_fdf_file(int fd);
 int			is_valid_file(char *filename);
-t_object	*parse_fdf_file(int fd, t_object *mesh);
+void 		parse_fdf_file(int fd, t_object *mesh);
 int			count_elems(char **str);
 //general utility, use for libft later
 void		*ft_realloc(void *old, size_t old_size, size_t new_size);

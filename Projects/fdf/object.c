@@ -50,8 +50,7 @@ void	put_object_vertex_data(t_object *mesh, char **splt, int split_elems)
 	while (i < split_elems)
 	{
 		mesh->verts[mesh->tot_verts].x = i * VERTDIST;
-		mesh->verts[mesh->tot_verts].y = mesh->dim.y
-			* VERTDIST;
+		mesh->verts[mesh->tot_verts].y = mesh->dim.y * VERTDIST;
 		mesh->verts[mesh->tot_verts].z = ft_atoi(splt[i]);
 		if (ft_poschr(splt[i], ','))
 		{
@@ -94,10 +93,14 @@ t_object	*init_object(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	obj = generate_empty_object();
-	obj = parse_fdf_file(fd, obj);
-	if (!obj)
-		terminate("Object Initialization failed");
+	parse_fdf_file(fd, obj);
+	if (!obj || !obj->verts)
+		return (NULL);
 	close(fd);
+	obj->dim.x = obj->tot_verts / obj->dim.y;
+	put_object_edge_data(obj);
+	if (!obj->edges)
+		return (NULL);
 	return (obj);
 }
 
@@ -106,9 +109,15 @@ void	free_object(t_object *obj)
 	if (obj)
 	{
 		if (obj->edges)
+		{
 			free(obj->edges);
+			obj->edges = NULL;
+		}
 		if (obj->verts)
+		{
 			free(obj->verts);
+			obj->verts = NULL;
+		}
 		free(obj);
 	}
 }

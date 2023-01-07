@@ -90,16 +90,3 @@ int handle_input(int keycode, void *param)
 	draw(prog,prog->obj);
 	return (0);
 }
-
-
-void shutdown_programm(t_prog *prog)
-{
-	mlx_destroy_image(prog->mlx,prog->img.img);
-	mlx_destroy_window(prog->mlx,prog->win);
-	mlx_destroy_display(prog->mlx);
-	free_object(prog->obj);
-
-	free(prog->mlx);
-	free(prog);
-	ft_printf("shutdown complete\n");
-}

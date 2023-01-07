@@ -47,48 +47,54 @@ static void	check_buff(size_t *buff, int split_elems, t_object * mesh)
 	}
 }
 
-t_object	*parse_fdf_file(int fd, t_object *mesh)
+static int	get_map_dim(char *line)
+{
+	char	**splitline;
+	int		count;
+
+	splitline = ft_split(line, ' ');
+	count = count_elems(splitline);
+	free_string_arr(splitline);
+	return (count);
+}
+static int is_valid_line(char *line, char **splitline, int dim, int split_elems, int fd)
+{
+	if(!line || !splitline || dim != split_elems)
+	{
+		free_string_arr(splitline);
+		while(line)
+		{
+			free(line);
+			line = get_next_line(fd);
+		}
+		return (0);
+	}
+	return (1);
+}
+
+void parse_fdf_file(int fd, t_object *m)
 {
 	char	*line;
 	char	**splitline;
 	int		split_elems;
+	int		dim;
 	size_t	buff;
 
 	buff = VERTEXBUFF;
 	line = get_next_line(fd);
+	dim = get_map_dim(line);
 	while (line)
 	{
 		splitline = ft_split(line, ' ');
 		split_elems = count_elems(splitline);
-		check_buff(&buff, split_elems, mesh);
-		put_object_vertex_data(mesh, splitline, split_elems);
+		if(!is_valid_line(line, splitline, dim, split_elems, fd))
+			return ;
+		check_buff(&buff, split_elems, m);
+		put_object_vertex_data(m, splitline, split_elems);
 		free_string_arr(splitline);
 		free(line);
 		line = get_next_line(fd);
-		mesh->dim.y++;
+		m->dim.y++;
 	}
-	mesh->dim.x = mesh->tot_verts / mesh->dim.y;
-	mesh->verts = ft_realloc(mesh->verts, sizeof(t_p3) * buff,
-			sizeof(t_p3) * mesh->tot_verts);
-	put_object_edge_data(mesh);
-	if(!mesh->verts || !mesh->edges)
-		return (NULL);
-	return (mesh);
-}
-
-void	free_string_arr(char **arr)
-{
-	int	i;
-
-	if (arr)
-	{
-		i = 0;
-		while (arr[i])
-		{
-			free(arr[i]);
-			arr[i] = 0;
-			i++;
-		}
-		free(arr);
-	}
+	m->verts = ft_realloc(m->verts, sizeof(t_p3) * buff, sizeof(t_p3) * m->tot_verts);
 }
