@@ -18,7 +18,6 @@ static int	close_programm(void *param)
 
 	prog = param;
 	mlx_loop_end(prog->mlx);
-	printf("close prog was called\n");
 	return (0);
 }
 
@@ -27,10 +26,7 @@ int	main(int ac, char **av)
 	t_prog	*prog;
 
 	if (av[1] == NULL || ac != 2 || !is_valid_file(av[1]))
-	{
-		ft_printf("test\n");
 		return (0);
-	}
 	prog = malloc(sizeof(t_prog));
 	if (!prog)
 		return (0);
