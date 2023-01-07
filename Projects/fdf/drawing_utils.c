@@ -17,8 +17,8 @@ void	drawline( t_prog *prog, t_p3 a, t_p3 b, int color)
 	double	len;
 	double	i;
 	double	t;
-	t_p3		temp;
-	t_p2		val;
+	t_p3	temp;
+	t_p2	val;
 
 	if (a.x >= X_SIZE || a.x <= 0 || a.y >= Y_SIZE || a.y <= 0
 		|| b.x >= X_SIZE || b.x <= 0 || b.y >= Y_SIZE || b.y <= 0)

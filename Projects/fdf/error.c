@@ -1,44 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_02.c                                         :+:      :+:    :+:   */
+/*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 17:15:05 by jisserst          #+#    #+#             */
-/*   Updated: 2023/01/07 17:15:06 by jisserst         ###   ########.fr       */
+/*   Created: 2023/01/06 19:42:47 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/06 19:42:48 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_string_arr(char **arr)
+int	validate_filetype(char *file, char *expected)
 {
 	int	i;
 
-	if (arr)
-	{
-		i = 0;
-		while (arr[i])
-		{
-			free(arr[i]);
-			arr[i] = 0;
-			i++;
-		}
-		free(arr);
-	}
+	i = 0;
+	while (file[i] && file[i] != '.')
+		i++;
+	return (ft_strncmp(&file[i], expected, 4));
 }
 
-void	transform_obj(t_object *obj, t_p3 *pos)
+int	is_valid_file(char *filename)
 {
-	pos->x += obj->pos.x;
-	pos->y += obj->pos.y;
-	pos->z += obj->pos.z;
-}
+	int	fd;
 
-void	scale_obj(t_object *obj, t_p3 *p)
-{
-	p->x *= obj->scale.x;
-	p->y *= obj->scale.y;
-	p->z *= obj->scale.z;
+	if (!validate_filetype(filename, ".fdf"))
+		terminate("File does not have the proper .fdf format");
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		terminate("File does not exist");
+	close(fd);
+	return (1);
 }

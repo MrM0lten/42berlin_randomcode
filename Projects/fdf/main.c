@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-void terminate(char *message)
+void	terminate(char *message)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
@@ -56,22 +56,19 @@ void terminate(char *message)
 	exit (0);
 }
 
-int shutdown_programm(t_prog *prog)
+int	shutdown_programm(t_prog *prog)
 {
-	if(prog->img.img)
-		mlx_destroy_image(prog->mlx,prog->img.img);
-	if(prog->win)
-		mlx_destroy_window(prog->mlx,prog->win);
-	if(prog->mlx)
+	if (prog->img.img)
+		mlx_destroy_image(prog->mlx, prog->img.img);
+	if (prog->win)
+		mlx_destroy_window(prog->mlx, prog->win);
+	if (prog->mlx)
 	{
 		mlx_destroy_display(prog->mlx);
 		free(prog->mlx);
 	}
-	if(prog->obj)
+	if (prog->obj)
 		free_object(prog->obj);
-	
 	free(prog);
-	ft_printf("shutdown complete\n");
-
 	return (0);
 }

@@ -19,7 +19,7 @@ void	rotate_x(double *y, double *z, double alpha)
 
 	temp_y = *y;
 	temp_z = *z;
-	alpha = alpha * M_PI/180;
+	alpha = alpha * M_PI / 180;
 	*y = temp_y * cos(alpha) + temp_z * (-sin(alpha));
 	*z = temp_y * sin(alpha) + temp_z * cos(alpha);
 }
@@ -31,7 +31,7 @@ void	rotate_y(double *x, double *z, double beta)
 
 	temp_x = *x;
 	temp_z = *z;
-	beta = beta * M_PI/180;
+	beta = beta * M_PI / 180;
 	*x = temp_x * cos(beta) + temp_z * sin(beta);
 	*z = temp_x * (-sin(beta)) + temp_z * cos(beta);
 }
@@ -43,7 +43,7 @@ void	rotate_z(double *x, double *y, double gamma)
 
 	temp_y = *y;
 	temp_x = *x;
-	gamma = gamma * M_PI/180;
+	gamma = gamma * M_PI / 180;
 	*x = temp_x * cos(gamma) + temp_y * (-sin(gamma));
 	*y = temp_x * sin(gamma) + temp_y * cos(gamma);
 }
@@ -57,20 +57,6 @@ void	iso(double *x, double *y, double z)
 	temp_y = *y;
 	*x = (temp_x - temp_y) * cos(0.523599);
 	*y = -z + (temp_x + temp_y) * sin(0.523599);
-}
-
-void	transform_obj(t_object *obj, t_p3 *pos)
-{
-	pos->x += obj->pos.x;
-	pos->y += obj->pos.y;
-	pos->z += obj->pos.z;
-}
-
-void	scale_obj(t_object *obj, t_p3 *p)
-{
-	p->x *= obj->scale.x;
-	p->y *= obj->scale.y;
-	p->z *= obj->scale.z;
 }
 
 t_p3	project(t_p3 p, t_prog *prog)

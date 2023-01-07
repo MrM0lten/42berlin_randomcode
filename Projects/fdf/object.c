@@ -88,7 +88,7 @@ static t_object	*generate_empty_object(void)
 
 t_object	*init_object(char *filename)
 {
-	int		fd;
+	int			fd;
 	t_object	*obj;
 
 	fd = open(filename, O_RDONLY);
