@@ -12,9 +12,12 @@
 
 #include "fdf.h"
 
-int	close_programm(void *param)
+static int	close_programm(void *param)
 {
-	(void)param;
+	t_prog	*prog;
+
+	prog = param;
+	mlx_loop_end(prog->mlx);
 	printf("close prog was called\n");
 	return (0);
 }
@@ -40,7 +43,7 @@ int	main(int ac, char **av)
 	prog->img.img = mlx_new_image(prog->mlx, X_SIZE, Y_SIZE);
 	if (!prog->mlx || !prog->win || !prog->img.img)
 		return (shutdown_programm(prog));
-	//mlx_hook(prog->win,17,0L, &close_programm,prog);
+	mlx_hook(prog->win, 17, 0L, &close_programm, prog);
 	mlx_key_hook(prog->win, &handle_input, prog);
 	draw(prog, prog->obj);
 	mlx_loop(prog->mlx);

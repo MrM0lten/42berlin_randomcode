@@ -24,13 +24,19 @@ int	validate_filetype(char *file, char *expected)
 
 int	is_valid_file(char *filename)
 {
-	int	fd;
+	int		fd;
+	int		bytes;
+	char	str[50];
 
+	bytes = 0;
 	if (!validate_filetype(filename, ".fdf"))
 		terminate("File does not have the proper .fdf format");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		terminate("File does not exist");
+	bytes = read(fd, str, 1);
+	if (bytes == -1 || bytes == 0)
+		terminate("empty file");
 	close(fd);
 	return (1);
 }

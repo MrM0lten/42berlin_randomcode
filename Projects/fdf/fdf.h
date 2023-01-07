@@ -134,6 +134,8 @@ void		iso(double *x, double *y, double z);
 void		rotate_x(double *y, double *z, double alpha);
 void		rotate_y(double *x, double *z, double beta);
 void		rotate_z(double *x, double *y, double gamma);
+void		transform_obj(t_object *obj, t_p3 *pos);
+void		scale_obj(t_object *obj, t_p3 *p);
 //error handling
 int			validate_filetype(char *file, char *expected);
 int			shutdown_programm(t_prog *prog);

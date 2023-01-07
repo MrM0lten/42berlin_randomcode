@@ -36,16 +36,12 @@ static int	get_map_dim(char *line)
 }
 
 static int	is_valid_line(char *line, char **splitline, int dim,
-	int split_elems, int fd)
+	int split_elems)
 {
 	if (!line || !splitline || dim != split_elems)
 	{
 		free_string_arr(splitline);
-		while (line)
-		{
-			free(line);
-			line = get_next_line(fd);
-		}
+		free(line);
 		return (0);
 	}
 	return (1);
@@ -66,7 +62,7 @@ void	parse_fdf_file(int fd, t_object *m)
 	{
 		splitline = ft_split(line, ' ');
 		split_elems = count_elems(splitline);
-		if (!is_valid_line(line, splitline, dim, split_elems, fd))
+		if (!is_valid_line(line, splitline, dim, split_elems))
 			return ;
 		check_buff(&buff, split_elems, m);
 		put_object_vertex_data(m, splitline, split_elems);
