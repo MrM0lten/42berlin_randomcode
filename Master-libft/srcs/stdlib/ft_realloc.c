@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/04 16:19:00 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/10 18:35:20 by jisserst         ###   ########.fr       */
+/*   Created: 2023/01/08 13:58:58 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/08 13:59:34 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../includes/libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+void	*ft_realloc(void *old, size_t old_size, size_t new_size)
 {
-	char	*ptr;
-	int		i;
+	void	*new;
+	size_t	copy_size;
 
-	if (!s || !f)
-		return (0);
-	ptr = malloc(ft_strlen(s) * sizeof(char) + 1);
-	if (!ptr)
-		return (0);
-	i = 0;
-	while (s[i])
-	{
-		ptr[i] = f(i, s[i]);
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
+	new = malloc(new_size);
+	copy_size = old_size;
+	if (new_size < old_size)
+		copy_size = new_size;
+	ft_memcpy(new, old, copy_size);
+	free(old);
+	return (new);
 }

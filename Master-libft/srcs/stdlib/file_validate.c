@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   file_validate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/04 16:19:23 by jisserst          #+#    #+#             */
-/*   Updated: 2022/12/04 19:08:41 by jisserst         ###   ########.fr       */
+/*   Created: 2023/01/08 14:00:11 by jisserst          #+#    #+#             */
+/*   Updated: 2023/01/08 14:00:12 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char*))
-{
-	unsigned int	i;
+#include "../../includes/libft.h"
 
-	if (!s || !f)
-		return ;
+int	validate_filetype(char *file, char *expected)
+{
+	int	i;
+
 	i = 0;
-	while (s[i])
-	{
-		f(i, &s[i]);
+	while (file[i] && file[i] != '.')
 		i++;
-	}
+	if (!ft_strncmp(&file[i], expected, 50))
+		return (1);
+	return (0);
 }

@@ -16,7 +16,6 @@
 #include "../../includes/get_next_line.h"
 
 char	*fill_buffer(int fd, char *buffer);
-char	*ft_realloc(char *s1, char *s2, size_t s2_len);
 char	*get_new_line(char *buffer);
 char	*free_and_fail(char *buffer, char *rtn_str);
 
