@@ -47,7 +47,9 @@ void	put_object_vertex_data(t_object *mesh, char **splt, int split_elems)
 	char	*str_col;
 
 	i = 0;
-	while (i < split_elems - 1)
+	if (splt[split_elems -1][0] == '\n')
+		split_elems--;
+	while (i < split_elems)
 	{
 		mesh->verts[mesh->tot_verts].x = i * VERTDIST;
 		mesh->verts[mesh->tot_verts].y = mesh->dim.y * VERTDIST;
