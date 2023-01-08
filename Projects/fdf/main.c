@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 	if (!prog)
 		return (0);
 	prog->iso = 1;
-	prog->obj = init_object(av[1]);
+	prog->obj = init_object(av[1], prog);
 	if (prog->obj == NULL)
 		return (shutdown_programm(prog));
 	prog->mlx = mlx_init();
@@ -57,16 +57,16 @@ void	terminate(char *message)
 
 int	shutdown_programm(t_prog *prog)
 {
-	if (prog->img.img)
+	if (prog->img.img != NULL)
 		mlx_destroy_image(prog->mlx, prog->img.img);
-	if (prog->win)
+	if (prog->win != NULL)
 		mlx_destroy_window(prog->mlx, prog->win);
-	if (prog->mlx)
+	if (prog->mlx != NULL)
 	{
 		mlx_destroy_display(prog->mlx);
 		free(prog->mlx);
 	}
-	if (prog->obj)
+	if (prog->obj != NULL)
 		free_object(prog->obj);
 	free(prog);
 	return (0);

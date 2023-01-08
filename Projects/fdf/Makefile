@@ -1,4 +1,4 @@
-SRC = main.c drawing_utils.c point_utils.c utils_01.c utils_02.c input.c object.c project.c file_utils.c debug.c error.c
+SRC = main.c drawing_utils.c point_utils.c utils_01.c utils_02.c input.c object.c project.c file_utils.c error.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc
@@ -30,13 +30,11 @@ $(LIBS):
 
 clean:
 	@$(MAKE) clean -C $(DIRLIB)
-	@$(MAKE) clean -C $(MLXDIRLIB)
 	@$(RM) $(OBJS)
 
 
 fclean: clean
 	@$(MAKE) fclean -C $(DIRLIB)
-	@$(MAKE) fclean -C $(MLXDIRLIB)
 	$(RM) $(NAME)
 
 

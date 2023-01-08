@@ -31,6 +31,8 @@ static int	get_map_dim(char *line)
 
 	splitline = ft_split(line, ' ');
 	count = count_elems(splitline);
+	if (splitline[count - 1][0] == '\n')
+		count--;
 	free_string_arr(splitline);
 	return (count);
 }
@@ -38,6 +40,8 @@ static int	get_map_dim(char *line)
 static int	is_valid_line(char *line, char **splitline, int dim,
 	int split_elems)
 {
+	if (splitline[split_elems - 1][0] == '\n')
+		split_elems--;
 	if (!line || !splitline || dim != split_elems)
 	{
 		free_string_arr(splitline);
@@ -47,7 +51,7 @@ static int	is_valid_line(char *line, char **splitline, int dim,
 	return (1);
 }
 
-void	parse_fdf_file(int fd, t_object *m)
+int	parse_fdf_file(int fd, t_object *m)
 {
 	char	*line;
 	char	**splitline;
@@ -63,7 +67,7 @@ void	parse_fdf_file(int fd, t_object *m)
 		splitline = ft_split(line, ' ');
 		split_elems = count_elems(splitline);
 		if (!is_valid_line(line, splitline, dim, split_elems))
-			return ;
+			return (0);
 		check_buff(&buff, split_elems, m);
 		put_object_vertex_data(m, splitline, split_elems);
 		free_string_arr(splitline);
@@ -73,4 +77,5 @@ void	parse_fdf_file(int fd, t_object *m)
 	}
 	m->verts = ft_realloc(m->verts, sizeof(t_p3) * buff,
 			sizeof(t_p3) * m->tot_verts);
+	return (1);
 }

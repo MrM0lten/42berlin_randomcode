@@ -6,7 +6,7 @@
 /*   By: jisserst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 19:43:26 by jisserst          #+#    #+#             */
-/*   Updated: 2023/01/06 19:43:27 by jisserst         ###   ########.fr       */
+/*   Updated: 2023/01/08 11:42:28 by jisserst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	put_object_vertex_data(t_object *mesh, char **splt, int split_elems)
 	char	*str_col;
 
 	i = 0;
-	if (splt[split_elems -1][0] == '\n')
+	if (splt[split_elems - 1][0] == '\n')
 		split_elems--;
 	while (i < split_elems)
 	{
@@ -79,6 +79,7 @@ static t_object	*generate_empty_object(void)
 	mesh->verts = (t_p3 *)malloc(sizeof(t_p3) * VERTEXBUFF);
 	if (!mesh->verts)
 		return (NULL);
+	mesh->edges = NULL;
 	mesh->tot_verts = 0;
 	mesh->tot_edges = 0;
 	mesh->pos = make_point(0, 0, 0);
@@ -88,17 +89,24 @@ static t_object	*generate_empty_object(void)
 	return (mesh);
 }
 
-t_object	*init_object(char *filename)
+t_object	*init_object(char *filename, t_prog *prog)
 {
 	int			fd;
 	t_object	*obj;
+	int			valid;
 
 	fd = open(filename, O_RDONLY);
 	obj = generate_empty_object();
-	parse_fdf_file(fd, obj);
+	valid = parse_fdf_file(fd, obj);
+	close(fd);
+	if (!valid)
+	{
+		free_object(obj);
+		free(prog);
+		terminate("map is broken");
+	}
 	if (!obj || !obj->verts)
 		return (NULL);
-	close(fd);
 	obj->dim.x = obj->tot_verts / obj->dim.y;
 	put_object_edge_data(obj);
 	if (!obj->edges)
@@ -108,14 +116,14 @@ t_object	*init_object(char *filename)
 
 void	free_object(t_object *obj)
 {
-	if (obj)
+	if (obj != NULL)
 	{
-		if (obj->edges)
+		if (obj->edges != NULL)
 		{
 			free(obj->edges);
 			obj->edges = NULL;
 		}
-		if (obj->verts)
+		if (obj->verts != NULL)
 		{
 			free(obj->verts);
 			obj->verts = NULL;

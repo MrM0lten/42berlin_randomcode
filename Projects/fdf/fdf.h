@@ -143,7 +143,7 @@ void		terminate(char *message);
 //input
 int			handle_input(int keycode, void *param);
 //Map Parsing
-t_object	*init_object(char *filename);
+t_object	*init_object(char *filename, t_prog *prog);
 void		free_object(t_object *obj);
 void		free_string_arr(char **arr);
 void		put_object_vertex_data(t_object *mesh, char **splitline,
@@ -151,7 +151,7 @@ void		put_object_vertex_data(t_object *mesh, char **splitline,
 void		put_object_edge_data(t_object *obj);
 void		read_fdf_file(int fd);
 int			is_valid_file(char *filename);
-void		parse_fdf_file(int fd, t_object *mesh);
+int			parse_fdf_file(int fd, t_object *mesh);
 int			count_elems(char **str);
 //general utility, use for libft later
 void		*ft_realloc(void *old, size_t old_size, size_t new_size);
