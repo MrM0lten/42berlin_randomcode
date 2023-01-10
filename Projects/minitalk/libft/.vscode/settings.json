@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"libft.h": "c",
+		"ft_printf.h": "c",
+		"get_next_line.h": "c",
+		"mlx_utils.h": "c",
+		"math.h": "c"
+	}
+}
