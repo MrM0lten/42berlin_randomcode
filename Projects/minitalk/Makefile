@@ -1,12 +1,13 @@
 SRC_SERVER := server.c
 SRC_CLIENT := client.c
 BUILDDIR := obj
+INCLUDEDIR := ./libft/includes/libft.h
 
 OBJS_SERVER := $(addprefix $(BUILDDIR)/,${SRC_SERVER:.c=.o})
 OBJS_CLIENT := $(addprefix $(BUILDDIR)/,${SRC_CLIENT:.c=.o})
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = #-Wall -Werror -Wextra
 
 SERVER = server
 CLIENT = client
@@ -18,10 +19,10 @@ LIBFT = $(DIRLIB)$(LIBNAME)
 all: $(SERVER) $(CLIENT)	
 
 $(SERVER): $(LIBNAME) $(OBJS_SERVER)
-	$(CC) $(CFLAGS) $(OBJS_SERVER) -o $(SERVER)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) -L. $(LIBFT) -o $(SERVER)
 
 $(CLIENT): $(LIBNAME) $(OBJS_CLIENT)
-	$(CC) $(CFLAGS) $(OBJS_CLIENT) -o $(CLIENT)
+	$(CC) $(CFLAGS)  $(OBJS_CLIENT) -L. $(LIBFT) -o $(CLIENT)
 
 $(LIBNAME):
 	@$(MAKE) -C $(DIRLIB)
