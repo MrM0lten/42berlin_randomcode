@@ -28,9 +28,8 @@ void	send_bits(int pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		printf("%d", byte);
 		i--;
-		usleep(100);
+		usleep(150);
 	}
 }
 
@@ -42,6 +41,8 @@ int	main(int ac, char **av)
 	if (ac != 3)
 		return (0);
 	pid = ft_atoi(av[1]);
+	if (pid == 0)
+		return (0);
 	i = 0;
 	while (av[2][i])
 	{

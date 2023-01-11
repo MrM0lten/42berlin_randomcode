@@ -20,7 +20,7 @@
 void	handler(int signal)
 {
 	static int	i = 8;
-	static int	c = 0;
+	static char	c = 0;
 
 	if (signal == SIGUSR1)
 		c |= 1 << (i - 1);
@@ -33,11 +33,16 @@ void	handler(int signal)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	struct sigaction		sa;
 
+	(void)av;
+	if (ac != 1)
+		return (0);
 	sa.sa_handler = handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	ft_printf("PID = %d\n", getpid());
