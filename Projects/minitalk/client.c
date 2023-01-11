@@ -49,6 +49,6 @@ int	main(int ac, char **av)
 		i++;
 	}
 	usleep(100);
-	//send_bits(pid, '\n');
+	send_bits(pid, '\n');
 	return (0);
 }
